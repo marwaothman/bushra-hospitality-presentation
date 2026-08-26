@@ -1,5 +1,5 @@
 const MEDIA_BASE="https://bushra-hospitality-packages.marwaothman999.chatgpt.site";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Lang="ar"|"en"; type Level=1|2|3; type Modal="video"|"gallery"|"details"|null; type Section="home"|"packages"|"testimonials"|"videos"|"team";
 const packs={
@@ -7,9 +7,15 @@ const packs={
   2:{ar:"المستوى الثاني",en:"Level Two",no:"02",tone:"#70a3c2"},
   3:{ar:"المستوى الثالث",en:"Level Three",no:"03",tone:"#d0a86c"},
 } as const;
+const leadership=[
+  {image:"/media/team/ali-bandaqji.webp",ar:{name:"علي بن حسين بندقجي",role:"الرئيس التنفيذي"},en:{name:"Ali bin Hussein Bandaqji",role:"Chief Executive Officer"}},
+  {image:"/media/team/mohammed-maimani.webp",ar:{name:"محمد بن محمود ميمني",role:"نائب الرئيس التنفيذي"},en:{name:"Mohammed bin Mahmoud Maimani",role:"Deputy Chief Executive Officer"}},
+  {image:"/media/team/yasser-bukhari.webp",ar:{name:"ياسر بن فؤاد بخاري",role:"المدير التنفيذي للخدمات اللوجستية"},en:{name:"Yasser bin Fouad Bukhari",role:"Executive Director of Logistics Services"}},
+  {image:"/media/team/essam-qattan.webp",ar:{name:"عصام بن سليمان قطان",role:"المدير التنفيذي للخدمات المساندة"},en:{name:"Essam bin Suleiman Qattan",role:"Executive Director of Support Services"}},
+] as const;
 const words={
-  ar:{kicker:"بُشرى لكل ضيف",hero:"رحلة تليق\nبقدسية المكان",lead:"ثلاث تجارب استثنائية، صُممت لتمنح ضيوف الرحمن رعاية تنبض بالسكينة والكرم.",careTitle:"مستويات العناية\nبضيوفنا",careLead:"ليست باقات فقط... بل مستويات مختلفة من العناية.",choose:"مرّر لاكتشاف الباقات",enter:"ادخل التجربة",back:"الباقات",services:"خدمات بشرى\nفي المشاعر",journey:"رحلة\nالحاج",details:"تفاصيل\nالباقة",detailsAction:"استعرض التفاصيل",watch:"شاهد التجربة",explore:"استعرض الرحلة",video:"هنا تبدأ تجربة الفيديو السينمائية",videoNote:"سيتم استبدال هذا المشهد بفيديو الباقة النهائي",image:"محطة من الرحلة",of:"من",close:"إغلاق",homeTitle:"اختر تجربتك",homeLead:"استكشف باقات بشرى وقصص ضيوفها ومكتبة الأفلام.",packages:"الباقات",testimonials:"شهادات من التجربة",videos:"بشرى في مشاهد",team:"فريقنا",soon:"سيتم إضافة المحتوى قريباً",home:"الرئيسية"},
-  en:{kicker:"BUSHRA FOR EVERY GUEST",hero:"A journey worthy\nof this sacred place",lead:"Three exceptional experiences, designed to surround every pilgrim with serenity, care and generosity.",careTitle:"Levels of Care\nfor Bushra Hospitality Guests",careLead:"Not just packages... but distinct levels of care.",choose:"Move to discover packages",enter:"Enter experience",back:"Packages",services:"Bushra Services\nat the Holy Sites",journey:"The Pilgrim\nJourney",details:"Package\nDetails",detailsAction:"View details",watch:"Watch experience",explore:"Explore journey",video:"The cinematic story begins here",videoNote:"This scene will be replaced by the final package video",image:"A moment from the journey",of:"of",close:"Close",homeTitle:"Choose your experience",homeLead:"Explore Bushra packages, guest stories and the film collection.",packages:"Packages",testimonials:"Stories from the Experience",videos:"Bushra in Scenes",team:"Our Team",soon:"Content will be added soon",home:"Home"},
+  ar:{kicker:"بُشرى لكل ضيف",hero:"رحلة تليق\nبقدسية المكان",lead:"ثلاث تجارب استثنائية، صُممت لتمنح ضيوف الرحمن رعاية تنبض بالسكينة والكرم.",careTitle:"مستويات العناية\nبضيوفنا",careLead:"ليست باقات فقط... بل مستويات مختلفة من العناية.",choose:"مرّر لاكتشاف الباقات",enter:"ادخل التجربة",back:"الباقات",services:"خدمات بشرى\nفي المشاعر",journey:"رحلة\nالحاج",details:"تفاصيل\nالباقة",detailsAction:"استعرض التفاصيل",watch:"شاهد التجربة",explore:"استعرض الرحلة",video:"هنا تبدأ تجربة الفيديو السينمائية",videoNote:"سيتم استبدال هذا المشهد بفيديو الباقة النهائي",image:"محطة من الرحلة",of:"من",close:"إغلاق",homeTitle:"اختر تجربتك",homeLead:"استكشف باقات بشرى وقصص ضيوفها ومكتبة الأفلام.",packages:"الباقات",testimonials:"شهادات من التجربة",videos:"بشرى في مشاهد",team:"فريقنا",teamTitle:"قيادات بشرى",soon:"سيتم إضافة المحتوى قريباً",home:"الرئيسية"},
+  en:{kicker:"BUSHRA FOR EVERY GUEST",hero:"A journey worthy\nof this sacred place",lead:"Three exceptional experiences, designed to surround every pilgrim with serenity, care and generosity.",careTitle:"Levels of Care\nfor Bushra Hospitality Guests",careLead:"Not just packages... but distinct levels of care.",choose:"Move to discover packages",enter:"Enter experience",back:"Packages",services:"Bushra Services\nat the Holy Sites",journey:"The Pilgrim\nJourney",details:"Package\nDetails",detailsAction:"View details",watch:"Watch experience",explore:"Explore journey",video:"The cinematic story begins here",videoNote:"This scene will be replaced by the final package video",image:"A moment from the journey",of:"of",close:"Close",homeTitle:"Choose your experience",homeLead:"Explore Bushra packages, guest stories and the film collection.",packages:"Packages",testimonials:"Stories from the Experience",videos:"Bushra in Scenes",team:"Our Team",teamTitle:"Executive Leadership",soon:"Content will be added soon",home:"Home"},
 };
 
 function Logo({className=""}:{className?:string}){return <img className={className} src={`${MEDIA_BASE}/company-logo.svg`} alt="بشرى الضيافة"/>}
@@ -105,8 +111,19 @@ export default function Home(){
       </div>
     </section>
 
-    <section className={`content-scene ${section==="testimonials"||section==="videos"||section==="team"?"is-here":""}`}>
-      {(section==="testimonials"||section==="videos"||section==="team")&&<><button className="section-back" onClick={()=>transition(()=>setSection("home"))}><Arrow/><span>{t.home}</span></button><div className="content-icon">{section==="testimonials"?<QuoteIcon/>:section==="videos"?<FilmsIcon/>:<TeamIcon/>}</div><span className="content-index">{section==="testimonials"?"02":section==="videos"?"03":"04"}</span><h2>{section==="testimonials"?t.testimonials:section==="videos"?t.videos:t.team}</h2><p>{t.soon}</p></>}
+    <section className={`content-scene ${section==="testimonials"||section==="videos"?"is-here":""}`}>
+      {(section==="testimonials"||section==="videos")&&<><button className="section-back" onClick={()=>transition(()=>setSection("home"))}><Arrow/><span>{t.home}</span></button><div className="content-icon">{section==="testimonials"?<QuoteIcon/>:<FilmsIcon/>}</div><span className="content-index">{section==="testimonials"?"02":"03"}</span><h2>{section==="testimonials"?t.testimonials:t.videos}</h2><p>{t.soon}</p></>}
+    </section>
+
+    <section className={`team-scene ${section==="team"?"is-here":""}`} aria-labelledby="leadership-title">
+      <button className="section-back" onClick={()=>transition(()=>setSection("home"))}><Arrow/><span>{t.home}</span></button>
+      <header className="leadership-heading"><span>04 / {rtl?"القيادة":"LEADERSHIP"}</span><h2 id="leadership-title">{t.teamTitle}</h2><i/></header>
+      <div className="leadership-grid">
+        {leadership.map((leader,index)=><article className={`leader-card ${index===0?"leader-card--primary":""}`} key={leader.en.name} style={{"--leader-index":index} as React.CSSProperties}>
+          <div className="leader-portrait"><span/><img src={leader.image} alt={leader[lang].name}/></div>
+          <div className="leader-copy"><small>0{index+1}</small><h3>{leader[lang].name}</h3><p>{leader[lang].role}</p></div>
+        </article>)}
+      </div>
     </section>
 
     <section className={`package-scene ${selected?"is-here":""}`}>
@@ -121,7 +138,7 @@ export default function Home(){
       </>}
     </section>
 
-    {modal==="video"&&<div className={`cinema modal-layer ${selected?"cinema--video":""}`} role="dialog" aria-modal="true"><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button>{selected?<><div className="cinema-video-bg" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background.mp4`} autoPlay muted loop playsInline/><div className="cinema-video-overlay"/><span className="cinema-video-light cinema-video-light-a"/><span className="cinema-video-light cinema-video-light-b"/></div><div className="video-screen-stage"><div className="video-screen-frame"><video key={`services-${selected}`} className="services-video" src={`${MEDIA_BASE}/media/level-${selected}/services.mp4`} poster={`${MEDIA_BASE}/media/level-${selected}/services-poster.jpg`} controls autoPlay playsInline preload="metadata">Your browser does not support video playback.</video><div className="video-vignette"/></div><span className="video-screen-shadow"/></div></>:<><div className="cinema-rings"><i/><i/><i/></div><div className="cinema-copy"><span>PLAY FILM — 0{selected}</span><h3>{t.video}</h3><p>{t.videoNote}</p><button><Play/></button></div><div className="cinema-time">00:00 <i/> 02:45</div></>}</div>}
+    {modal==="video"&&<div className={`cinema modal-layer ${selected?"cinema--video":""}`} role="dialog" aria-modal="true"><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button>{selected?<><div className="cinema-video-bg" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background.mp4`} autoPlay muted loop playsInline/><div className="cinema-video-overlay"/><span className="cinema-video-light cinema-video-light-a"/><span className="cinema-video-light cinema-video-light-b"/></div><div className="video-screen-stage"><div className="video-screen-frame"><video key={`services-${selected}`} className="services-video" src={`${MEDIA_BASE}/media/level-${selected}/services.mp4`} poster={`/media/level-${selected}/services-poster.jpg`} controls autoPlay playsInline preload="metadata">Your browser does not support video playback.</video><div className="video-vignette"/></div><span className="video-screen-shadow"/></div></>:<><div className="cinema-rings"><i/><i/><i/></div><div className="cinema-copy"><span>PLAY FILM — 0{selected}</span><h3>{t.video}</h3><p>{t.videoNote}</p><button><Play/></button></div><div className="cinema-time">00:00 <i/> 02:45</div></>}</div>}
     {modal==="gallery"&&<div className={`gallery modal-layer ${hasLevelOneArabic?"gallery--real":""} ${rtl?"gallery--rtl":"gallery--ltr"}`} role="dialog" aria-modal="true" onTouchStart={e=>touchStart.current=e.changedTouches[0].clientX} onTouchEnd={e=>{const delta=e.changedTouches[0].clientX-touchStart.current;if(Math.abs(delta)>45)setSlide(s=>(s+(delta<0?1:galleryTotal-1))%galleryTotal)}}>
       {hasLevelOneArabic&&<div className="gallery-video-bg" aria-hidden="true"><video className="video-panorama" src={`${MEDIA_BASE}/media/brand/background.mp4`} autoPlay muted loop playsInline/><div className="video-overlay"/><span className="video-light video-light-a"/><span className="video-light video-light-b"/></div>}
       <button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button>
