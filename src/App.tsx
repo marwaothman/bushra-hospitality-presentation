@@ -8,10 +8,10 @@ const packs={
   3:{ar:"المستوى الثالث",en:"Level Three",no:"03",tone:"#d0a86c"},
 } as const;
 const leadership=[
-  {image:"/media/team/ali-bandaqji.webp",ar:{name:"علي بن حسين بندقجي",role:"الرئيس التنفيذي"},en:{name:"Ali bin Hussein Bandaqji",role:"Chief Executive Officer"}},
-  {image:"/media/team/mohammed-maimani.webp",ar:{name:"محمد بن محمود ميمني",role:"نائب الرئيس التنفيذي"},en:{name:"Mohammed bin Mahmoud Maimani",role:"Deputy Chief Executive Officer"}},
-  {image:"/media/team/yasser-bukhari.webp",ar:{name:"ياسر بن فؤاد بخاري",role:"المدير التنفيذي للخدمات اللوجستية"},en:{name:"Yasser bin Fouad Bukhari",role:"Executive Director of Logistics Services"}},
-  {image:"/media/team/essam-qattan.webp",ar:{name:"عصام بن سليمان قطان",role:"المدير التنفيذي للخدمات المساندة"},en:{name:"Essam bin Suleiman Qattan",role:"Executive Director of Support Services"}},
+  {image:`${MEDIA_BASE}/media/team/ali-bandaqji.webp`,ar:{name:"علي بن حسين بندقجي",role:"الرئيس التنفيذي"},en:{name:"Ali bin Hussein Bandaqji",role:"Chief Executive Officer"}},
+  {image:`${MEDIA_BASE}/media/team/mohammed-maimani.webp`,ar:{name:"محمد بن محمود ميمني",role:"نائب الرئيس التنفيذي"},en:{name:"Mohammed bin Mahmoud Maimani",role:"Deputy Chief Executive Officer"}},
+  {image:`${MEDIA_BASE}/media/team/yasser-bukhari.webp`,ar:{name:"ياسر بن فؤاد بخاري",role:"المدير التنفيذي للخدمات اللوجستية"},en:{name:"Yasser bin Fouad Bukhari",role:"Executive Director of Logistics Services"}},
+  {image:`${MEDIA_BASE}/media/team/essam-qattan.webp`,ar:{name:"عصام بن سليمان قطان",role:"المدير التنفيذي للخدمات المساندة"},en:{name:"Essam bin Suleiman Qattan",role:"Executive Director of Support Services"}},
 ] as const;
 const words={
   ar:{kicker:"بُشرى لكل ضيف",hero:"رحلة تليق\nبقدسية المكان",lead:"ثلاث تجارب استثنائية، صُممت لتمنح ضيوف الرحمن رعاية تنبض بالسكينة والكرم.",careTitle:"مستويات العناية\nبضيوفنا",careLead:"ليست باقات فقط... بل مستويات مختلفة من العناية.",choose:"مرّر لاكتشاف الباقات",enter:"ادخل التجربة",back:"الباقات",services:"خدمات بشرى\nفي المشاعر",journey:"رحلة\nالحاج",details:"تفاصيل\nالباقة",detailsAction:"استعرض التفاصيل",watch:"شاهد التجربة",explore:"استعرض الرحلة",video:"هنا تبدأ تجربة الفيديو السينمائية",videoNote:"سيتم استبدال هذا المشهد بفيديو الباقة النهائي",image:"محطة من الرحلة",of:"من",close:"إغلاق",homeTitle:"اختر تجربتك",homeLead:"استكشف باقات بشرى وقصص ضيوفها ومكتبة الأفلام.",packages:"الباقات",testimonials:"شهادات من التجربة",videos:"بشرى في مشاهد",team:"فريقنا",teamTitle:"قيادات بشرى",soon:"سيتم إضافة المحتوى قريباً",home:"الرئيسية"},
