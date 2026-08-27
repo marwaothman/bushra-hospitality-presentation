@@ -15,3 +15,5 @@ The workflow in `.github/workflows/pages.yml` builds and deploys the presentatio
 Deployment is configured through GitHub Actions.
 
 Large videos and gallery images are served from the existing Bushra presentation media host to keep this repository lightweight and fast.
+
+Deployment sync: 2026-08-27
