@@ -301,18 +301,18 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 @media(max-width:1000px){.hub-scene{grid-template-columns:1fr}.hub-options{grid-template-columns:repeat(3,minmax(165px,1fr));grid-template-rows:repeat(2,minmax(205px,1fr));width:min(700px,94vw);height:69vh;gap:10px}.hub-options>button,.hub-options>button:nth-child(n){--tower-shift:0px;height:auto;min-height:0;transform:none;padding:20px 12px}.hub-options>button:hover,.hub-options>button:nth-child(n):hover{transform:translateY(-6px)}.hub-options>button>span{position:relative;top:auto;left:auto;transform:none;margin:0 auto 20px}.hub-options>button:hover>span{transform:translateY(-4px) scale(1.04)}.hub-options strong{position:relative;inset:auto;font-size:15px}}
 @media(max-width:560px){.hub-options{grid-template-columns:repeat(2,minmax(132px,1fr));grid-template-rows:repeat(3,minmax(145px,1fr));width:94vw;height:70vh;gap:7px}.hub-options>button,.hub-options>button:nth-child(n){padding:12px 7px}.hub-options>button>span{width:46px;height:46px;margin-bottom:11px}.hub-options svg{width:24px;height:24px}.hub-options strong{font-size:10.5px}}
 
-/* Navigation clearance — extended towers ending above controls */
+/* Navigation clearance — visibly shorter towers */
 @media(min-width:1001px){
-  .hub-options{height:min(66vh,620px);transform:translateY(56px)}
-  .hub-options>button,.hub-options>button:nth-child(2),.hub-options>button:nth-child(4),.hub-options>button:nth-child(5),.hub-options>button:nth-child(6){min-height:350px}
-  .hub-options>button:nth-child(1){--tower-shift:8px;height:calc(88% + 15px)}
-  .hub-options>button:nth-child(2){--tower-shift:16px;height:calc(94% + 15px)}
-  .hub-options>button:nth-child(3){--tower-shift:-4px;height:calc(100% + 15px)}
-  .hub-options>button:nth-child(4){--tower-shift:13px;height:calc(93% + 15px)}
-  .hub-options>button:nth-child(5){--tower-shift:2px;height:calc(98% + 15px)}
-  .hub-options>button:nth-child(6){--tower-shift:10px;height:calc(90% + 15px)}
+  .hub-options{height:min(58vh,550px);transform:translateY(20px)}
+  .hub-options>button,.hub-options>button:nth-child(2),.hub-options>button:nth-child(4),.hub-options>button:nth-child(5),.hub-options>button:nth-child(6){min-height:300px}
+  .hub-options>button:nth-child(1){--tower-shift:8px;height:88%}
+  .hub-options>button:nth-child(2){--tower-shift:16px;height:94%}
+  .hub-options>button:nth-child(3){--tower-shift:-4px;height:100%}
+  .hub-options>button:nth-child(4){--tower-shift:13px;height:93%}
+  .hub-options>button:nth-child(5){--tower-shift:2px;height:98%}
+  .hub-options>button:nth-child(6){--tower-shift:10px;height:90%}
 }
 @media(min-width:1001px) and (max-height:760px){
-  .hub-options{height:min(62vh,540px);transform:translateY(35px)}
-  .hub-options>button,.hub-options>button:nth-child(n){min-height:320px}
+  .hub-options{height:min(54vh,470px);transform:translateY(15px)}
+  .hub-options>button,.hub-options>button:nth-child(n){min-height:280px}
 }
