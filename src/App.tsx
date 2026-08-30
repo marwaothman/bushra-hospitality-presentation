@@ -46,7 +46,8 @@ function PackagesIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><rect
 function QuoteIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 34c0-13 7-21 19-24v9c-6 2-9 6-9 11h10v22H10V34Zm30 0c0-13 7-21 19-24v9c-6 2-9 6-9 11h10v22H40V34Z"/></svg>}
 function FilmsIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="7" y="12" width="50" height="40" rx="3"/><path d="M7 22h50M18 12v10M32 12v10M46 12v10M27 31l14 8-14 8Z"/></svg>}
 function TeamIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="20" r="9"/><circle cx="14" cy="28" r="6"/><circle cx="50" cy="28" r="6"/><path d="M17 55c0-11 6-18 15-18s15 7 15 18M3 53c0-8 4-13 11-13 4 0 7 2 9 5M61 53c0-8-4-13-11-13-4 0-7 2-9 5"/></svg>}
-function HospitalityIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 45c8-1 13 1 19 7h6c6-6 11-8 19-7M14 39V22l18-12 18 12v17"/><path d="M23 39V27h18v12M32 10v29"/><circle cx="32" cy="48" r="4"/></svg>}\nfunction HomeIcon(){return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9h-6v-6H9v6H3Z"/></svg>}
+function HospitalityIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 45c8-1 13 1 19 7h6c6-6 11-8 19-7M14 39V22l18-12 18 12v17"/><path d="M23 39V27h18v12M32 10v29"/><circle cx="32" cy="48" r="4"/></svg>}
+function HomeIcon(){return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9h-6v-6H9v6H3Z"/></svg>}
 function FullscreenIcon({active=false}:{active?:boolean}){return active?<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6"/></svg>:<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg>}
 function CareLevelIcon({level}:{level:Level}){
   if(level===1)return <svg className="care-level-icon" viewBox="0 0 96 96" aria-hidden="true"><path d="M18 67 13 30l22 17 13-28 13 28 22-17-5 37Z"/><path d="M18 67h60v11H18Z"/><circle cx="13" cy="25" r="3"/><circle cx="48" cy="14" r="3"/><circle cx="83" cy="25" r="3"/></svg>;
@@ -87,7 +88,8 @@ export default function Home(){
   const previousPage=()=>transition(()=>{
     setModal(null);
     if(selected){if(selected>1)pick((selected-1) as Level);else setSelected(null);return}
-    if(section==="hospitality")setSection("team");\n    else if(section==="team")setSection("videos");
+    if(section==="hospitality")setSection("team");
+    else if(section==="team")setSection("videos");
     else if(section==="videos")setSection("testimonials");
     else if(section==="testimonials")setSection("packages");
     else if(section==="packages")setSection("home");
@@ -98,7 +100,8 @@ export default function Home(){
     if(section==="home")setSection("packages");
     else if(section==="packages")pick(focus);
     else if(section==="testimonials")setSection("videos");
-    else if(section==="videos")setSection("team");\n    else if(section==="team")setSection("hospitality");
+    else if(section==="videos")setSection("team");
+    else if(section==="team")setSection("hospitality");
   });
   return <main className={`experience theme-${focus}`} dir={rtl?"rtl":"ltr"} onPointerMove={e=>{const el=e.currentTarget;el.style.setProperty("--mx",`${e.clientX}px`);el.style.setProperty("--my",`${e.clientY}px`)}}>
     <div className="brand-film" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background.mp4`} poster={`${MEDIA_BASE}/media/brand/background-poster.jpg`} autoPlay muted loop playsInline preload="auto"/><div className="film-grade"/><div className="film-vignette"/><div className="film-grain"/></div>
@@ -117,7 +120,8 @@ export default function Home(){
         <button onClick={()=>transition(()=>setSection("packages"))}><span><PackagesIcon/></span><strong>{t.packages}</strong></button>
         <button onClick={()=>transition(()=>setSection("testimonials"))}><span><QuoteIcon/></span><strong>{t.testimonials}</strong></button>
         <button onClick={()=>transition(()=>setSection("videos"))}><span><FilmsIcon/></span><strong>{t.videos}</strong></button>
-        <button onClick={()=>transition(()=>setSection("team"))}><span><TeamIcon/></span><strong>{t.team}</strong></button>\n        <button onClick={()=>transition(()=>setSection("hospitality"))}><span><HospitalityIcon/></span><strong>{t.hospitality}</strong></button>
+        <button onClick={()=>transition(()=>setSection("team"))}><span><TeamIcon/></span><strong>{t.team}</strong></button>
+        <button onClick={()=>transition(()=>setSection("hospitality"))}><span><HospitalityIcon/></span><strong>{t.hospitality}</strong></button>
       </div>
     </section>
 
