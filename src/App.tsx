@@ -3,7 +3,7 @@ const MEDIA_BASE="https://bushra-hospitality-packages.marwaothman999.chatgpt.sit
 
 import { useEffect, useRef, useState } from "react";
 
-type Lang="ar"|"en"; type Level=1|2|3; type Modal="video"|"gallery"|"details"|"showcase"|null; type Section="home"|"packages"|"testimonials"|"videos"|"team";
+type Lang="ar"|"en"; type Level=1|2|3; type Modal="video"|"gallery"|"details"|"showcase"|"hospitality"|null; type Section="home"|"packages"|"testimonials"|"videos"|"team"|"hospitality";
 const packs={
   1:{ar:"المستوى الأول",en:"Level One",no:"01",tone:"#b08e57"},
   2:{ar:"المستوى الثاني",en:"Level Two",no:"02",tone:"#70a3c2"},
@@ -18,9 +18,22 @@ const leadership=[
 const showcaseVideos=[
   {title:"استقبال حجاج ليبيا",src:`${MEDIA_BASE}/media/showcase/01.mp4`,poster:`${MEDIA_BASE}/media/showcase/01.jpg`},
 ] as const;
+const hospitalityStages=[
+  {ar:"المسار الإلكتروني وبطائق نسك",en:"Digital Journey & Nusuk Cards",kind:"video"},
+  {ar:"إسكان مكة",en:"Makkah Accommodation",kind:"gallery"},
+  {ar:"الاستقبال",en:"Reception",kind:"video"},
+  {ar:"النقل",en:"Transportation",kind:"video"},
+  {ar:"إسكان المشاعر",en:"Holy Sites Accommodation",kind:"gallery"},
+  {ar:"التغذية",en:"Catering",kind:"gallery"},
+  {ar:"الحراسات الأمنية",en:"Security",kind:"video"},
+  {ar:"الشؤون العامة",en:"General Affairs",kind:"gallery"},
+  {ar:"المراقبة والمتابعة",en:"Monitoring & Follow-up",kind:"video"},
+  {ar:"الرصد والتحكم",en:"Control & Observation",kind:"video"},
+  {ar:"فريق السعادة ورضا الضيف",en:"Guest Happiness Team",kind:"gallery"},
+] as const;
 const words={
-  ar:{kicker:"بُشرى لكل ضيف",hero:"رحلة تليق\nبقدسية المكان",lead:"ثلاث تجارب استثنائية، صُممت لتمنح ضيوف الرحمن رعاية تنبض بالسكينة والكرم.",careTitle:"مستويات العناية\nبضيوفنا",careLead:"ليست باقات فقط... بل مستويات مختلفة من العناية.",choose:"مرّر لاكتشاف الباقات",enter:"ادخل التجربة",back:"الباقات",services:"خدمات بشرى\nفي المشاعر",journey:"رحلة\nالحاج",details:"تفاصيل\nالباقة",detailsAction:"استعرض التفاصيل",watch:"شاهد التجربة",explore:"استعرض الرحلة",video:"هنا تبدأ تجربة الفيديو السينمائية",videoNote:"سيتم استبدال هذا المشهد بفيديو الباقة النهائي",image:"محطة من الرحلة",of:"من",close:"إغلاق",homeTitle:"اختر تجربتك",homeLead:"استكشف باقات بشرى وقصص ضيوفها ومكتبة الأفلام.",packages:"الباقات",testimonials:"شهادات من التجربة",videos:"بشرى في مشاهد",team:"فريقنا",teamTitle:"قيادات بشرى الضيافة",soon:"سيتم إضافة المحتوى قريباً",home:"الرئيسية"},
-  en:{kicker:"BUSHRA FOR EVERY GUEST",hero:"A journey worthy\nof this sacred place",lead:"Three exceptional experiences, designed to surround every pilgrim with serenity, care and generosity.",careTitle:"Levels of Care\nfor Bushra Hospitality Guests",careLead:"Not just packages... but distinct levels of care.",choose:"Move to discover packages",enter:"Enter experience",back:"Packages",services:"Bushra Services\nat the Holy Sites",journey:"The Pilgrim\nJourney",details:"Package\nDetails",detailsAction:"View details",watch:"Watch experience",explore:"Explore journey",video:"The cinematic story begins here",videoNote:"This scene will be replaced by the final package video",image:"A moment from the journey",of:"of",close:"Close",homeTitle:"Choose your experience",homeLead:"Explore Bushra packages, guest stories and the film collection.",packages:"Packages",testimonials:"Stories from the Experience",videos:"Bushra in Scenes",team:"Our Team",teamTitle:"Executive Leadership",soon:"Content will be added soon",home:"Home"},
+  ar:{kicker:"بُشرى لكل ضيف",hero:"رحلة تليق\nبقدسية المكان",lead:"ثلاث تجارب استثنائية، صُممت لتمنح ضيوف الرحمن رعاية تنبض بالسكينة والكرم.",careTitle:"مستويات العناية\nبضيوفنا",careLead:"ليست باقات فقط... بل مستويات مختلفة من العناية.",choose:"مرّر لاكتشاف الباقات",enter:"ادخل التجربة",back:"الباقات",services:"خدمات بشرى\nفي المشاعر",journey:"رحلة\nالحاج",details:"تفاصيل\nالباقة",detailsAction:"استعرض التفاصيل",watch:"شاهد التجربة",explore:"استعرض الرحلة",video:"هنا تبدأ تجربة الفيديو السينمائية",videoNote:"سيتم استبدال هذا المشهد بفيديو الباقة النهائي",image:"محطة من الرحلة",of:"من",close:"إغلاق",homeTitle:"اختر تجربتك",homeLead:"استكشف باقات بشرى وقصص ضيوفها ومكتبة الأفلام.",packages:"الباقات",testimonials:"شهادات من التجربة",videos:"بشرى في مشاهد",team:"فريقنا",teamTitle:"قيادات بشرى الضيافة",hospitality:"تجربة الضيافة",hospitalityTitle:"رحلة تجربة الضيافة",hospitalityLead:"من المسار الإلكتروني حتى رضا الضيف — منظومة عناية متكاملة.",videoMedia:"فيديو",galleryMedia:"صور",soon:"سيتم إضافة المحتوى قريباً",home:"الرئيسية"},
+  en:{kicker:"BUSHRA FOR EVERY GUEST",hero:"A journey worthy\nof this sacred place",lead:"Three exceptional experiences, designed to surround every pilgrim with serenity, care and generosity.",careTitle:"Levels of Care\nfor Bushra Hospitality Guests",careLead:"Not just packages... but distinct levels of care.",choose:"Move to discover packages",enter:"Enter experience",back:"Packages",services:"Bushra Services\nat the Holy Sites",journey:"The Pilgrim\nJourney",details:"Package\nDetails",detailsAction:"View details",watch:"Watch experience",explore:"Explore journey",video:"The cinematic story begins here",videoNote:"This scene will be replaced by the final package video",image:"A moment from the journey",of:"of",close:"Close",homeTitle:"Choose your experience",homeLead:"Explore Bushra packages, guest stories and the film collection.",packages:"Packages",testimonials:"Stories from the Experience",videos:"Bushra in Scenes",team:"Our Team",teamTitle:"Executive Leadership",hospitality:"Hospitality Experience",hospitalityTitle:"The Hospitality Journey",hospitalityLead:"From the digital journey to guest satisfaction — one integrated care system.",videoMedia:"Video",galleryMedia:"Images",soon:"Content will be added soon",home:"Home"},
 };
 
 function Logo({className=""}:{className?:string}){return <img className={className} src={`${MEDIA_BASE}/company-logo.svg`} alt="بشرى الضيافة"/>}
@@ -33,7 +46,7 @@ function PackagesIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><rect
 function QuoteIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 34c0-13 7-21 19-24v9c-6 2-9 6-9 11h10v22H10V34Zm30 0c0-13 7-21 19-24v9c-6 2-9 6-9 11h10v22H40V34Z"/></svg>}
 function FilmsIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="7" y="12" width="50" height="40" rx="3"/><path d="M7 22h50M18 12v10M32 12v10M46 12v10M27 31l14 8-14 8Z"/></svg>}
 function TeamIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="20" r="9"/><circle cx="14" cy="28" r="6"/><circle cx="50" cy="28" r="6"/><path d="M17 55c0-11 6-18 15-18s15 7 15 18M3 53c0-8 4-13 11-13 4 0 7 2 9 5M61 53c0-8-4-13-11-13-4 0-7 2-9 5"/></svg>}
-function HomeIcon(){return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9h-6v-6H9v6H3Z"/></svg>}
+function HospitalityIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 45c8-1 13 1 19 7h6c6-6 11-8 19-7M14 39V22l18-12 18 12v17"/><path d="M23 39V27h18v12M32 10v29"/><circle cx="32" cy="48" r="4"/></svg>}\nfunction HomeIcon(){return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9h-6v-6H9v6H3Z"/></svg>}
 function FullscreenIcon({active=false}:{active?:boolean}){return active?<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6"/></svg>:<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg>}
 function CareLevelIcon({level}:{level:Level}){
   if(level===1)return <svg className="care-level-icon" viewBox="0 0 96 96" aria-hidden="true"><path d="M18 67 13 30l22 17 13-28 13 28 22-17-5 37Z"/><path d="M18 67h60v11H18Z"/><circle cx="13" cy="25" r="3"/><circle cx="48" cy="14" r="3"/><circle cx="83" cy="25" r="3"/></svg>;
@@ -57,7 +70,7 @@ function ParticleField(){
 }
 
 export default function Home(){
-  const [lang,setLang]=useState<Lang>("ar"),[loading,setLoading]=useState(true),[section,setSection]=useState<Section>("home"),[selected,setSelected]=useState<Level|null>(null),[focus,setFocus]=useState<Level>(1),[modal,setModal]=useState<Modal>(null),[slide,setSlide]=useState(0),[activeShowcase,setActiveShowcase]=useState(0),[isFullscreen,setIsFullscreen]=useState(false);
+  const [lang,setLang]=useState<Lang>("ar"),[loading,setLoading]=useState(true),[section,setSection]=useState<Section>("home"),[selected,setSelected]=useState<Level|null>(null),[focus,setFocus]=useState<Level>(1),[modal,setModal]=useState<Modal>(null),[slide,setSlide]=useState(0),[activeShowcase,setActiveShowcase]=useState(0),[activeHospitality,setActiveHospitality]=useState(0),[isFullscreen,setIsFullscreen]=useState(false);
   const t=words[lang],rtl=lang==="ar";
   const hasLevelOneArabic=selected===1&&lang==="ar";
   const galleryTotal=hasLevelOneArabic?50:60;
@@ -70,11 +83,11 @@ export default function Home(){
   const goHome=()=>transition(()=>{setModal(null);setSelected(null);setSection("home")});
   const toggleFullscreen=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{/* Fullscreen can be blocked by the browser or an embedded frame. */}};
   const atFirstPage=section==="home"&&!selected;
-  const atLastPage=section==="team"&&!selected;
+  const atLastPage=section==="hospitality"&&!selected;
   const previousPage=()=>transition(()=>{
     setModal(null);
     if(selected){if(selected>1)pick((selected-1) as Level);else setSelected(null);return}
-    if(section==="team")setSection("videos");
+    if(section==="hospitality")setSection("team");\n    else if(section==="team")setSection("videos");
     else if(section==="videos")setSection("testimonials");
     else if(section==="testimonials")setSection("packages");
     else if(section==="packages")setSection("home");
@@ -85,7 +98,7 @@ export default function Home(){
     if(section==="home")setSection("packages");
     else if(section==="packages")pick(focus);
     else if(section==="testimonials")setSection("videos");
-    else if(section==="videos")setSection("team");
+    else if(section==="videos")setSection("team");\n    else if(section==="team")setSection("hospitality");
   });
   return <main className={`experience theme-${focus}`} dir={rtl?"rtl":"ltr"} onPointerMove={e=>{const el=e.currentTarget;el.style.setProperty("--mx",`${e.clientX}px`);el.style.setProperty("--my",`${e.clientY}px`)}}>
     <div className="brand-film" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background.mp4`} poster={`${MEDIA_BASE}/media/brand/background-poster.jpg`} autoPlay muted loop playsInline preload="auto"/><div className="film-grade"/><div className="film-vignette"/><div className="film-grain"/></div>
@@ -104,7 +117,7 @@ export default function Home(){
         <button onClick={()=>transition(()=>setSection("packages"))}><span><PackagesIcon/></span><strong>{t.packages}</strong></button>
         <button onClick={()=>transition(()=>setSection("testimonials"))}><span><QuoteIcon/></span><strong>{t.testimonials}</strong></button>
         <button onClick={()=>transition(()=>setSection("videos"))}><span><FilmsIcon/></span><strong>{t.videos}</strong></button>
-        <button onClick={()=>transition(()=>setSection("team"))}><span><TeamIcon/></span><strong>{t.team}</strong></button>
+        <button onClick={()=>transition(()=>setSection("team"))}><span><TeamIcon/></span><strong>{t.team}</strong></button>\n        <button onClick={()=>transition(()=>setSection("hospitality"))}><span><HospitalityIcon/></span><strong>{t.hospitality}</strong></button>
       </div>
     </section>
 
@@ -145,6 +158,15 @@ export default function Home(){
       </div>
     </section>
 
+    <section className={`hospitality-scene ${section==="hospitality"?"is-here":""}`} aria-labelledby="hospitality-title">
+      <header className="hospitality-heading"><span>05 / EXPERIENCE</span><h2 id="hospitality-title">{t.hospitalityTitle}</h2><p>{t.hospitalityLead}</p></header>
+      <div className="journey-map" role="list">
+        {hospitalityStages.map((stage,index)=><button type="button" role="listitem" className="journey-stage" key={stage.ar} style={{"--stage-index":index} as React.CSSProperties} onClick={()=>{setActiveHospitality(index);setModal("hospitality")}}>
+          <span className="journey-number">{String(index+1).padStart(2,"0")}</span><span className="journey-node">{stage.kind==="video"?<Play/>:<Frames/>}</span><strong>{stage[lang]}</strong><small>{stage.kind==="video"?t.videoMedia:t.galleryMedia}</small>
+        </button>)}
+      </div>
+    </section>
+
     <section className={`package-scene ${selected?"is-here":""}`}>
       {selected&&<><div className="giant-index">{packs[selected].no}</div><button className="back-button" onClick={()=>transition(()=>setSelected(null))}><Arrow/><span>{t.back}</span></button>
         <div className="package-title"><span>0{selected} / 03</span><h2>{packs[selected][lang]}</h2><i/></div>
@@ -168,6 +190,8 @@ export default function Home(){
 
     {modal==="details"&&<div className="cinema details-modal modal-layer" role="dialog" aria-modal="true"><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button><div className="cinema-rings"><i/><i/><i/></div><div className="cinema-copy details-copy"><span>0{selected} / 03</span><DetailsIcon/><h3>{t.details.replace("\n"," ")}</h3><p>{t.soon}</p></div></div>}
     {modal==="showcase"&&<div className="cinema cinema--video showcase-modal modal-layer" role="dialog" aria-modal="true" aria-label={showcaseVideos[activeShowcase].title}><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button><div className="cinema-video-bg" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background.mp4`} autoPlay muted loop playsInline/><div className="cinema-video-overlay"/></div><div className="video-screen-stage"><div className="video-screen-frame"><video key={showcaseVideos[activeShowcase].src} className="services-video" src={showcaseVideos[activeShowcase].src} poster={showcaseVideos[activeShowcase].poster} controls autoPlay playsInline preload="metadata">Your browser does not support video playback.</video><div className="video-vignette"/></div><h3 className="showcase-video-title">{showcaseVideos[activeShowcase].title}</h3><span className="video-screen-shadow"/></div></div>}
+
+    {modal==="hospitality"&&<div className="cinema hospitality-modal modal-layer" role="dialog" aria-modal="true" aria-label={hospitalityStages[activeHospitality][lang]}><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button><div className="cinema-rings"><i/><i/><i/></div><div className="hospitality-modal-copy"><span>{String(activeHospitality+1).padStart(2,"0")} / {hospitalityStages.length}</span><div className="hospitality-modal-icon">{hospitalityStages[activeHospitality].kind==="video"?<Play/>:<Frames/>}</div><h3>{hospitalityStages[activeHospitality][lang]}</h3><p>{hospitalityStages[activeHospitality].kind==="video"?t.videoMedia:t.galleryMedia} · {t.soon}</p></div></div>}
 
     <nav className={`page-step-nav global-step-nav ${modal?"is-obscured":""}`} aria-label={rtl?"التنقل بين الصفحات":"Page navigation"}>
       <div className="step-row"><button type="button" className="page-step page-step-prev" onClick={previousPage} disabled={atFirstPage} aria-label={rtl?"الصفحة السابقة":"Previous page"}><Arrow/></button><span className="page-step-line"><i/></span><button type="button" className="page-step page-step-next" onClick={nextPage} disabled={atLastPage} aria-label={rtl?"الصفحة التالية":"Next page"}><Arrow/></button></div>
