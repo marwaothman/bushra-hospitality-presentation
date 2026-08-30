@@ -300,3 +300,20 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 @media(max-width:1350px){.hub-scene{grid-template-columns:minmax(300px,.58fr) minmax(760px,1.42fr);padding-inline:28px;gap:24px}.hub-options{gap:7px}.hub-options>button{min-height:310px}.hub-options strong{font-size:14px}.hub-options>button>span{width:58px;height:58px}.hub-options svg{width:30px;height:30px}}
 @media(max-width:1000px){.hub-scene{grid-template-columns:1fr}.hub-options{grid-template-columns:repeat(3,minmax(165px,1fr));grid-template-rows:repeat(2,minmax(205px,1fr));width:min(700px,94vw);height:69vh;gap:10px}.hub-options>button,.hub-options>button:nth-child(n){--tower-shift:0px;height:auto;min-height:0;transform:none;padding:20px 12px}.hub-options>button:hover,.hub-options>button:nth-child(n):hover{transform:translateY(-6px)}.hub-options>button>span{position:relative;top:auto;left:auto;transform:none;margin:0 auto 20px}.hub-options>button:hover>span{transform:translateY(-4px) scale(1.04)}.hub-options strong{position:relative;inset:auto;font-size:15px}}
 @media(max-width:560px){.hub-options{grid-template-columns:repeat(2,minmax(132px,1fr));grid-template-rows:repeat(3,minmax(145px,1fr));width:94vw;height:70vh;gap:7px}.hub-options>button,.hub-options>button:nth-child(n){padding:12px 7px}.hub-options>button>span{width:46px;height:46px;margin-bottom:11px}.hub-options svg{width:24px;height:24px}.hub-options strong{font-size:10.5px}}
+
+
+/* Navigation clearance — shorter cinematic towers */
+@media(min-width:1001px){
+  .hub-options{height:min(52vh,500px);transform:translateY(-18px)}
+  .hub-options>button,.hub-options>button:nth-child(2),.hub-options>button:nth-child(4),.hub-options>button:nth-child(5),.hub-options>button:nth-child(6){min-height:275px}
+  .hub-options>button:nth-child(1){--tower-shift:8px;height:73%}
+  .hub-options>button:nth-child(2){--tower-shift:17px;height:80%}
+  .hub-options>button:nth-child(3){--tower-shift:-7px;height:89%}
+  .hub-options>button:nth-child(4){--tower-shift:13px;height:79%}
+  .hub-options>button:nth-child(5){--tower-shift:1px;height:85%}
+  .hub-options>button:nth-child(6){--tower-shift:10px;height:75%}
+}
+@media(min-width:1001px) and (max-height:760px){
+  .hub-options{height:min(48vh,430px);transform:translateY(-22px)}
+  .hub-options>button,.hub-options>button:nth-child(n){min-height:250px}
+}
