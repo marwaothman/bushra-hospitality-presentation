@@ -260,3 +260,14 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .journey-stage small{font-size:7px;letter-spacing:.12em;opacity:.8}
 @media(max-width:1100px){.journey-map{grid-template-columns:repeat(8,minmax(0,1fr));grid-auto-rows:145px;overflow:auto;align-content:start}.journey-stage,.journey-stage:nth-child(n+7),.experience[dir="ltr"] .journey-stage:nth-child(n+7){grid-column:span 2}.journey-stage:nth-child(7){grid-column:span 2}.journey-map:before{display:none}}
 @media(max-width:560px){.hospitality-scene{padding:80px 8px 56px}.hospitality-heading{margin-bottom:12px}.hospitality-heading h2{font-size:25px}.hospitality-heading h2:after{margin-top:8px}.hospitality-heading p{font-size:8px;margin-top:7px}.journey-map{width:100%;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:130px;gap:4px;overflow:auto;padding:0}.journey-stage,.journey-stage:nth-child(n+7),.experience[dir="ltr"] .journey-stage:nth-child(n+7){grid-column:span 2;padding:7px 3px}.journey-node{width:52px;height:52px}.journey-stage strong{font-size:10px;min-height:2.4em}.journey-stage small{font-size:6px}}
+
+
+/* Six-entry home menu — balanced 3 × 2 editorial grid */
+.hub-scene{grid-template-columns:minmax(320px,.72fr) minmax(720px,1.28fr);gap:clamp(34px,4vw,72px)}
+.hub-options{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));width:min(920px,100%);height:min(61vh,590px);max-width:920px;gap:clamp(9px,1vw,16px);align-self:center}
+.hub-options>button,.hub-options>button:nth-child(2),.hub-options>button:nth-child(4),.hub-options>button:nth-child(5),.hub-options>button:nth-child(6){height:auto;min-height:0;transform:none;padding:18px 14px;background:linear-gradient(150deg,rgba(255,255,255,.11),rgba(8,31,51,.7) 56%,rgba(3,18,31,.87));box-shadow:-12px 20px 40px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.11)}
+.hub-options>button:hover,.hub-options>button:nth-child(2):hover,.hub-options>button:nth-child(4):hover,.hub-options>button:nth-child(5):hover,.hub-options>button:nth-child(6):hover{transform:translateY(-7px) translateZ(28px)}
+.hub-options>button>span{width:68px;height:68px}.hub-options svg{width:36px;height:36px}.hub-options strong{font-size:clamp(15px,1.35vw,23px);line-height:1.3}
+.trust-scene .content-icon svg{fill:none;stroke:#d0a86c;stroke-width:1.3}
+@media(max-width:1000px){.hub-scene{grid-template-columns:1fr}.hub-heading{display:none}.hub-options{width:min(820px,92vw);height:68vh;margin:auto}.hub-options strong{font-size:clamp(13px,2vw,19px)}}
+@media(max-width:560px){.hub-options{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));width:94vw;height:68vh;gap:7px}.hub-options>button,.hub-options>button:nth-child(5){grid-column:auto;width:auto;justify-self:stretch;padding:9px 6px}.hub-options>button>span{width:45px;height:45px}.hub-options svg{width:24px;height:24px}.hub-options strong{font-size:11px}}
