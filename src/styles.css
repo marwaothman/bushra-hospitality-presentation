@@ -305,12 +305,12 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 @media(min-width:1001px){
   .hub-options{height:min(66vh,620px);transform:translateY(56px)}
   .hub-options>button,.hub-options>button:nth-child(2),.hub-options>button:nth-child(4),.hub-options>button:nth-child(5),.hub-options>button:nth-child(6){min-height:350px}
-  .hub-options>button:nth-child(1){--tower-shift:8px;height:calc(88% + 27px)}
-  .hub-options>button:nth-child(2){--tower-shift:16px;height:calc(94% + 27px)}
-  .hub-options>button:nth-child(3){--tower-shift:-4px;height:calc(100% + 27px)}
-  .hub-options>button:nth-child(4){--tower-shift:13px;height:calc(93% + 27px)}
-  .hub-options>button:nth-child(5){--tower-shift:2px;height:calc(98% + 27px)}
-  .hub-options>button:nth-child(6){--tower-shift:10px;height:calc(90% + 27px)}
+  .hub-options>button:nth-child(1){--tower-shift:8px;height:calc(88% + 15px)}
+  .hub-options>button:nth-child(2){--tower-shift:16px;height:calc(94% + 15px)}
+  .hub-options>button:nth-child(3){--tower-shift:-4px;height:calc(100% + 15px)}
+  .hub-options>button:nth-child(4){--tower-shift:13px;height:calc(93% + 15px)}
+  .hub-options>button:nth-child(5){--tower-shift:2px;height:calc(98% + 15px)}
+  .hub-options>button:nth-child(6){--tower-shift:10px;height:calc(90% + 15px)}
 }
 @media(min-width:1001px) and (max-height:760px){
   .hub-options{height:min(62vh,540px);transform:translateY(35px)}
