@@ -193,7 +193,7 @@ export default function Home(){
       <header className="hospitality-heading"><h2 id="hospitality-title">{t.hospitalityTitle}</h2><p>{t.hospitalityLead}</p></header>
       <div className="journey-map" role="list">
         {managedStages.map((stage,index)=><button type="button" role="listitem" className="journey-stage" key={stage.ar} style={{"--stage-index":index} as React.CSSProperties} onClick={()=>{setActiveHospitality(index);setModal("hospitality")}}>
-          <span className="journey-number">{String(index+1).padStart(2,"0")}</span><span className="journey-node">{stage.kind==="video"?<Play/>:<Frames/>}</span><strong>{stage[lang]}</strong><small>{stage.kind==="video"?t.videoMedia:t.galleryMedia}</small>
+<span className="journey-node">{stage.kind==="video"?<Play/>:<Frames/>}</span><strong>{stage[lang]}</strong>
         </button>)}
       </div>
     </section>
