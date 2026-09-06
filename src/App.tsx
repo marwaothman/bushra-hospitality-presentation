@@ -31,6 +31,15 @@ const hospitalityStages=[
   {ar:"الرصد والتحكم",en:"Control & Observation",kind:"video"},
   {ar:"فريق السعادة ورضا الضيف",en:"Guest Happiness Team",kind:"gallery"},
 ] as const;
+
+type CmsPayload={
+  settings?:{homepageTitleAr?:string;homepageTitleEn?:string}|null;
+  packages?:Array<{level:number;titleAr?:string;titleEn?:string;active?:boolean}>;
+  leaders?:Array<{order:number;nameAr?:string;nameEn?:string;roleAr?:string;roleEn?:string;featured?:boolean}>;
+  stages?:Array<{order:number;titleAr?:string;titleEn?:string;mediaType?:"video"|"images";active?:boolean}>;
+};
+const SANITY_QUERY=`{"settings":*[_type=="siteSettings"][0]{homepageTitleAr,homepageTitleEn},"packages":*[_type=="package"&&active!=false]|order(order asc){level,titleAr,titleEn,active},"leaders":*[_type=="leader"]|order(order asc){order,nameAr,nameEn,roleAr,roleEn,featured},"stages":*[_type=="hospitalityStage"&&active!=false]|order(order asc){order,titleAr,titleEn,mediaType,active}}`;
+const SANITY_URL=`https://l526cvef.api.sanity.io/v2026-09-06/data/query/production?query=${encodeURIComponent(SANITY_QUERY)}`;
 const words={
   ar:{kicker:"بُشرى لكل ضيف",hero:"رحلة تليق\nبقدسية المكان",lead:"ثلاث تجارب استثنائية، صُممت لتمنح ضيوف الرحمن رعاية تنبض بالسكينة والكرم.",careTitle:"مستويات العناية\nبضيوفنا",careLead:"ليست باقات فقط... بل مستويات مختلفة من العناية.",choose:"مرّر لاكتشاف الباقات",enter:"ادخل التجربة",back:"الباقات",services:"خدمات بشرى\nفي المشاعر",journey:"رحلة\nالحاج",details:"تفاصيل\nالباقة",detailsAction:"استعرض التفاصيل",watch:"شاهد التجربة",explore:"استعرض الرحلة",video:"هنا تبدأ تجربة الفيديو السينمائية",videoNote:"سيتم استبدال هذا المشهد بفيديو الباقة النهائي",image:"محطة من الرحلة",of:"من",close:"إغلاق",homeTitle:"اختر تجربتك",homeLead:"استكشف باقات بشرى وقصص ضيوفها ومكتبة الأفلام.",trust:"شواهد الثقة",trustTitle:"شواهد الثقة",packages:"الباقات",testimonials:"شهادات من التجربة",videos:"بشرى في مشاهد",team:"فريقنا القيادي",teamTitle:"قيادات بشرى الضيافة",hospitality:"تجربة الضيافة",hospitalityTitle:"تجربة الضيافة",hospitalityLead:"من المسار الإلكتروني حتى رضا الضيف — منظومة عناية متكاملة.",videoMedia:"فيديو",galleryMedia:"صور",soon:"سيتم إضافة المحتوى قريباً",home:"الرئيسية"},
   en:{kicker:"BUSHRA FOR EVERY GUEST",hero:"A journey worthy\nof this sacred place",lead:"Three exceptional experiences, designed to surround every pilgrim with serenity, care and generosity.",careTitle:"Levels of Care\nfor Bushra Hospitality Guests",careLead:"Not just packages... but distinct levels of care.",choose:"Move to discover packages",enter:"Enter experience",back:"Packages",services:"Bushra Services\nat the Holy Sites",journey:"The Pilgrim\nJourney",details:"Package\nDetails",detailsAction:"View details",watch:"Watch experience",explore:"Explore journey",video:"The cinematic story begins here",videoNote:"This scene will be replaced by the final package video",image:"A moment from the journey",of:"of",close:"Close",homeTitle:"Choose your experience",homeLead:"Explore Bushra packages, guest stories and the film collection.",trust:"Trust Evidence",trustTitle:"Evidence of Trust",packages:"Packages",testimonials:"Stories from the Experience",videos:"Bushra in Scenes",team:"Leadership Team",teamTitle:"Executive Leadership",hospitality:"Hospitality Experience",hospitalityTitle:"Hospitality Experience",hospitalityLead:"From the digital journey to guest satisfaction — one integrated care system.",videoMedia:"Video",galleryMedia:"Images",soon:"Content will be added soon",home:"Home"},
@@ -73,11 +82,16 @@ function ParticleField(){
 
 export default function Home(){
   const [lang,setLang]=useState<Lang>("ar"),[loading,setLoading]=useState(true),[section,setSection]=useState<Section>("home"),[selected,setSelected]=useState<Level|null>(null),[focus,setFocus]=useState<Level>(1),[modal,setModal]=useState<Modal>(null),[slide,setSlide]=useState(0),[activeShowcase,setActiveShowcase]=useState(0),[activeHospitality,setActiveHospitality]=useState(0),[isFullscreen,setIsFullscreen]=useState(false);
-  const t=words[lang],rtl=lang==="ar";
+  const [cms,setCms]=useState<CmsPayload|null>(null);
+  const managedPacks=([1,2,3] as Level[]).reduce((all,level)=>{const item=cms?.packages?.find(entry=>entry.level===level);all[level]={...packs[level],ar:item?.titleAr||packs[level].ar,en:item?.titleEn||packs[level].en};return all},{} as Record<Level,{ar:string;en:string;no:string;tone:string}>);
+  const managedLeadership=managedLeadership.map((leader,index)=>{const item=cms?.leaders?.find(entry=>entry.order===index+1);return {...leader,ar:{name:item?.nameAr||leader.ar.name,role:item?.roleAr||leader.ar.role},en:{name:item?.nameEn||leader.en.name,role:item?.roleEn||leader.en.role}}});
+  const managedStages=(cms?.stages?.length?cms.stages:hospitalityStages).map((stage,index)=>{const fallback=hospitalityStages[Math.min(index,managedStages.length-1)];return {ar:("titleAr" in stage&&stage.titleAr)||fallback.ar,en:("titleEn" in stage&&stage.titleEn)||fallback.en,kind:("mediaType" in stage&&stage.mediaType==="images"?"gallery":"video") as "gallery"|"video"}});
+  const t={...words[lang],kicker:(lang==="ar"?cms?.settings?.homepageTitleAr:cms?.settings?.homepageTitleEn)||words[lang].kicker},rtl=lang==="ar";
   const hasLevelOneArabic=selected===1&&lang==="ar";
   const galleryTotal=hasLevelOneArabic?50:60;
   const touchStart=useRef(0);
   useEffect(()=>{const id=setTimeout(()=>setLoading(false),1900);return()=>clearTimeout(id)},[]);
+  useEffect(()=>{const controller=new AbortController();fetch(SANITY_URL,{signal:controller.signal}).then(response=>response.ok?response.json():Promise.reject()).then(data=>setCms(data.result as CmsPayload)).catch(()=>{/* Keep the complete built-in presentation when the CMS is unavailable. */});return()=>controller.abort()},[]);
   useEffect(()=>{const sync=()=>setIsFullscreen(Boolean(document.fullscreenElement));document.addEventListener("fullscreenchange",sync);return()=>document.removeEventListener("fullscreenchange",sync)},[]);
   useEffect(()=>{const key=(e:KeyboardEvent)=>{if(e.key==="Escape")setModal(null);if(modal==="gallery"&&e.key==="ArrowRight")setSlide(s=>(s+1)%galleryTotal);if(modal==="gallery"&&e.key==="ArrowLeft")setSlide(s=>(s+galleryTotal-1)%galleryTotal)};addEventListener("keydown",key);return()=>removeEventListener("keydown",key)},[modal,galleryTotal]);
   const transition=(action:()=>void)=>{const doc=document as Document&{startViewTransition?:(cb:()=>void)=>void};doc.startViewTransition?doc.startViewTransition(action):action()};
@@ -140,8 +154,8 @@ export default function Home(){
       </div>
       <div className="portal-stage">
         <div className="orbit orbit-a"/><div className="orbit orbit-b"/>
-        {([1,2,3] as Level[]).map(level=><button type="button" key={level} onPointerEnter={()=>setFocus(level)} onPointerDown={()=>setFocus(level)} onFocus={()=>setFocus(level)} onClick={()=>pick(level)} className={`portal portal-${level} ${focus===level?"is-focused":""}`} aria-label={packs[level][lang]}>
-          <span className="portal-halo"/><span className="portal-glass"><span className={`portal-care-symbol portal-care-symbol-${level}`}><CareLevelIcon level={level}/></span><span className="portal-title">{packs[level][lang]}</span><span className="portal-enter">{t.enter}<Arrow/></span></span>
+        {([1,2,3] as Level[]).map(level=><button type="button" key={level} onPointerEnter={()=>setFocus(level)} onPointerDown={()=>setFocus(level)} onFocus={()=>setFocus(level)} onClick={()=>pick(level)} className={`portal portal-${level} ${focus===level?"is-focused":""}`} aria-label={managedPacks[level][lang]}>
+          <span className="portal-halo"/><span className="portal-glass"><span className={`portal-care-symbol portal-care-symbol-${level}`}><CareLevelIcon level={level}/></span><span className="portal-title">{managedPacks[level][lang]}</span><span className="portal-enter">{t.enter}<Arrow/></span></span>
         </button>)}
       </div>
     </section>
@@ -173,15 +187,15 @@ export default function Home(){
     <section className={`hospitality-scene ${section==="hospitality"?"is-here":""}`} aria-labelledby="hospitality-title">
       <header className="hospitality-heading"><h2 id="hospitality-title">{t.hospitalityTitle}</h2><p>{t.hospitalityLead}</p></header>
       <div className="journey-map" role="list">
-        {hospitalityStages.map((stage,index)=><button type="button" role="listitem" className="journey-stage" key={stage.ar} style={{"--stage-index":index} as React.CSSProperties} onClick={()=>{setActiveHospitality(index);setModal("hospitality")}}>
+        {managedStages.map((stage,index)=><button type="button" role="listitem" className="journey-stage" key={stage.ar} style={{"--stage-index":index} as React.CSSProperties} onClick={()=>{setActiveHospitality(index);setModal("hospitality")}}>
           <span className="journey-number">{String(index+1).padStart(2,"0")}</span><span className="journey-node">{stage.kind==="video"?<Play/>:<Frames/>}</span><strong>{stage[lang]}</strong><small>{stage.kind==="video"?t.videoMedia:t.galleryMedia}</small>
         </button>)}
       </div>
     </section>
 
     <section className={`package-scene ${selected?"is-here":""}`}>
-      {selected&&<><div className="giant-index">{packs[selected].no}</div><button className="back-button" onClick={()=>transition(()=>setSelected(null))}><Arrow/><span>{t.back}</span></button>
-        <div className="package-title"><span>0{selected} / 03</span><h2>{packs[selected][lang]}</h2><i/></div>
+      {selected&&<><div className="giant-index">{managedPacks[selected].no}</div><button className="back-button" onClick={()=>transition(()=>setSelected(null))}><Arrow/><span>{t.back}</span></button>
+        <div className="package-title"><span>0{selected} / 03</span><h2>{managedPacks[selected][lang]}</h2><i/></div>
         <div className="experience-picks">
           <button type="button" className="experience-pick video-pick" onClick={()=>setModal("video")}><span className="pick-media"><i className="liquid"/><Play/></span><span className="pick-copy"><strong>{t.services.split("\n").map(x=><span key={x}>{x}</span>)}</strong></span></button>
           <button type="button" className="experience-pick gallery-pick" onClick={()=>{setSlide(0);setModal("gallery")}}><span className="pick-media"><i className="liquid"/><Frames/></span><span className="pick-copy"><strong>{t.journey.split("\n").map(x=><span key={x}>{x}</span>)}</strong></span></button>
@@ -196,14 +210,14 @@ export default function Home(){
       {hasLevelOneArabic&&<div className="gallery-video-bg" aria-hidden="true"><video className="video-panorama" src={`${MEDIA_BASE}/media/brand/background.mp4`} autoPlay muted loop playsInline/><div className="video-overlay"/><span className="video-light video-light-a"/><span className="video-light video-light-b"/></div>}
       <button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button>
       <div className="gallery-number">{String(slide+1).padStart(2,"0")}</div>
-      <div className="screen-stage"><div className="gallery-frame"><div className="gallery-art">{hasLevelOneArabic?<img key={slide} className="journey-slide" src={`${MEDIA_BASE}/media/level-1/ar/${String(slide+1).padStart(2,"0")}.webp`} alt={`رحلة حجاج بشرى الضيافة - صفحة ${slide+1}`} draggable={false}/>:<><Logo/><span>{packs[selected??1][lang]}</span></>}</div><div className="gallery-caption"><small>{String(slide+1).padStart(2,"0")} {t.of} {galleryTotal}</small><h3>{hasLevelOneArabic?"رحلة حجاج بشرى الضيافة":t.image}</h3></div></div><span className="screen-shadow"/></div>
+      <div className="screen-stage"><div className="gallery-frame"><div className="gallery-art">{hasLevelOneArabic?<img key={slide} className="journey-slide" src={`${MEDIA_BASE}/media/level-1/ar/${String(slide+1).padStart(2,"0")}.webp`} alt={`رحلة حجاج بشرى الضيافة - صفحة ${slide+1}`} draggable={false}/>:<><Logo/><span>{managedPacks[selected??1][lang]}</span></>}</div><div className="gallery-caption"><small>{String(slide+1).padStart(2,"0")} {t.of} {galleryTotal}</small><h3>{hasLevelOneArabic?"رحلة حجاج بشرى الضيافة":t.image}</h3></div></div><span className="screen-shadow"/></div>
       <div className="gallery-nav"><button onClick={()=>setSlide(s=>(s+galleryTotal-1)%galleryTotal)}><Arrow/></button><i><em style={{width:`${((slide+1)/galleryTotal)*100}%`}}/></i><b>{String(slide+1).padStart(2,"0")} / {galleryTotal}</b><button onClick={()=>setSlide(s=>(s+1)%galleryTotal)}><Arrow/></button></div>
     </div>}
 
     {modal==="details"&&<div className="cinema details-modal modal-layer" role="dialog" aria-modal="true"><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button><div className="cinema-rings"><i/><i/><i/></div><div className="cinema-copy details-copy"><span>0{selected} / 03</span><DetailsIcon/><h3>{t.details.replace("\n"," ")}</h3><p>{t.soon}</p></div></div>}
     {modal==="showcase"&&<div className="cinema cinema--video showcase-modal modal-layer" role="dialog" aria-modal="true" aria-label={showcaseVideos[activeShowcase].title}><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button><div className="cinema-video-bg" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background.mp4`} autoPlay muted loop playsInline/><div className="cinema-video-overlay"/></div><div className="video-screen-stage"><div className="video-screen-frame"><video key={showcaseVideos[activeShowcase].src} className="services-video" src={showcaseVideos[activeShowcase].src} poster={showcaseVideos[activeShowcase].poster} controls autoPlay playsInline preload="metadata">Your browser does not support video playback.</video><div className="video-vignette"/></div><h3 className="showcase-video-title">{showcaseVideos[activeShowcase].title}</h3><span className="video-screen-shadow"/></div></div>}
 
-    {modal==="hospitality"&&<div className="cinema hospitality-modal modal-layer" role="dialog" aria-modal="true" aria-label={hospitalityStages[activeHospitality][lang]}><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button><div className="cinema-rings"><i/><i/><i/></div><div className="hospitality-modal-copy"><span>{String(activeHospitality+1).padStart(2,"0")} / {hospitalityStages.length}</span><div className="hospitality-modal-icon">{hospitalityStages[activeHospitality].kind==="video"?<Play/>:<Frames/>}</div><h3>{hospitalityStages[activeHospitality][lang]}</h3><p>{hospitalityStages[activeHospitality].kind==="video"?t.videoMedia:t.galleryMedia} · {t.soon}</p></div></div>}
+    {modal==="hospitality"&&managedStages[activeHospitality]&&<div className="cinema hospitality-modal modal-layer" role="dialog" aria-modal="true" aria-label={managedStages[activeHospitality][lang]}><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button><div className="cinema-rings"><i/><i/><i/></div><div className="hospitality-modal-copy"><span>{String(activeHospitality+1).padStart(2,"0")} / {managedStages.length}</span><div className="hospitality-modal-icon">{managedStages[activeHospitality].kind==="video"?<Play/>:<Frames/>}</div><h3>{managedStages[activeHospitality][lang]}</h3><p>{managedStages[activeHospitality].kind==="video"?t.videoMedia:t.galleryMedia} · {t.soon}</p></div></div>}
 
     <nav className={`page-step-nav global-step-nav ${modal?"is-obscured":""}`} aria-label={rtl?"التنقل بين الصفحات":"Page navigation"}>
       <div className="step-row"><button type="button" className="page-step page-step-prev" onClick={previousPage} disabled={atFirstPage} aria-label={rtl?"الصفحة السابقة":"Previous page"}><Arrow/></button><span className="page-step-line"><i/></span><button type="button" className="page-step page-step-next" onClick={nextPage} disabled={atLastPage} aria-label={rtl?"الصفحة التالية":"Next page"}><Arrow/></button></div>
