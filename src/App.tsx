@@ -81,7 +81,7 @@ function ParticleField(){
 }
 
 export default function Home(){
-  const [lang,setLang]=useState<Lang>("ar"),[loading,setLoading]=useState(true),[section,setSection]=useState<Section>("home"),[selected,setSelected]=useState<Level|null>(null),[focus,setFocus]=useState<Level>(1),[modal,setModal]=useState<Modal>(null),[slide,setSlide]=useState(0),[activeShowcase,setActiveShowcase]=useState(0),[activeHospitality,setActiveHospitality]=useState(0),[isFullscreen,setIsFullscreen]=useState(false);
+  const [lang,setLang]=useState<Lang>("ar"),[loading,setLoading]=useState(true),[transitioning,setTransitioning]=useState(false),[section,setSection]=useState<Section>("home"),[selected,setSelected]=useState<Level|null>(null),[focus,setFocus]=useState<Level>(1),[modal,setModal]=useState<Modal>(null),[slide,setSlide]=useState(0),[activeShowcase,setActiveShowcase]=useState(0),[activeHospitality,setActiveHospitality]=useState(0),[isFullscreen,setIsFullscreen]=useState(false);
   const [cms,setCms]=useState<CmsPayload|null>(null);
   const managedPacks=([1,2,3] as Level[]).reduce((all,level)=>{const item=cms?.packages?.find(entry=>entry.level===level);all[level]={...packs[level],ar:item?.titleAr||packs[level].ar,en:item?.titleEn||packs[level].en};return all},{} as Record<Level,{ar:string;en:string;no:string;tone:string}>);
   const managedLeadership=managedLeadership.map((leader,index)=>{const item=cms?.leaders?.find(entry=>entry.order===index+1);return {...leader,ar:{name:item?.nameAr||leader.ar.name,role:item?.roleAr||leader.ar.role},en:{name:item?.nameEn||leader.en.name,role:item?.roleEn||leader.en.role}}});
@@ -90,11 +90,16 @@ export default function Home(){
   const hasLevelOneArabic=selected===1&&lang==="ar";
   const galleryTotal=hasLevelOneArabic?50:60;
   const touchStart=useRef(0);
+  const transitionTimers=useRef<number[]>([]);
   useEffect(()=>{const id=setTimeout(()=>setLoading(false),1900);return()=>clearTimeout(id)},[]);
   useEffect(()=>{const controller=new AbortController();fetch(SANITY_URL,{signal:controller.signal}).then(response=>response.ok?response.json():Promise.reject()).then(data=>setCms(data.result as CmsPayload)).catch(()=>{/* Keep the complete built-in presentation when the CMS is unavailable. */});return()=>controller.abort()},[]);
   useEffect(()=>{const sync=()=>setIsFullscreen(Boolean(document.fullscreenElement));document.addEventListener("fullscreenchange",sync);return()=>document.removeEventListener("fullscreenchange",sync)},[]);
+  useEffect(()=>()=>transitionTimers.current.forEach(clearTimeout),[]);
   useEffect(()=>{const key=(e:KeyboardEvent)=>{if(e.key==="Escape")setModal(null);if(modal==="gallery"&&e.key==="ArrowRight")setSlide(s=>(s+1)%galleryTotal);if(modal==="gallery"&&e.key==="ArrowLeft")setSlide(s=>(s+galleryTotal-1)%galleryTotal)};addEventListener("keydown",key);return()=>removeEventListener("keydown",key)},[modal,galleryTotal]);
-  const transition=(action:()=>void)=>{const doc=document as Document&{startViewTransition?:(cb:()=>void)=>void};doc.startViewTransition?doc.startViewTransition(action):action()};
+  const transition=(action:()=>void)=>{
+    transitionTimers.current.forEach(clearTimeout);setTransitioning(true);
+    transitionTimers.current=[window.setTimeout(()=>{const doc=document as Document&{startViewTransition?:(cb:()=>void)=>void};doc.startViewTransition?doc.startViewTransition(action):action()},260),window.setTimeout(()=>setTransitioning(false),900)];
+  };
   const pick=(n:Level)=>{setModal(null);setSlide(0);setFocus(n);setSelected(n)};
   const goHome=()=>transition(()=>{setModal(null);setSelected(null);setSection("home")});
   const toggleFullscreen=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{/* Fullscreen can be blocked by the browser or an embedded frame. */}};
@@ -224,6 +229,7 @@ export default function Home(){
       <div className="utility-row"><button type="button" className="utility-step" onClick={goHome} aria-label={rtl?"العودة إلى الصفحة الرئيسية":"Go to homepage"}><HomeIcon/></button><button type="button" className="utility-step" onClick={toggleFullscreen} aria-label={isFullscreen?(rtl?"الخروج من ملء الشاشة":"Exit full screen"):(rtl?"عرض بملء الشاشة":"Enter full screen")}><FullscreenIcon active={isFullscreen}/></button></div>
     </nav>
 
+    <div className={`page-transition-logo ${transitioning?"is-visible":""}`} aria-hidden="true"><div><span/><DrawLogo/></div></div>
     <div className={`loader ${loading?"show":""}`}><div className="loader-stage"><div className="logo-draw-wrap"><span className="logo-aura"/><DrawLogo/></div></div></div>
   </main>
 }
