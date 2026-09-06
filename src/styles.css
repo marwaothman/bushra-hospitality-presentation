@@ -380,3 +380,16 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .journey-map{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:108px}.showcase-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
   .global-step-nav{bottom:3px;transform:translateX(-50%) scale(.86);transform-origin:bottom center}
 }
+
+/* Transparent logo signature between presentation scenes */
+.page-transition-logo{position:fixed;z-index:76;inset:0;display:grid;place-items:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease,visibility 0s .9s}
+.page-transition-logo.is-visible{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .18s ease,visibility 0s}
+.page-transition-logo>div{position:relative;width:clamp(64px,6.5vw,94px);aspect-ratio:1560/2000;display:grid;place-items:center;filter:drop-shadow(0 16px 34px rgba(0,0,0,.38));animation:transitionLogoPulse .9s cubic-bezier(.16,1,.3,1) both}
+.page-transition-logo>div>span{position:absolute;inset:-80%;border-radius:50%;background:radial-gradient(circle,rgba(208,168,108,.18),rgba(19,60,103,.08) 38%,transparent 70%);filter:blur(13px)}
+.page-transition-logo .draw-logo{position:relative;width:100%;height:100%}
+.page-transition-logo .draw-path{animation-duration:.52s,.28s}
+.page-transition-logo .draw-gold,.page-transition-logo .draw-blue{animation-delay:0s,.42s}
+.page-transition-logo .draw-diamond{animation-delay:.08s,.5s}
+@keyframes transitionLogoPulse{0%{opacity:0;transform:scale(.76)}28%{opacity:1;transform:scale(1)}72%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.94)}}
+@media(max-width:760px){.page-transition-logo>div{width:62px}.page-transition-logo>div>span{inset:-65%}}
+@media(prefers-reduced-motion:reduce){.page-transition-logo>div{animation:none}.page-transition-logo .draw-path{animation:none;fill:#b08e57;stroke-dashoffset:0}.page-transition-logo .draw-blue{fill:#133c67}}
