@@ -98,7 +98,7 @@ export default function Home(){
   useEffect(()=>{const key=(e:KeyboardEvent)=>{if(e.key==="Escape")setModal(null);if(modal==="gallery"&&e.key==="ArrowRight")setSlide(s=>(s+1)%galleryTotal);if(modal==="gallery"&&e.key==="ArrowLeft")setSlide(s=>(s+galleryTotal-1)%galleryTotal)};addEventListener("keydown",key);return()=>removeEventListener("keydown",key)},[modal,galleryTotal]);
   const transition=(action:()=>void)=>{
     transitionTimers.current.forEach(clearTimeout);setTransitioning(true);
-    transitionTimers.current=[window.setTimeout(()=>{const doc=document as Document&{startViewTransition?:(cb:()=>void)=>void};doc.startViewTransition?doc.startViewTransition(action):action()},260),window.setTimeout(()=>setTransitioning(false),900)];
+    transitionTimers.current=[window.setTimeout(()=>{const doc=document as Document&{startViewTransition?:(cb:()=>void)=>void};doc.startViewTransition?doc.startViewTransition(action):action()},380),window.setTimeout(()=>setTransitioning(false),1150)];
   };
   const pick=(n:Level)=>{setModal(null);setSlide(0);setFocus(n);setSelected(n)};
   const goHome=()=>transition(()=>{setModal(null);setSelected(null);setSection("home")});
