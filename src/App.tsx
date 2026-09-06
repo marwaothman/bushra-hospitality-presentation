@@ -191,7 +191,7 @@ export default function Home(){
 
     <section className={`hospitality-scene ${section==="hospitality"?"is-here":""}`} aria-labelledby="hospitality-title">
       <header className="hospitality-heading"><h2 id="hospitality-title">{t.hospitalityTitle}</h2></header>
-      <div className="journey-map" role="list"><svg className="journey-turn" viewBox="0 0 1320 360" preserveAspectRatio="none" aria-hidden="true"><path d="M62 92 C20 92 20 292 62 292"/></svg>
+      <div className="journey-map" role="list">
         {managedStages.map((stage,index)=><button type="button" role="listitem" className="journey-stage" key={stage.ar} style={{"--stage-index":index} as React.CSSProperties} onClick={()=>{setActiveHospitality(index);setModal("hospitality")}}>
 <span className="journey-node">{stage.kind==="video"?<Play/>:<Frames/>}</span><strong>{stage[lang]}</strong>
         </button>)}
