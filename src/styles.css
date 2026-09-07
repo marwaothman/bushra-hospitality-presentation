@@ -424,3 +424,5 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .trust-slide-nav b{min-width:56px;color:#d0a86c;font:500 10px/1 sans-serif;letter-spacing:.12em}
 @media(max-width:760px){.trust-slide-stage{inset:68px 8px 88px}.trust-slide-frame{width:100%;max-height:calc(100dvh - 168px)}.trust-slide-nav{bottom:25px;gap:8px}.trust-slide-nav button{width:42px;height:42px}.trust-slide-nav i{width:18vw}}
 
+
+.trust-gallery .gallery-art .trust-pdf-slide{object-fit:contain;background:#0a2138}
