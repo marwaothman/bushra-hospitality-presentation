@@ -25,6 +25,12 @@ const receptionVideos=[
   {ar:"استقبال حجاج بنغلاديش",en:"Welcoming Bangladeshi Pilgrims",src:`${MEDIA_BASE}/media/hospitality/reception/bangladesh.mp4`,poster:`${MEDIA_BASE}/media/hospitality/reception/bangladesh.jpg`},
 ] as const;
 const trustSlideCount=6;
+const testimonials=[
+  {name:"Mero Queen",quote:"لكم مني خالص الشكر والتقدير على مجهوداتكم وخدماتكم اللامحدودة، جزاكم الله عنا خير الجزاء ودمتم في تألق وإبداع دائم. بشرى الضيافة اسم سيظل في ذاكرتي.",image:`${MEDIA_BASE}/media/testimonials/facebook-01.png`},
+  {name:"نوران أحمد",quote:"جزاكم الله كل الخير، نعم الشركة، ربنا يبارك فيكم.",image:`${MEDIA_BASE}/media/testimonials/facebook-02.png`},
+  {name:"أم بركة عمر يحيى",quote:"بارك الله فيكم، كانت استضافة مميزة وخدمات ما شاء الله. ربي يعاونكم، موفقين دائماً.",image:`${MEDIA_BASE}/media/testimonials/facebook-03.png`},
+] as const;
+const facebookPost="https://www.facebook.com/share/p/1CEexKbd63/";
 const hospitalityStages=[
   {ar:"المسار الإلكتروني وبطائق نسك",en:"Digital Journey & Nusuk Cards",kind:"video"},
   {ar:"إسكان مكة",en:"Makkah Accommodation",kind:"video"},
@@ -88,7 +94,7 @@ function ParticleField(){
 }
 
 export default function Home(){
-  const [lang,setLang]=useState<Lang>("ar"),[loading,setLoading]=useState(true),[transitioning,setTransitioning]=useState(false),[section,setSection]=useState<Section>("home"),[selected,setSelected]=useState<Level|null>(null),[focus,setFocus]=useState<Level>(1),[modal,setModal]=useState<Modal>(null),[slide,setSlide]=useState(0),[activeShowcase,setActiveShowcase]=useState(0),[activeHospitality,setActiveHospitality]=useState(0),[activeReception,setActiveReception]=useState(0),[activeTrust,setActiveTrust]=useState(0),[isFullscreen,setIsFullscreen]=useState(false);
+  const [lang,setLang]=useState<Lang>("ar"),[loading,setLoading]=useState(true),[transitioning,setTransitioning]=useState(false),[section,setSection]=useState<Section>("home"),[selected,setSelected]=useState<Level|null>(null),[focus,setFocus]=useState<Level>(1),[modal,setModal]=useState<Modal>(null),[slide,setSlide]=useState(0),[activeShowcase,setActiveShowcase]=useState(0),[activeHospitality,setActiveHospitality]=useState(0),[activeReception,setActiveReception]=useState(0),[activeTestimonial,setActiveTestimonial]=useState(0),[activeTrust,setActiveTrust]=useState(0),[isFullscreen,setIsFullscreen]=useState(false);
   const [cms,setCms]=useState<CmsPayload|null>(null);
   const managedPacks=([1,2,3] as Level[]).reduce((all,level)=>{const item=cms?.packages?.find(entry=>entry.level===level);all[level]={...packs[level],ar:item?.titleAr||packs[level].ar,en:item?.titleEn||packs[level].en};return all},{} as Record<Level,{ar:string;en:string;no:string;tone:string}>);
   const managedLeadership=leadership.map((leader,index)=>{const item=cms?.leaders?.find(entry=>entry.order===index+1);return {...leader,ar:{name:item?.nameAr||leader.ar.name,role:item?.roleAr||leader.ar.role},en:{name:item?.nameEn||leader.en.name,role:item?.roleEn||leader.en.role}}});
@@ -102,7 +108,7 @@ export default function Home(){
   useEffect(()=>{const controller=new AbortController();fetch(SANITY_URL,{signal:controller.signal}).then(response=>response.ok?response.json():Promise.reject()).then(data=>setCms(data.result as CmsPayload)).catch(()=>{/* Keep the complete built-in presentation when the CMS is unavailable. */});return()=>controller.abort()},[]);
   useEffect(()=>{const sync=()=>setIsFullscreen(Boolean(document.fullscreenElement));document.addEventListener("fullscreenchange",sync);return()=>document.removeEventListener("fullscreenchange",sync)},[]);
   useEffect(()=>()=>transitionTimers.current.forEach(clearTimeout),[]);
-  useEffect(()=>{const key=(e:KeyboardEvent)=>{if(e.key==="Escape")setModal(null);if(modal==="gallery"&&e.key==="ArrowRight")setSlide(s=>(s+1)%galleryTotal);if(modal==="gallery"&&e.key==="ArrowLeft")setSlide(s=>(s+galleryTotal-1)%galleryTotal);if(modal==="hospitality"&&activeHospitality===2&&e.key==="ArrowRight")setActiveReception(i=>(i+1)%receptionVideos.length);if(modal==="hospitality"&&activeHospitality===2&&e.key==="ArrowLeft")setActiveReception(i=>(i+receptionVideos.length-1)%receptionVideos.length);if(modal==="trust"&&e.key==="ArrowRight")setActiveTrust(i=>(i+1)%trustSlideCount);if(modal==="trust"&&e.key==="ArrowLeft")setActiveTrust(i=>(i+trustSlideCount-1)%trustSlideCount)};addEventListener("keydown",key);return()=>removeEventListener("keydown",key)},[modal,galleryTotal,activeHospitality]);
+  useEffect(()=>{const key=(e:KeyboardEvent)=>{if(e.key==="Escape")setModal(null);if(modal==="gallery"&&e.key==="ArrowRight")setSlide(s=>(s+1)%galleryTotal);if(modal==="gallery"&&e.key==="ArrowLeft")setSlide(s=>(s+galleryTotal-1)%galleryTotal);if(modal==="hospitality"&&activeHospitality===2&&e.key==="ArrowRight")setActiveReception(i=>(i+1)%receptionVideos.length);if(modal==="hospitality"&&activeHospitality===2&&e.key==="ArrowLeft")setActiveReception(i=>(i+receptionVideos.length-1)%receptionVideos.length);if(modal==="trust"&&e.key==="ArrowRight")setActiveTrust(i=>(i+1)%trustSlideCount);if(modal==="trust"&&e.key==="ArrowLeft")setActiveTrust(i=>(i+trustSlideCount-1)%trustSlideCount);if(section==="testimonials"&&e.key==="ArrowRight")setActiveTestimonial(i=>(i+1)%testimonials.length);if(section==="testimonials"&&e.key==="ArrowLeft")setActiveTestimonial(i=>(i+testimonials.length-1)%testimonials.length)};addEventListener("keydown",key);return()=>removeEventListener("keydown",key)},[modal,galleryTotal,activeHospitality,section]);
   const transition=(action:()=>void)=>{
     transitionTimers.current.forEach(clearTimeout);setTransitioning(true);
     transitionTimers.current=[window.setTimeout(()=>{const doc=document as Document&{startViewTransition?:(cb:()=>void)=>void};doc.startViewTransition?doc.startViewTransition(action):action()},380),window.setTimeout(()=>setTransitioning(false),1150)];
@@ -166,8 +172,15 @@ export default function Home(){
       </div>
     </section>
 
-    <section className={`content-scene ${section==="testimonials"?"is-here":""}`}>
-      {section==="testimonials"&&<><div className="content-icon"><QuoteIcon/></div><span className="content-index">02</span><h2>{t.testimonials}</h2><p>{t.soon}</p></>}
+    <section className={`testimonial-scene ${section==="testimonials"?"is-here":""}`} dir="rtl" onTouchStart={e=>touchStart.current=e.changedTouches[0].clientX} onTouchEnd={e=>{const delta=e.changedTouches[0].clientX-touchStart.current;if(Math.abs(delta)>45)setActiveTestimonial(i=>(i+(delta<0?1:testimonials.length-1))%testimonials.length)}}>
+      {section==="testimonials"&&<div className="testimonial-stage">
+        <header className="testimonial-heading"><span><QuoteIcon/></span><div><small>آراء موثقة من ضيوفنا</small><h2>شهادات من التجربة</h2></div></header>
+        <div className="testimonial-card" key={activeTestimonial}>
+          <div className="testimonial-copy"><span className="testimonial-platform">f <i/> Facebook</span><blockquote>«{testimonials[activeTestimonial].quote}»</blockquote><footer><strong>{testimonials[activeTestimonial].name}</strong><a href={facebookPost} target="_blank" rel="noreferrer">عرض المنشور الأصلي <Arrow/></a></footer></div>
+          <div className="testimonial-proof"><span>من المنشور الأصلي</span><img src={testimonials[activeTestimonial].image} alt={`تعليق ${testimonials[activeTestimonial].name} على فيسبوك`}/></div>
+        </div>
+        <div className="testimonial-nav"><button type="button" onClick={()=>setActiveTestimonial(i=>(i+testimonials.length-1)%testimonials.length)} aria-label="الشهادة السابقة"><Arrow/></button><i><em style={{width:`${((activeTestimonial+1)/testimonials.length)*100}%`}}/></i><b>{String(activeTestimonial+1).padStart(2,"0")} / {String(testimonials.length).padStart(2,"0")}</b><button type="button" onClick={()=>setActiveTestimonial(i=>(i+1)%testimonials.length)} aria-label="الشهادة التالية"><Arrow/></button></div>
+      </div>}
     </section>
 
     <section className={`showcase-scene ${section==="videos"?"is-here":""}`} aria-labelledby="showcase-title">
