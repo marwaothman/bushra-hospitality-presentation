@@ -3,7 +3,7 @@ const MEDIA_BASE="https://bushra-hospitality-packages.marwaothman999.chatgpt.sit
 
 import { useEffect, useRef, useState } from "react";
 
-type Lang="ar"|"en"; type Level=1|2|3; type Modal="video"|"gallery"|"details"|"showcase"|"hospitality"|"trust"|null; type Section="home"|"trust"|"packages"|"testimonials"|"videos"|"team"|"hospitality";
+type Lang="ar"|"en"; type Level=1|2|3; type Modal="video"|"gallery"|"details"|"showcase"|"hospitality"|"trust"|null; type Section="home"|"packages"|"testimonials"|"videos"|"team"|"hospitality";
 const packs={
   1:{ar:"المستوى الأول",en:"Level One",no:"01",tone:"#b08e57"},
   2:{ar:"المستوى الثاني",en:"Level Two",no:"02",tone:"#70a3c2"},
@@ -119,14 +119,12 @@ export default function Home(){
     else if(section==="testimonials")setSection("packages");
     else if(section==="packages")setSection("hospitality");
     else if(section==="hospitality")setSection("team");
-    else if(section==="team")setSection("trust");
-    else if(section==="trust")setSection("home");
+    else if(section==="team")setSection("home");
   });
   const nextPage=()=>transition(()=>{
     setModal(null);
     if(selected){if(selected<3)pick((selected+1) as Level);else{setSelected(null);setSection("testimonials")}return}
-    if(section==="home")setSection("trust");
-    else if(section==="trust")setSection("team");
+    if(section==="home")setSection("team");
     else if(section==="team")setSection("hospitality");
     else if(section==="hospitality")setSection("packages");
     else if(section==="packages")pick(focus);
@@ -146,17 +144,13 @@ export default function Home(){
     <section className={`hub-scene ${section==="home"?"is-here":""}`}>
       <div className="hub-heading"><h1 className="hub-slogan">{t.kicker}</h1></div>
       <div className="hub-options">
-        <button onClick={()=>transition(()=>setSection("trust"))}><span><TrustIcon/></span><strong>{t.trust}</strong></button>
+        <button onClick={()=>{setActiveTrust(0);setModal("trust")}}><span><TrustIcon/></span><strong>{t.trust}</strong></button>
         <button onClick={()=>transition(()=>setSection("team"))}><span><TeamIcon/></span><strong>{t.team}</strong></button>
         <button onClick={()=>transition(()=>setSection("hospitality"))}><span><HospitalityIcon/></span><strong>{t.hospitality}</strong></button>
         <button onClick={()=>transition(()=>setSection("packages"))}><span><PackagesIcon/></span><strong>{t.packages}</strong></button>
         <button onClick={()=>transition(()=>setSection("testimonials"))}><span><QuoteIcon/></span><strong>{t.testimonials}</strong></button>
         <button onClick={()=>transition(()=>setSection("videos"))}><span><FilmsIcon/></span><strong>{t.videos}</strong></button>
       </div>
-    </section>
-
-    <section className={`content-scene trust-scene ${section==="trust"?"is-here":""}`}>
-      {section==="trust"&&<div className="trust-dossier" dir="rtl"><header className="trust-dossier-heading"><div className="trust-dossier-icon"><TrustIcon/></div><div><span>شواهد الثقة</span><h2>الخبرات التراكمية<br/>وشواهد الثقة</h2><p>ما نقدمه... تؤكده الشواهد.</p></div></header><div className="trust-proof-grid"><article><strong>35K+</strong><span>إجمالي عدد الحجاج<br/>موسم حج 1447 هـ</span></article><article><strong>48 ساعة</strong><span>إنجاز يعكس سرعة المتابعة<br/>وجاهزية الفرق</span></article><article><strong>صفر</strong><span>بطاقات غير مفعلة</span></article></div><button type="button" className="trust-open" onClick={()=>{setActiveTrust(0);setModal("trust")}}>استعرض الشواهد <Arrow/></button></div>}
     </section>
 
     <section className={`home-scene ${section!=="packages"||selected?"is-away":""}`}>
@@ -229,7 +223,13 @@ export default function Home(){
     {modal==="details"&&<div className="cinema details-modal modal-layer" role="dialog" aria-modal="true"><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button><div className="cinema-rings"><i/><i/><i/></div><div className="cinema-copy details-copy"><span>0{selected} / 03</span><DetailsIcon/><h3>{t.details.replace("\n"," ")}</h3><p>{t.soon}</p></div></div>}
     {modal==="showcase"&&<div className="cinema cinema--video showcase-modal modal-layer" role="dialog" aria-modal="true" aria-label={showcaseVideos[activeShowcase].title}><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button><div className="cinema-video-bg" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background.mp4`} autoPlay muted loop playsInline/><div className="cinema-video-overlay"/></div><div className="video-screen-stage"><div className="video-screen-frame"><video key={showcaseVideos[activeShowcase].src} className="services-video" src={showcaseVideos[activeShowcase].src} poster={showcaseVideos[activeShowcase].poster} controls autoPlay playsInline preload="metadata">Your browser does not support video playback.</video><div className="video-vignette"/></div><h3 className="showcase-video-title">{showcaseVideos[activeShowcase].title}</h3><span className="video-screen-shadow"/></div></div>}
 
-    {modal==="trust"&&<div className="trust-modal trust-slides-modal modal-layer" role="dialog" aria-modal="true" aria-label="شواهد الثقة" dir="rtl" onTouchStart={e=>touchStart.current=e.changedTouches[0].clientX} onTouchEnd={e=>{const delta=e.changedTouches[0].clientX-touchStart.current;if(Math.abs(delta)>45)setActiveTrust(i=>(i+(delta<0?1:trustSlideCount-1))%trustSlideCount)}}><button className="x" onClick={()=>setModal(null)}>×<small>إغلاق</small></button><div className="trust-slide-stage"><div className="trust-slide-frame"><img key={activeTrust} src={`${MEDIA_BASE}/media/trust/trust-slide-${activeTrust+1}.jpg`} alt={`شواهد الثقة - الصفحة ${activeTrust+1}`} draggable={false}/></div><span className="trust-slide-shadow"/></div><div className="trust-slide-nav"><button type="button" onClick={()=>setActiveTrust(i=>(i+trustSlideCount-1)%trustSlideCount)} aria-label="الشريحة السابقة"><Arrow/></button><i><em style={{width:`${((activeTrust+1)/trustSlideCount)*100}%`}}/></i><b>{String(activeTrust+1).padStart(2,"0")} / {String(trustSlideCount).padStart(2,"0")}</b><button type="button" onClick={()=>setActiveTrust(i=>(i+1)%trustSlideCount)} aria-label="الشريحة التالية"><Arrow/></button></div></div>}
+    {modal==="trust"&&<div className="gallery gallery--real gallery--rtl trust-gallery modal-layer" role="dialog" aria-modal="true" aria-label="شواهد الثقة" dir="rtl" onTouchStart={e=>touchStart.current=e.changedTouches[0].clientX} onTouchEnd={e=>{const delta=e.changedTouches[0].clientX-touchStart.current;if(Math.abs(delta)>45)setActiveTrust(i=>(i+(delta<0?1:trustSlideCount-1))%trustSlideCount)}}>
+      <div className="gallery-video-bg" aria-hidden="true"><video className="video-panorama" src={`${MEDIA_BASE}/media/brand/background.mp4`} autoPlay muted loop playsInline/><div className="video-overlay"/><span className="video-light video-light-a"/><span className="video-light video-light-b"/></div>
+      <button className="x" onClick={()=>setModal(null)}>×<small>إغلاق</small></button>
+      <div className="gallery-number">{String(activeTrust+1).padStart(2,"0")}</div>
+      <div className="screen-stage"><div className="gallery-frame"><div className="gallery-art"><img key={activeTrust} className="journey-slide trust-pdf-slide" src={`${MEDIA_BASE}/media/trust/trust-slide-${activeTrust+1}.jpg`} alt={`شواهد الثقة - الصفحة ${activeTrust+1}`} draggable={false}/></div></div><span className="screen-shadow"/></div>
+      <div className="gallery-nav"><button onClick={()=>setActiveTrust(i=>(i+trustSlideCount-1)%trustSlideCount)} aria-label="الصفحة السابقة"><Arrow/></button><i><em style={{width:`${((activeTrust+1)/trustSlideCount)*100}%`}}/></i><b>{String(activeTrust+1).padStart(2,"0")} / {String(trustSlideCount).padStart(2,"0")}</b><button onClick={()=>setActiveTrust(i=>(i+1)%trustSlideCount)} aria-label="الصفحة التالية"><Arrow/></button></div>
+    </div>}
 
     {modal==="hospitality"&&managedStages[activeHospitality]&&(activeHospitality===2?<div className="cinema cinema--video hospitality-modal hospitality-modal--reception modal-layer" role="dialog" aria-modal="true" aria-label={managedStages[activeHospitality][lang]}><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button><div className="cinema-video-bg" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background.mp4`} autoPlay muted loop playsInline/><div className="cinema-video-overlay"/></div><div className="video-screen-stage"><div className="video-screen-frame"><video key={receptionVideos[activeReception].src} className="services-video" src={receptionVideos[activeReception].src} poster={receptionVideos[activeReception].poster} controls autoPlay playsInline preload="metadata">Your browser does not support video playback.</video><div className="video-vignette"/><span className="reception-video-count">{String(activeReception+1).padStart(2,"0")} / {String(receptionVideos.length).padStart(2,"0")}</span><button type="button" className="reception-video-arrow reception-video-prev" onClick={()=>setActiveReception(i=>(i+receptionVideos.length-1)%receptionVideos.length)} aria-label={lang==="ar"?"الفيديو السابق":"Previous video"}><Arrow/></button><button type="button" className="reception-video-arrow reception-video-next" onClick={()=>setActiveReception(i=>(i+1)%receptionVideos.length)} aria-label={lang==="ar"?"الفيديو التالي":"Next video"}><Arrow/></button></div><h3 className="showcase-video-title">{receptionVideos[activeReception][lang]}</h3><span className="video-screen-shadow"/></div></div>:(activeHospitality<=1||activeHospitality===3)?<div className="cinema cinema--video hospitality-modal modal-layer" role="dialog" aria-modal="true" aria-label={activeHospitality===0?"بطاقة نسك لرحلة أيسر":managedStages[activeHospitality][lang]}><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button><div className="cinema-video-bg" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background.mp4`} autoPlay muted loop playsInline/><div className="cinema-video-overlay"/></div><div className="video-screen-stage"><div className="video-screen-frame"><video key={`hospitality-${activeHospitality}`} className="services-video" src={[`${MEDIA_BASE}/media/hospitality/nusuk-card.mp4`,`${MEDIA_BASE}/media/hospitality/makkah-accommodation-v2.mp4`,"",`${MEDIA_BASE}/media/hospitality/transportation.mp4`][activeHospitality]} poster={[`${MEDIA_BASE}/media/hospitality/nusuk-card-poster.jpg`,`${MEDIA_BASE}/media/hospitality/makkah-accommodation-v2-poster.jpg`,"",`${MEDIA_BASE}/media/hospitality/transportation-poster.jpg`][activeHospitality]} controls autoPlay playsInline preload="metadata">Your browser does not support video playback.</video><div className="video-vignette"/></div><h3 className="showcase-video-title">{activeHospitality===0?"بطاقة نسك لرحلة أيسر":managedStages[activeHospitality][lang]}</h3><span className="video-screen-shadow"/></div></div>:<div className="cinema hospitality-modal modal-layer" role="dialog" aria-modal="true" aria-label={managedStages[activeHospitality][lang]}><button className="x" onClick={()=>setModal(null)}>×<small>{t.close}</small></button><div className="cinema-rings"><i/><i/><i/></div><div className="hospitality-modal-copy"><span>{String(activeHospitality+1).padStart(2,"0")} / {managedStages.length}</span><div className="hospitality-modal-icon">{managedStages[activeHospitality].kind==="video"?<Play/>:<Frames/>}</div><h3>{managedStages[activeHospitality][lang]}</h3><p>{managedStages[activeHospitality].kind==="video"?t.videoMedia:t.galleryMedia} · {t.soon}</p></div></div>)}
 
