@@ -103,7 +103,7 @@ export default function Home(){
   const t={...words[lang],kicker:(lang==="ar"?cms?.settings?.homepageTitleAr:cms?.settings?.homepageTitleEn)||words[lang].kicker},rtl=lang==="ar";
   const hasLevelOneArabic=selected===1&&lang==="ar";
   const galleryTotal=hasLevelOneArabic?50:60;
-  const touchStart=useRef(0);
+  const touchStart=useRef(0);\n  const hubOptionsRef=useRef<HTMLDivElement>(null);
   const transitionTimers=useRef<number[]>([]);
   useEffect(()=>{const id=setTimeout(()=>setLoading(false),1900);return()=>clearTimeout(id)},[]);
   useEffect(()=>{const controller=new AbortController();fetch(SANITY_URL,{signal:controller.signal}).then(response=>response.ok?response.json():Promise.reject()).then(data=>setCms(data.result as CmsPayload)).catch(()=>{/* Keep the complete built-in presentation when the CMS is unavailable. */});return()=>controller.abort()},[]);
@@ -150,13 +150,16 @@ export default function Home(){
 
     <section className={`hub-scene ${section==="home"?"is-here":""}`}>
       <div className="hub-heading"><h1 className="hub-slogan">{t.kicker}</h1></div>
-      <div className="hub-options">
-        <button onClick={()=>{setActiveTrust(0);setModal("trust")}}><span><TrustIcon/></span><strong>{t.trust}</strong></button>
-        <button onClick={()=>transition(()=>setSection("team"))}><span><TeamIcon/></span><strong>{t.team}</strong></button>
-        <button onClick={()=>transition(()=>setSection("hospitality"))}><span><HospitalityIcon/></span><strong>{t.hospitality}</strong></button>
-        <button onClick={()=>transition(()=>setSection("packages"))}><span><PackagesIcon/></span><strong>{t.packages}</strong></button>
-        <button onClick={()=>transition(()=>setSection("testimonials"))}><span><QuoteIcon/></span><strong>{t.testimonials}</strong></button>
-        <button onClick={()=>transition(()=>setSection("videos"))}><span><FilmsIcon/></span><strong>{t.videos}</strong></button>
+      <div className="hub-carousel">
+        <div className="hub-options" ref={hubOptionsRef}>
+          <button onClick={()=>{setActiveTrust(0);setModal("trust")}}><img src={`${MEDIA_BASE}/media/trust/trust-slide-2.jpg`} alt=""/><span><TrustIcon/></span><strong>{t.trust}</strong><em><Arrow/></em></button>
+          <button onClick={()=>transition(()=>setSection("team"))}><img src={`${MEDIA_BASE}/media/team/ali-bandaqji.webp`} alt=""/><span><TeamIcon/></span><strong>{t.team}</strong><em><Arrow/></em></button>
+          <button onClick={()=>transition(()=>setSection("hospitality"))}><img src={`${MEDIA_BASE}/media/hospitality/makkah-accommodation-poster.jpg`} alt=""/><span><HospitalityIcon/></span><strong>{t.hospitality}</strong><em><Arrow/></em></button>
+          <button onClick={()=>transition(()=>setSection("packages"))}><img src={`${MEDIA_BASE}/media/level-1/services-poster.jpg`} alt=""/><span><PackagesIcon/></span><strong>{t.packages}</strong><em><Arrow/></em></button>
+          <button onClick={()=>transition(()=>setSection("testimonials"))}><img src={`${MEDIA_BASE}/media/testimonials/ibrahim-al-saghir-poster.jpg`} alt=""/><span><QuoteIcon/></span><strong>{t.testimonials}</strong><em><Arrow/></em></button>
+          <button onClick={()=>transition(()=>setSection("videos"))}><img src={`${MEDIA_BASE}/media/showcase/01.jpg`} alt=""/><span><FilmsIcon/></span><strong>{t.videos}</strong><em><Arrow/></em></button>
+        </div>
+        <div className="hub-carousel-nav" dir="ltr"><button type="button" onClick={()=>hubOptionsRef.current?.scrollBy({left:-hubOptionsRef.current.clientWidth*.72,behavior:"smooth"})} aria-label={lang==="ar"?"البطاقات السابقة":"Previous cards"}><Arrow/></button><i/><button type="button" onClick={()=>hubOptionsRef.current?.scrollBy({left:hubOptionsRef.current.clientWidth*.72,behavior:"smooth"})} aria-label={lang==="ar"?"البطاقات التالية":"Next cards"}><Arrow/></button></div>
       </div>
     </section>
 
