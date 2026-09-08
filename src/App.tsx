@@ -112,7 +112,8 @@ export default function Home(){
   ];
   const hasLevelOneArabic=selected===1&&lang==="ar";
   const galleryTotal=hasLevelOneArabic?50:60;
-  const touchStart=useRef(0);\n  const hubOptionsRef=useRef<HTMLDivElement>(null);
+  const touchStart=useRef(0);
+  const hubOptionsRef=useRef<HTMLDivElement>(null);
   const transitionTimers=useRef<number[]>([]);
   useEffect(()=>{const id=setTimeout(()=>setLoading(false),1900);return()=>clearTimeout(id)},[]);
   useEffect(()=>{const controller=new AbortController();fetch(SANITY_URL,{signal:controller.signal}).then(response=>response.ok?response.json():Promise.reject()).then(data=>setCms(data.result as CmsPayload)).catch(()=>{/* Keep the complete built-in presentation when the CMS is unavailable. */});return()=>controller.abort()},[]);
