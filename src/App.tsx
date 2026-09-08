@@ -147,7 +147,7 @@ export default function Home(){
     else if(section==="testimonials")setSection("videos");
   });
   return <main className={`experience theme-${focus}`} dir={rtl?"rtl":"ltr"} onPointerMove={e=>{const el=e.currentTarget;el.style.setProperty("--mx",`${e.clientX}px`);el.style.setProperty("--my",`${e.clientY}px`)}}>
-    <div className="brand-film" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background.mp4`} poster={`${MEDIA_BASE}/media/brand/background-poster.jpg`} autoPlay muted loop playsInline preload="auto"/><div className="film-grade"/><div className="film-vignette"/><div className="film-grain"/></div>
+    <div className="brand-film" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background-video2.mp4`} poster={`${MEDIA_BASE}/media/brand/background-poster.jpg`} autoPlay muted loop playsInline preload="auto"/><div className="film-grade"/><div className="film-vignette"/><div className="film-grain"/></div>
     <div className="aurora"/><div className="cursor-light"/><div className="edge-noise"/>
     <header className="nav">
       <button className="brand-lockup" onClick={()=>transition(()=>{setSelected(null);setSection("home")})} aria-label="Bushra Hospitality home"><img className="anniversary-logo" src={`${MEDIA_BASE}/anniversary-logo.svg`} alt="11th anniversary"/><i/><img className="company-wordmark" src={`${MEDIA_BASE}/company-logo-horizontal.svg`} alt="Bushra Hospitality"/></button>
