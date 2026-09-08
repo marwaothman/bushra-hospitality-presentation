@@ -538,3 +538,23 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .hub-options.has-active>button.is-active{aspect-ratio:1.08/1}
   .hub-carousel{padding-inline:86px}
 }
+
+
+/* Full-canvas editorial focus and vertically centred card rail */
+.hub-scene{isolation:isolate}
+.hub-scene.has-card-focus:before{content:"";position:absolute;z-index:0;inset:0;background:#263038;pointer-events:none;animation:hubCanvasIn .34s ease both}
+.hub-scene.has-card-focus .hub-heading,.hub-scene.has-card-focus .hub-carousel{position:relative;z-index:1}
+@keyframes hubCanvasIn{from{opacity:0}to{opacity:1}}
+@media(min-width:1001px){
+  .hub-scene{padding-top:clamp(118px,13vh,146px);padding-bottom:70px;gap:clamp(20px,3vh,34px)}
+  .hub-heading{min-height:clamp(112px,14vh,154px)}
+  .hub-heading.is-detail .hub-slogan,.hub-heading.is-detail p{align-self:center;padding:0;background:transparent;box-shadow:none}
+  .hub-heading.is-detail .hub-slogan{font-size:clamp(48px,4.8vw,86px)}
+  .hub-heading.is-detail p{font-size:clamp(19px,1.35vw,26px);line-height:1.55}
+  .hub-carousel{margin-top:0;margin-bottom:auto;padding-inline:72px}
+  .hub-options{padding-top:clamp(22px,3vh,38px);padding-bottom:18px}
+}
+@media(min-width:1900px){
+  .hub-scene{padding-top:clamp(132px,14vh,168px);padding-bottom:82px}
+  .hub-heading{min-height:clamp(130px,15vh,170px)}
+}
