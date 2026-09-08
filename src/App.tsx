@@ -157,7 +157,7 @@ export default function Home(){
       </div>
     </header>
 
-    <section className={`hub-scene ${section==="home"?"is-here":""}`}>
+    <section className={`hub-scene ${section==="home"?"is-here":""} ${activeHub!==null?"has-card-focus":""}`}>
       <div className={`hub-heading ${activeHub!==null?"is-detail":""}`}><h1 className="hub-slogan">{activeHub===null?t.kicker:hubDetails[activeHub].title}</h1>{activeHub!==null&&<p>{hubDetails[activeHub].brief}</p>}</div>
       <div className="hub-carousel">
         <div className={`hub-options ${activeHub!==null?"has-active":""}`} ref={hubOptionsRef} onPointerLeave={()=>setActiveHub(null)}>
