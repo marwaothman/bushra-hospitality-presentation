@@ -152,14 +152,15 @@ export default function Home(){
       <div className="hub-heading"><h1 className="hub-slogan">{t.kicker}</h1></div>
       <div className="hub-carousel">
         <div className="hub-options" ref={hubOptionsRef}>
-          <button onClick={()=>{setActiveTrust(0);setModal("trust")}}><img src={`${MEDIA_BASE}/media/trust/trust-slide-2.jpg`} alt=""/><span><TrustIcon/></span><strong>{t.trust}</strong><em><Arrow/></em></button>
-          <button onClick={()=>transition(()=>setSection("team"))}><img src={`${MEDIA_BASE}/media/team/ali-bandaqji.webp`} alt=""/><span><TeamIcon/></span><strong>{t.team}</strong><em><Arrow/></em></button>
-          <button onClick={()=>transition(()=>setSection("hospitality"))}><img src={`${MEDIA_BASE}/media/hospitality/makkah-accommodation-poster.jpg`} alt=""/><span><HospitalityIcon/></span><strong>{t.hospitality}</strong><em><Arrow/></em></button>
-          <button onClick={()=>transition(()=>setSection("packages"))}><img src={`${MEDIA_BASE}/media/level-1/services-poster.jpg`} alt=""/><span><PackagesIcon/></span><strong>{t.packages}</strong><em><Arrow/></em></button>
-          <button onClick={()=>transition(()=>setSection("testimonials"))}><img src={`${MEDIA_BASE}/media/testimonials/ibrahim-al-saghir-poster.jpg`} alt=""/><span><QuoteIcon/></span><strong>{t.testimonials}</strong><em><Arrow/></em></button>
-          <button onClick={()=>transition(()=>setSection("videos"))}><img src={`${MEDIA_BASE}/media/showcase/01.jpg`} alt=""/><span><FilmsIcon/></span><strong>{t.videos}</strong><em><Arrow/></em></button>
+          <button onClick={()=>{setActiveTrust(0);setModal("trust")}}><img src={`${MEDIA_BASE}/media/trust/trust-slide-2.jpg`} alt=""/><span><TrustIcon/></span><strong>{t.trust}</strong></button>
+          <button onClick={()=>transition(()=>setSection("team"))}><img src={`${MEDIA_BASE}/media/team/ali-bandaqji.webp`} alt=""/><span><TeamIcon/></span><strong>{t.team}</strong></button>
+          <button onClick={()=>transition(()=>setSection("hospitality"))}><img src={`${MEDIA_BASE}/media/hospitality/makkah-accommodation-poster.jpg`} alt=""/><span><HospitalityIcon/></span><strong>{t.hospitality}</strong></button>
+          <button onClick={()=>transition(()=>setSection("packages"))}><img src={`${MEDIA_BASE}/media/level-1/services-poster.jpg`} alt=""/><span><PackagesIcon/></span><strong>{t.packages}</strong></button>
+          <button onClick={()=>transition(()=>setSection("testimonials"))}><img src={`${MEDIA_BASE}/media/testimonials/ibrahim-al-saghir-poster.jpg`} alt=""/><span><QuoteIcon/></span><strong>{t.testimonials}</strong></button>
+          <button onClick={()=>transition(()=>setSection("videos"))}><img src={`${MEDIA_BASE}/media/showcase/01.jpg`} alt=""/><span><FilmsIcon/></span><strong>{t.videos}</strong></button>
         </div>
-        <div className="hub-carousel-nav" dir="ltr"><button type="button" onClick={()=>hubOptionsRef.current?.scrollBy({left:-hubOptionsRef.current.clientWidth*.72,behavior:"smooth"})} aria-label={lang==="ar"?"البطاقات السابقة":"Previous cards"}><Arrow/></button><i/><button type="button" onClick={()=>hubOptionsRef.current?.scrollBy({left:hubOptionsRef.current.clientWidth*.72,behavior:"smooth"})} aria-label={lang==="ar"?"البطاقات التالية":"Next cards"}><Arrow/></button></div>
+        <button className="hub-side-arrow hub-side-arrow--left" type="button" onClick={()=>hubOptionsRef.current?.scrollBy({left:-hubOptionsRef.current.clientWidth*.72,behavior:"smooth"})} aria-label={lang==="ar"?"البطاقات السابقة":"Previous cards"}><Arrow/></button>
+        <button className="hub-side-arrow hub-side-arrow--right" type="button" onClick={()=>hubOptionsRef.current?.scrollBy({left:hubOptionsRef.current.clientWidth*.72,behavior:"smooth"})} aria-label={lang==="ar"?"البطاقات التالية":"Next cards"}><Arrow/></button>
       </div>
     </section>
 
