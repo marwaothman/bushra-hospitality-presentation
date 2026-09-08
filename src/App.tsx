@@ -62,6 +62,7 @@ const words={
 function Logo({className=""}:{className?:string}){return <img className={className} src={`${MEDIA_BASE}/company-logo.svg`} alt="بشرى الضيافة"/>}
 function DrawLogo(){return <svg className="draw-logo" viewBox="0 0 1560 2000" role="img" aria-label="بشرى الضيافة"><path className="draw-path draw-gold" pathLength="1" d="M261.061 1360.423V723.093c0-51.12 27.275-98.36 71.541-123.913L780 340.872l447.399 258.308c44.28 25.553 71.541 72.793 71.541 123.913v637.329l194.737-78.417V610.654c0-51.12-27.261-98.36-71.541-123.913L780 116 137.864 486.741c-44.272 25.553-71.541 72.793-71.541 123.913v671.352l194.738 78.417Z"/><path className="draw-path draw-blue" pathLength="1" d="M1297.977 1430.148v221.738H262.03v-221.738L65.99 1351.731v507.241h571.855L780 1716.803l142.162 142.169h571.848v-507.241l-196.033 78.417Z"/><path className="draw-path draw-diamond" pathLength="1" d="m780 1768.69 91.606 91.606L780 1951.902l-91.606-91.606L780 1768.69Z"/></svg>}
 function Arrow(){return <svg viewBox="0 0 32 16" aria-hidden="true"><path d="M1 8h28M22 1l7 7-7 7"/></svg>}
+function Chevron(){return <svg viewBox="0 0 24 40" aria-hidden="true"><path d="M3 3l17 17L3 37"/></svg>}
 function Play(){return <svg viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="23"/><path d="m21 17 13 8-13 8Z"/></svg>}
 function Frames(){return <svg viewBox="0 0 50 50" aria-hidden="true"><rect x="7" y="10" width="31" height="31" rx="3"/><path d="m12 34 8-9 6 6 5-5 7 8"/><circle cx="18" cy="19" r="3"/><path d="M15 6h28v29"/></svg>}
 function DetailsIcon(){return <svg viewBox="0 0 50 50" aria-hidden="true"><path d="M11 5h21l8 8v32H11Z"/><path d="M32 5v9h8M17 22h17M17 29h17M17 36h11"/><circle cx="17" cy="14" r="2"/></svg>}
@@ -95,12 +96,20 @@ function ParticleField(){
 }
 
 export default function Home(){
-  const [lang,setLang]=useState<Lang>("ar"),[loading,setLoading]=useState(true),[transitioning,setTransitioning]=useState(false),[section,setSection]=useState<Section>("home"),[selected,setSelected]=useState<Level|null>(null),[focus,setFocus]=useState<Level>(1),[modal,setModal]=useState<Modal>(null),[slide,setSlide]=useState(0),[activeShowcase,setActiveShowcase]=useState(0),[activeHospitality,setActiveHospitality]=useState(0),[activeReception,setActiveReception]=useState(0),[activeTestimonial,setActiveTestimonial]=useState(0),[activeTrust,setActiveTrust]=useState(0),[isFullscreen,setIsFullscreen]=useState(false);
+  const [lang,setLang]=useState<Lang>("ar"),[loading,setLoading]=useState(true),[transitioning,setTransitioning]=useState(false),[section,setSection]=useState<Section>("home"),[selected,setSelected]=useState<Level|null>(null),[focus,setFocus]=useState<Level>(1),[modal,setModal]=useState<Modal>(null),[slide,setSlide]=useState(0),[activeShowcase,setActiveShowcase]=useState(0),[activeHospitality,setActiveHospitality]=useState(0),[activeReception,setActiveReception]=useState(0),[activeTestimonial,setActiveTestimonial]=useState(0),[activeTrust,setActiveTrust]=useState(0),[isFullscreen,setIsFullscreen]=useState(false),[activeHub,setActiveHub]=useState<number|null>(null);
   const [cms,setCms]=useState<CmsPayload|null>(null);
   const managedPacks=([1,2,3] as Level[]).reduce((all,level)=>{const item=cms?.packages?.find(entry=>entry.level===level);all[level]={...packs[level],ar:item?.titleAr||packs[level].ar,en:item?.titleEn||packs[level].en};return all},{} as Record<Level,{ar:string;en:string;no:string;tone:string}>);
   const managedLeadership=leadership.map((leader,index)=>{const item=cms?.leaders?.find(entry=>entry.order===index+1);return {...leader,ar:{name:item?.nameAr||leader.ar.name,role:item?.roleAr||leader.ar.role},en:{name:item?.nameEn||leader.en.name,role:item?.roleEn||leader.en.role}}});
   const managedStages=(cms?.stages?.length?cms.stages:hospitalityStages).map((stage,index)=>{const fallback=hospitalityStages[Math.min(index,hospitalityStages.length-1)];return {ar:("titleAr" in stage&&stage.titleAr)||fallback.ar,en:("titleEn" in stage&&stage.titleEn)||fallback.en,kind:("mediaType" in stage&&stage.mediaType==="images"?"gallery":"video") as "gallery"|"video"}});
   const t={...words[lang],kicker:(lang==="ar"?cms?.settings?.homepageTitleAr:cms?.settings?.homepageTitleEn)||words[lang].kicker},rtl=lang==="ar";
+  const hubDetails=[
+    {title:t.trust,brief:lang==="ar"?"إنجازات موثقة وشهادات تعكس أثر بشرى وجودة خدماتها لضيوف الرحمن.":"Verified achievements and credentials reflecting Bushra's impact and service quality."},
+    {title:t.team,brief:lang==="ar"?"خبرات قيادية تقود منظومة الضيافة برؤية واضحة ومسؤولية راسخة.":"Experienced leaders guiding the hospitality system with vision and responsibility."},
+    {title:t.hospitality,brief:lang==="ar"?"قطاعات مترابطة تصنع رحلة تشغيل متكاملة من الوصول حتى رضا الضيف.":"Connected sectors creating an integrated journey from arrival to guest satisfaction."},
+    {title:t.packages,brief:lang==="ar"?"مستويات عناية صُممت لتلائم احتياجات ضيوف الرحمن في كل محطة.":"Care levels designed around pilgrims' needs at every stage of their journey."},
+    {title:t.testimonials,brief:lang==="ar"?"أصوات ضيوفنا وشركائنا تحكي تجربة بشرى كما عاشوها.":"Guests and partners share the Bushra experience in their own words."},
+    {title:t.videos,brief:lang==="ar"?"مشاهد مختارة توثق حضور بشرى وخدماتها في الميدان.":"Selected moments documenting Bushra's services and presence in the field."},
+  ];
   const hasLevelOneArabic=selected===1&&lang==="ar";
   const galleryTotal=hasLevelOneArabic?50:60;
   const touchStart=useRef(0);\n  const hubOptionsRef=useRef<HTMLDivElement>(null);
@@ -149,18 +158,18 @@ export default function Home(){
     </header>
 
     <section className={`hub-scene ${section==="home"?"is-here":""}`}>
-      <div className="hub-heading"><h1 className="hub-slogan">{t.kicker}</h1></div>
+      <div className={`hub-heading ${activeHub!==null?"is-detail":""}`}><h1 className="hub-slogan">{activeHub===null?t.kicker:hubDetails[activeHub].title}</h1>{activeHub!==null&&<p>{hubDetails[activeHub].brief}</p>}</div>
       <div className="hub-carousel">
-        <div className="hub-options" ref={hubOptionsRef}>
-          <button onClick={()=>{setActiveTrust(0);setModal("trust")}}><img src={`${MEDIA_BASE}/media/trust/trust-slide-2.jpg`} alt=""/><span><TrustIcon/></span><strong>{t.trust}</strong></button>
-          <button onClick={()=>transition(()=>setSection("team"))}><img src={`${MEDIA_BASE}/media/team/ali-bandaqji.webp`} alt=""/><span><TeamIcon/></span><strong>{t.team}</strong></button>
-          <button onClick={()=>transition(()=>setSection("hospitality"))}><img src={`${MEDIA_BASE}/media/hospitality/makkah-accommodation-poster.jpg`} alt=""/><span><HospitalityIcon/></span><strong>{t.hospitality}</strong></button>
-          <button onClick={()=>transition(()=>setSection("packages"))}><img src={`${MEDIA_BASE}/media/level-1/services-poster.jpg`} alt=""/><span><PackagesIcon/></span><strong>{t.packages}</strong></button>
-          <button onClick={()=>transition(()=>setSection("testimonials"))}><img src={`${MEDIA_BASE}/media/testimonials/ibrahim-al-saghir-poster.jpg`} alt=""/><span><QuoteIcon/></span><strong>{t.testimonials}</strong></button>
-          <button onClick={()=>transition(()=>setSection("videos"))}><img src={`${MEDIA_BASE}/media/showcase/01.jpg`} alt=""/><span><FilmsIcon/></span><strong>{t.videos}</strong></button>
+        <div className={`hub-options ${activeHub!==null?"has-active":""}`} ref={hubOptionsRef} onPointerLeave={()=>setActiveHub(null)}>
+          <button className={activeHub===0?"is-active":""} onPointerEnter={()=>setActiveHub(0)} onFocus={()=>setActiveHub(0)} onClick={()=>{setActiveTrust(0);setModal("trust")}}><img src={`${MEDIA_BASE}/media/trust/trust-slide-2.jpg`} alt=""/><span><TrustIcon/></span><strong>{t.trust}</strong></button>
+          <button className={activeHub===1?"is-active":""} onPointerEnter={()=>setActiveHub(1)} onFocus={()=>setActiveHub(1)} onClick={()=>transition(()=>setSection("team"))}><img src={`${MEDIA_BASE}/media/team/ali-bandaqji.webp`} alt=""/><span><TeamIcon/></span><strong>{t.team}</strong></button>
+          <button className={activeHub===2?"is-active":""} onPointerEnter={()=>setActiveHub(2)} onFocus={()=>setActiveHub(2)} onClick={()=>transition(()=>setSection("hospitality"))}><img src={`${MEDIA_BASE}/media/hospitality/makkah-accommodation-poster.jpg`} alt=""/><span><HospitalityIcon/></span><strong>{t.hospitality}</strong></button>
+          <button className={activeHub===3?"is-active":""} onPointerEnter={()=>setActiveHub(3)} onFocus={()=>setActiveHub(3)} onClick={()=>transition(()=>setSection("packages"))}><img src={`${MEDIA_BASE}/media/level-1/services-poster.jpg`} alt=""/><span><PackagesIcon/></span><strong>{t.packages}</strong></button>
+          <button className={activeHub===4?"is-active":""} onPointerEnter={()=>setActiveHub(4)} onFocus={()=>setActiveHub(4)} onClick={()=>transition(()=>setSection("testimonials"))}><img src={`${MEDIA_BASE}/media/testimonials/ibrahim-al-saghir-poster.jpg`} alt=""/><span><QuoteIcon/></span><strong>{t.testimonials}</strong></button>
+          <button className={activeHub===5?"is-active":""} onPointerEnter={()=>setActiveHub(5)} onFocus={()=>setActiveHub(5)} onClick={()=>transition(()=>setSection("videos"))}><img src={`${MEDIA_BASE}/media/showcase/01.jpg`} alt=""/><span><FilmsIcon/></span><strong>{t.videos}</strong></button>
         </div>
-        <button className="hub-side-arrow hub-side-arrow--left" type="button" onClick={()=>hubOptionsRef.current?.scrollBy({left:-hubOptionsRef.current.clientWidth*.72,behavior:"smooth"})} aria-label={lang==="ar"?"البطاقات السابقة":"Previous cards"}><Arrow/></button>
-        <button className="hub-side-arrow hub-side-arrow--right" type="button" onClick={()=>hubOptionsRef.current?.scrollBy({left:hubOptionsRef.current.clientWidth*.72,behavior:"smooth"})} aria-label={lang==="ar"?"البطاقات التالية":"Next cards"}><Arrow/></button>
+        <button className="hub-side-arrow hub-side-arrow--left" type="button" onClick={()=>hubOptionsRef.current?.scrollBy({left:-hubOptionsRef.current.clientWidth*.72,behavior:"smooth"})} aria-label={lang==="ar"?"البطاقات السابقة":"Previous cards"}><Chevron/></button>
+        <button className="hub-side-arrow hub-side-arrow--right" type="button" onClick={()=>hubOptionsRef.current?.scrollBy({left:hubOptionsRef.current.clientWidth*.72,behavior:"smooth"})} aria-label={lang==="ar"?"البطاقات التالية":"Next cards"}><Chevron/></button>
       </div>
     </section>
 
