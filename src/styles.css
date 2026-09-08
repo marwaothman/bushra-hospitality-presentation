@@ -466,3 +466,54 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .hub-side-arrow--left{left:0}.hub-side-arrow--right{right:0}
 @media(max-width:1000px){.hub-scene{padding:calc(var(--mobile-header) + 24px) 20px 70px;gap:24px}.hub-heading{display:block;text-align:right;margin:0}.hub-heading h1,.hub-heading .hub-slogan{white-space:nowrap;font-size:clamp(34px,6.8vw,56px)}.hub-carousel{width:100%;height:auto;padding-inline:52px}.hub-options>button,.hub-options>button:nth-child(n){flex-basis:calc((100% - 16px)/2);height:auto;aspect-ratio:1.9/1}.hub-options strong{font-size:17px}}
 @media(max-width:560px){.hub-scene{padding:calc(var(--mobile-header) + 18px) 10px 58px;gap:16px;justify-content:center}.hub-heading{text-align:center}.hub-heading h1,.hub-heading .hub-slogan{font-size:clamp(26px,8.5vw,38px)}.hub-carousel{height:auto;padding-inline:38px}.hub-options{gap:10px;padding-bottom:14px}.hub-options>button,.hub-options>button:nth-child(n){flex-basis:88%;height:auto;min-height:0;aspect-ratio:1.72/1}.hub-options>button>img{height:70%}.hub-options>button:hover>img,.hub-options>button:focus-visible>img{height:78%;transform:scale(1.08)}.hub-options>button>span{top:12px;inset-inline-start:12px;width:39px;height:39px}.hub-options svg{width:20px;height:20px}.hub-options strong{inset-inline:16px;bottom:14px;font-size:16px}.hub-side-arrow{width:40px;height:40px;margin-top:-20px}.hub-side-arrow--left{left:0}.hub-side-arrow--right{right:0}}
+
+/* Four-card focus rail — SoftServe-style pointer focus */
+@media(min-width:1001px){
+  .hub-carousel{padding-inline:54px}
+  .hub-options{overflow:hidden;gap:clamp(12px,1.1vw,20px);scroll-snap-type:none}
+  .hub-options>button,.hub-options>button:nth-child(n){flex:0 0 calc((100% - clamp(36px,3.3vw,60px))/4);aspect-ratio:2.05/1;transition:transform .55s cubic-bezier(.16,1,.3,1),filter .5s,opacity .5s,border-color .4s,box-shadow .55s}
+  .hub-options:has(>button:hover)>button:not(:hover){filter:blur(3px);opacity:.52;transform:scale(.975)}
+  .hub-options:has(>button:hover)>button:hover{transform:translateY(-10px) scale(1.035);z-index:6}
+  .hub-options:has(>button:hover)>button:hover>img{height:82%;transform:scale(1.1);filter:saturate(1.08) contrast(1.06)}
+  .hub-options:has(>button:hover)>button:hover:after{background:linear-gradient(180deg,rgba(3,16,27,.02) 24%,rgba(3,16,27,.08) 58%,rgba(3,16,27,.9) 78%,#071d30 100%)}
+}
+@media(max-width:1000px) and (min-width:561px){.hub-options>button,.hub-options>button:nth-child(n){flex-basis:calc((100% - 16px)/2)}}
+
+/* Large-screen reveal cards and pure chevron navigation */
+.hub-side-arrow{width:62px;height:82px;margin-top:-41px;border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none;color:#d0a86c}
+.hub-side-arrow:hover{background:transparent;transform:scale(1.16)}
+.hub-side-arrow svg{width:32px;height:52px;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 8px 15px rgba(0,0,0,.38))}
+.hub-options>button>small{position:absolute;z-index:5;inset-inline:20px;bottom:18px;display:block;margin:0;color:rgba(255,255,255,.82);font-size:clamp(12px,.82vw,15px);line-height:1.45;text-align:start;opacity:0;transform:translateY(12px);transition:opacity .42s,transform .55s cubic-bezier(.16,1,.3,1)}
+@media(min-width:1001px){
+  .hub-scene{gap:clamp(28px,4vh,48px);padding-inline:clamp(28px,3.4vw,66px)}
+  .hub-carousel{padding-inline:68px}
+  .hub-options>button,.hub-options>button:nth-child(n){aspect-ratio:1.62/1}
+  .hub-options:has(>button:hover)>button:hover>img{height:100%;transform:scale(1.035)}
+  .hub-options:has(>button:hover)>button:hover:after{background:linear-gradient(180deg,rgba(2,12,20,.02) 26%,rgba(2,12,20,.12) 54%,rgba(2,12,20,.92) 100%)}
+  .hub-options:has(>button:hover)>button:hover>span{opacity:0;transform:translateY(-10px)}
+  .hub-options:has(>button:hover)>button:hover strong{bottom:64px;font-size:clamp(20px,1.45vw,27px)}
+  .hub-options:has(>button:hover)>button:hover>small{opacity:1;transform:none}
+}
+@media(min-width:1800px){.hub-options>button,.hub-options>button:nth-child(n){aspect-ratio:1.55/1}.hub-heading h1,.hub-heading .hub-slogan{font-size:clamp(68px,4.7vw,96px)}}
+@media(max-width:1000px){.hub-side-arrow{width:44px;height:62px;margin-top:-31px}.hub-side-arrow svg{width:24px;height:42px}.hub-options>button>small{display:none}}
+
+/* Reference-accurate editorial hover: detail copy above, active card taller */
+.hub-heading{min-height:clamp(88px,12vh,132px);display:grid;grid-template-columns:minmax(280px,.72fr) minmax(420px,1.28fr);align-items:start;gap:clamp(36px,7vw,130px);transition:opacity .3s}
+.hub-heading .hub-slogan{grid-column:1/-1}
+.hub-heading.is-detail .hub-slogan{grid-column:1;font-size:clamp(48px,5.2vw,92px);color:#fff;text-align:start}
+.hub-heading p{grid-column:2;margin:5px 0 0;max-width:760px;color:rgba(255,255,255,.78);font-size:clamp(18px,1.45vw,27px);line-height:1.38;text-align:start;animation:hubCopyIn .48s cubic-bezier(.16,1,.3,1) both}
+@keyframes hubCopyIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(min-width:1001px){
+  .hub-scene{justify-content:flex-start;padding-top:clamp(122px,14vh,154px);gap:clamp(18px,2.8vh,34px)}
+  .hub-carousel{margin-top:auto;margin-bottom:clamp(44px,6vh,72px)}
+  .hub-options{align-items:flex-end;padding-top:34px}
+  .hub-options>button,.hub-options>button:nth-child(n){aspect-ratio:1.72/1;transform-origin:center bottom}
+  .hub-options.has-active>button:not(.is-active){filter:blur(4px) saturate(.55);opacity:.48;transform:scale(.965)}
+  .hub-options.has-active>button.is-active{z-index:7;aspect-ratio:1.46/1;transform:translateY(-24px) scale(1.035);border-color:rgba(255,255,255,.5);box-shadow:0 36px 85px rgba(0,0,0,.48)}
+  .hub-options.has-active>button.is-active>img{height:100%;transform:scale(1.02);filter:saturate(1.06) contrast(1.05)}
+  .hub-options.has-active>button.is-active:after{background:linear-gradient(180deg,transparent 42%,rgba(2,12,20,.08) 58%,rgba(2,12,20,.88) 100%)}
+  .hub-options.has-active>button.is-active>span{opacity:0}
+  .hub-options.has-active>button.is-active strong{bottom:22px;font-size:clamp(20px,1.35vw,27px)}
+}
+@media(min-width:1800px){.hub-options>button,.hub-options>button:nth-child(n){aspect-ratio:1.62/1}.hub-options.has-active>button.is-active{aspect-ratio:1.38/1}}
+@media(max-width:1000px){.hub-heading{min-height:auto;display:block}.hub-heading.is-detail .hub-slogan{font-size:clamp(34px,6.8vw,56px);text-align:center}.hub-heading p{display:none}}
