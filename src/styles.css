@@ -692,3 +692,17 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .comprehensive-panel-close:hover,.comprehensive-panel-close:focus-visible{background:#b08e57;color:#fff;transform:scale(1.07);outline:none}
 .comprehensive-panel p{margin-top:clamp(22px,2.4vh,32px)}
 @media(max-width:1000px){.comprehensive-heading{right:18px;left:18px;max-width:none}.comprehensive-heading h2{font-size:clamp(28px,7vw,46px)}.comprehensive-orbit{left:5%;width:90%;top:15%;height:46%}.comprehensive-panel{right:16px;left:16px;bottom:76px;width:auto}.comprehensive-orbit button span{font-size:11px;padding:3px 7px}}
+
+
+/* Use the artwork's native 3D service icons as the interaction surface */
+.comprehensive-orbit{inset:0!important;left:0!important;top:0!important;width:auto!important;height:auto!important}
+.comprehensive-orbit button{width:clamp(112px,9vw,174px);height:clamp(112px,9vw,174px);padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;color:transparent!important}
+.comprehensive-orbit button:nth-child(1){left:55.3%;top:16.7%}.comprehensive-orbit button:nth-child(2){left:72.5%;top:26.6%}.comprehensive-orbit button:nth-child(3){left:75.5%;top:53.2%}.comprehensive-orbit button:nth-child(4){left:63.4%;top:71.6%}.comprehensive-orbit button:nth-child(5){left:46%;top:68.2%}.comprehensive-orbit button:nth-child(6){left:41.9%;top:37.2%}
+.comprehensive-orbit button svg{display:none!important}
+.comprehensive-orbit button:before{inset:3px;border:2px solid transparent;box-shadow:none;background:transparent;transition:border-color .3s ease,box-shadow .3s ease,transform .3s ease}
+.comprehensive-orbit button:hover,.comprehensive-orbit button:focus-visible,.comprehensive-orbit button.is-active{transform:translate(-50%,-50%) scale(1.06)!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.comprehensive-orbit button:hover:before,.comprehensive-orbit button:focus-visible:before,.comprehensive-orbit button.is-active:before{border-color:rgba(102,218,248,.9);box-shadow:0 0 18px rgba(69,202,241,.72),inset 0 0 18px rgba(69,202,241,.22);transform:scale(1.04)}
+.comprehensive-orbit button.is-active:before{border-color:#e7bd70;box-shadow:0 0 20px rgba(208,168,108,.8),inset 0 0 20px rgba(208,168,108,.22)}
+.comprehensive-orbit button span{top:calc(100% + 3px);opacity:0;pointer-events:none;background:rgba(3,15,25,.88);color:#fff;transition:opacity .25s ease,transform .25s ease}
+.comprehensive-orbit button:hover span,.comprehensive-orbit button:focus-visible span,.comprehensive-orbit button.is-active span{opacity:1;transform:translateX(-50%) translateY(2px)}
+@media(max-width:1000px){.comprehensive-orbit{inset:0!important}.comprehensive-orbit button{width:82px;height:82px}.comprehensive-orbit button span{display:none}.comprehensive-orbit button:nth-child(1){left:55%;top:23%}.comprehensive-orbit button:nth-child(2){left:75%;top:31%}.comprehensive-orbit button:nth-child(3){left:78%;top:49%}.comprehensive-orbit button:nth-child(4){left:63%;top:61%}.comprehensive-orbit button:nth-child(5){left:45%;top:59%}.comprehensive-orbit button:nth-child(6){left:40%;top:39%}}
