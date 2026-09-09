@@ -634,3 +634,20 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .film-grade{background:linear-gradient(180deg,rgba(3,18,31,.58),rgba(2,13,23,.78)),linear-gradient(90deg,rgba(6,29,49,.42),rgba(5,24,41,.54))}
 .film-vignette{background:radial-gradient(ellipse at center,transparent 28%,rgba(1,10,18,.2) 68%,rgba(1,8,14,.52) 100%)}
 @media(prefers-reduced-motion:reduce){.brand-film video{animation:none}}
+
+
+/* Refined large-screen card focus and popup controls */
+.modal-layer>.x{display:none!important}
+@media(min-width:1001px){
+  .hub-scene.has-card-focus:before{background:linear-gradient(118deg,#10171c 0%,#263038 52%,#35414a 100%)}
+  .hub-heading.is-detail{width:calc(100% - clamp(152px,10vw,224px));max-width:1720px;min-height:clamp(156px,18vh,220px);margin-inline:auto;padding:clamp(26px,3vh,42px) clamp(34px,3.2vw,64px);grid-template-columns:minmax(360px,.9fr) minmax(520px,1.25fr);column-gap:clamp(150px,12vw,300px);border-top:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.14);background:rgba(12,20,26,.62);box-shadow:0 30px 80px rgba(0,0,0,.22);backdrop-filter:blur(18px);animation:hubEditorialIn .42s cubic-bezier(.16,1,.3,1) both}
+  .hub-heading.is-detail .hub-slogan{justify-self:start;align-self:center;margin:0;max-width:680px;color:#fff;font-size:clamp(52px,4.6vw,88px);font-weight:650;line-height:1.04;letter-spacing:-.035em;text-align:start}
+  .hub-heading.is-detail p{justify-self:end;align-self:center;width:min(100%,720px);max-width:720px;margin:0;color:rgba(255,255,255,.86);font-size:clamp(21px,1.4vw,29px);line-height:1.75;text-align:start}
+  .hub-options.has-active>button.is-active{transform:translateY(-14px) scale(1.1);box-shadow:0 36px 84px rgba(0,0,0,.48)}
+  .hub-options.has-active>button:not(.is-active){filter:saturate(.72) brightness(.66);opacity:.58}
+}
+@keyframes hubEditorialIn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1000px){
+  .hub-heading.is-detail{padding:18px 20px;background:rgba(10,22,31,.76);border-block:1px solid rgba(255,255,255,.14)}
+  .hub-heading.is-detail p{display:block;margin-top:18px;font-size:17px;line-height:1.7;color:rgba(255,255,255,.82)}
+}
