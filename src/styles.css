@@ -616,7 +616,7 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .global-step-nav .utility-step{width:46px;height:46px;border-color:rgba(208,168,108,.52);background:rgba(5,28,46,.82)}
 .global-step-nav .utility-step:hover,.global-step-nav .utility-step:focus-visible{background:rgba(208,168,108,.2);border-color:#d0a86c;transform:scale(1.07);outline:none}
 .global-step-nav .utility-step svg{width:21px;height:21px}
-.global-step-nav .utility-step--close{font:300 30px/1 Arial,sans-serif;color:#fff}
+.global-step-nav .utility-step--close{font:300 30px/1 Arial,sans-serif;color:#d0a86c}
 @media(max-width:760px){.global-step-nav .utility-row{gap:6px;padding:5px 8px}.global-step-nav .utility-step{width:38px;height:38px}.global-step-nav .utility-step svg{width:17px;height:17px}.global-step-nav .utility-step--close{font-size:25px}}
 
 
