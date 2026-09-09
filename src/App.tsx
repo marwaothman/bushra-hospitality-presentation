@@ -73,7 +73,7 @@ function TeamIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><circle c
 function HospitalityIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 45c8-1 13 1 19 7h6c6-6 11-8 19-7M14 39V22l18-12 18 12v17"/><path d="M23 39V27h18v12M32 10v29"/><circle cx="32" cy="48" r="4"/></svg>}
 function TrustIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6 51 14v16c0 13-8 23-19 28C21 53 13 43 13 30V14Z"/><path d="m22 31 7 7 14-16"/><circle cx="32" cy="19" r="3"/></svg>}
 function HomeIcon(){return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9h-6v-6H9v6H3Z"/></svg>}
-function FullscreenIcon({active=false}:{active?:boolean}){return active?<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6"/></svg>:<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg>}
+function FullscreenIcon({active=false}:{active?:boolean}){return active?<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6"/></svg>:<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg>}\nfunction RefreshIcon(){return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M19 12a7 7 0 1 0-2 5"/></svg>}
 function CareLevelIcon({level}:{level:Level}){
   if(level===1)return <svg className="care-level-icon" viewBox="0 0 96 96" aria-hidden="true"><path d="M18 67 13 30l22 17 13-28 13 28 22-17-5 37Z"/><path d="M18 67h60v11H18Z"/><circle cx="13" cy="25" r="3"/><circle cx="48" cy="14" r="3"/><circle cx="83" cy="25" r="3"/></svg>;
   if(level===2)return <svg className="care-level-icon" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 78S19 61 19 35c0-11 8-18 18-18 6 0 10 3 11 8 2-5 6-8 12-8 10 0 17 7 17 18 0 26-29 43-29 43Z"/><path d="M14 72c8-9 17-14 28-15M82 72c-8-9-17-14-28-15"/></svg>;
@@ -147,7 +147,7 @@ export default function Home(){
     else if(section==="packages")pick(focus);
     else if(section==="testimonials")setSection("videos");
   });
-  return <main className={`experience theme-${focus}`} dir={rtl?"rtl":"ltr"} onPointerMove={e=>{const el=e.currentTarget;el.style.setProperty("--mx",`${e.clientX}px`);el.style.setProperty("--my",`${e.clientY}px`)}}>
+  useEffect(()=>{const key=(e:KeyboardEvent)=>{if(modal)return;if(e.key==="PageDown"||e.key===" "){e.preventDefault();nextPage();return}if(e.key==="PageUp"){e.preventDefault();previousPage();return}if(section==="home"&&e.key==="ArrowRight"){hubOptionsRef.current?.scrollBy({left:hubOptionsRef.current.clientWidth*.72,behavior:"smooth"});return}if(section==="home"&&e.key==="ArrowLeft"){hubOptionsRef.current?.scrollBy({left:-hubOptionsRef.current.clientWidth*.72,behavior:"smooth"});return}if(e.key==="ArrowRight")nextPage();if(e.key==="ArrowLeft")previousPage()};addEventListener("keydown",key);return()=>removeEventListener("keydown",key)},[modal,section]);\n  return <main className={`experience theme-${focus}`} dir={rtl?"rtl":"ltr"} onPointerMove={e=>{const el=e.currentTarget;el.style.setProperty("--mx",`${e.clientX}px`);el.style.setProperty("--my",`${e.clientY}px`)}}>
     <div className="brand-film" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background-video2.mp4`} poster={`${MEDIA_BASE}/media/brand/background-poster.jpg`} autoPlay muted loop playsInline preload="auto"/><div className="film-grade"/><div className="film-vignette"/><div className="film-grain"/></div>
     <div className="aurora"/><div className="cursor-light"/><div className="edge-noise"/>
     <header className="nav">
@@ -260,8 +260,8 @@ export default function Home(){
 
     {modal&&<button type="button" className="bottom-modal-close" onClick={()=>setModal(null)} aria-label={t.close}><span>×</span><small>{t.close}</small></button>}
 
-    <nav className={`page-step-nav global-step-nav ${modal?"is-obscured":""}`} aria-label={rtl?"التنقل بين الصفحات":"Page navigation"}>
-      <div className="utility-row"><button type="button" className="utility-step" onClick={goHome} aria-label={rtl?"العودة إلى الصفحة الرئيسية":"Go to homepage"}><HomeIcon/></button><button type="button" className="utility-step" onClick={toggleFullscreen} aria-label={isFullscreen?(rtl?"الخروج من ملء الشاشة":"Exit full screen"):(rtl?"عرض بملء الشاشة":"Enter full screen")}><FullscreenIcon active={isFullscreen}/></button></div>
+    <nav className="page-step-nav global-step-nav" aria-label={rtl?"التنقل بين الصفحات":"Page navigation"}>
+      <div className="utility-row"><button type="button" className="utility-step" onClick={goHome} aria-label={rtl?"العودة إلى الصفحة الرئيسية":"Go to homepage"}><HomeIcon/></button><button type="button" className="utility-step" onClick={toggleFullscreen} aria-label={isFullscreen?(rtl?"الخروج من ملء الشاشة":"Exit full screen"):(rtl?"عرض بملء الشاشة":"Enter full screen")}><FullscreenIcon active={isFullscreen}/></button><button type="button" className="utility-step" onClick={()=>window.location.reload()} aria-label={rtl?"تحديث العرض":"Refresh presentation"}><RefreshIcon/></button>{modal&&<button type="button" className="utility-step utility-step--close" onClick={()=>setModal(null)} aria-label={t.close}>×</button>}</div>
     </nav>
 
     <div className={`page-transition-logo ${transitioning?"is-visible":""}`} aria-hidden="true"><div><span/><DrawLogo/></div></div>
