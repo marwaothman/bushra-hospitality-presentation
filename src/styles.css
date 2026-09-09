@@ -584,3 +584,13 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .hub-options>button,.hub-options>button:nth-child(n),.hub-options.has-active>button.is-active{height:auto;aspect-ratio:1.618/1;transform-origin:center center}
   .hub-options.has-active>button.is-active{transform:translateY(-24px) scale(1.055)}
 }
+
+
+/* Five-card desktop rail and unframed slide navigation */
+@media(min-width:1001px){
+  .hub-options>button,.hub-options>button:nth-child(n){flex-basis:calc((100% - clamp(64px,4.8vw,96px))/5);aspect-ratio:1.618/1}
+  .hub-options.has-active>button.is-active{aspect-ratio:1.618/1}
+}
+.gallery-nav button,.gallery--real .gallery-nav button,.trust-slide-nav button,.testimonial-evidence-nav button,.reception-video-arrow,.trust-modal-nav button{border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none}
+.gallery-nav button:hover,.gallery--real .gallery-nav button:hover,.trust-slide-nav button:hover,.testimonial-evidence-nav button:hover,.reception-video-arrow:hover,.trust-modal-nav button:hover{background:transparent;box-shadow:none}
+.gallery-nav button svg,.trust-slide-nav button svg,.testimonial-evidence-nav button svg,.reception-video-arrow svg{filter:drop-shadow(0 7px 14px rgba(0,0,0,.42));stroke-width:1.8}
