@@ -627,3 +627,10 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .hub-options>button>span{display:none!important}
   .hub-options strong{inset-inline:24px;bottom:24px}
 }
+
+
+/* Cinematic executive background film treatment */
+.brand-film video{filter:saturate(.68) contrast(.9) brightness(.76);transition:filter .6s ease,opacity .6s ease}
+.film-grade{background:linear-gradient(180deg,rgba(3,18,31,.58),rgba(2,13,23,.78)),linear-gradient(90deg,rgba(6,29,49,.42),rgba(5,24,41,.54))}
+.film-vignette{background:radial-gradient(ellipse at center,transparent 28%,rgba(1,10,18,.2) 68%,rgba(1,8,14,.52) 100%)}
+@media(prefers-reduced-motion:reduce){.brand-film video{animation:none}}
