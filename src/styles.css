@@ -594,3 +594,27 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .gallery-nav button,.gallery--real .gallery-nav button,.trust-slide-nav button,.testimonial-evidence-nav button,.reception-video-arrow,.trust-modal-nav button{border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none}
 .gallery-nav button:hover,.gallery--real .gallery-nav button:hover,.trust-slide-nav button:hover,.testimonial-evidence-nav button:hover,.reception-video-arrow:hover,.trust-modal-nav button:hover{background:transparent;box-shadow:none}
 .gallery-nav button svg,.trust-slide-nav button svg,.testimonial-evidence-nav button svg,.reception-video-arrow svg{filter:drop-shadow(0 7px 14px rgba(0,0,0,.42));stroke-width:1.8}
+
+
+/* Executive-stage three-card presentation system */
+@media(min-width:1001px){
+  .hub-carousel{padding-inline:clamp(76px,5vw,112px)}
+  .hub-options{justify-content:center;gap:clamp(24px,1.8vw,38px);overflow:hidden;padding-block:26px 30px}
+  .hub-options>button,.hub-options>button:nth-child(n),.hub-options.has-active>button.is-active{flex:0 0 clamp(360px,calc((100% - clamp(48px,3.6vw,76px))/3),780px);max-width:780px;height:auto;aspect-ratio:1.618/1}
+  .hub-options strong{font-size:clamp(23px,1.55vw,34px);line-height:1.25;bottom:24px}
+  .hub-options:has(>button:hover)>button:not(:hover),.hub-options.has-active>button:not(.is-active){filter:saturate(.68) brightness(.72);opacity:.64;transform:scale(.985)}
+  .hub-options:has(>button:hover)>button:hover,.hub-options.has-active>button.is-active{transform:translateY(-12px) scale(1.12);z-index:7}
+  .hub-side-arrow--left{left:0}.hub-side-arrow--right{right:0}
+}
+@media(min-width:3000px){
+  .hub-options{gap:44px}
+  .hub-options>button,.hub-options>button:nth-child(n),.hub-options.has-active>button.is-active{flex-basis:780px;width:780px}
+  .hub-options strong{font-size:36px}
+}
+.global-step-nav{z-index:96;bottom:clamp(18px,2.5vh,34px)}
+.global-step-nav .utility-row{display:flex;align-items:center;justify-content:center;gap:10px;margin:0;padding:8px 12px;border:1px solid rgba(208,168,108,.36);border-radius:999px;background:rgba(3,18,30,.78);box-shadow:0 16px 40px rgba(0,0,0,.3);backdrop-filter:blur(15px)}
+.global-step-nav .utility-step{width:46px;height:46px;border-color:rgba(208,168,108,.52);background:rgba(5,28,46,.82)}
+.global-step-nav .utility-step:hover,.global-step-nav .utility-step:focus-visible{background:rgba(208,168,108,.2);border-color:#d0a86c;transform:scale(1.07);outline:none}
+.global-step-nav .utility-step svg{width:21px;height:21px}
+.global-step-nav .utility-step--close{font:300 30px/1 Arial,sans-serif;color:#fff}
+@media(max-width:760px){.global-step-nav .utility-row{gap:6px;padding:5px 8px}.global-step-nav .utility-step{width:38px;height:38px}.global-step-nav .utility-step svg{width:17px;height:17px}.global-step-nav .utility-step--close{font-size:25px}}
