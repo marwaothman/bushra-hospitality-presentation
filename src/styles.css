@@ -577,3 +577,10 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .bottom-modal-close small{position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);color:rgba(255,255,255,.78);font-size:11px;white-space:nowrap}
 .global-step-nav .utility-row{margin:0}
 @media(max-width:760px){.bottom-modal-close{left:12px;bottom:max(14px,env(safe-area-inset-bottom));width:52px;height:52px}.bottom-modal-close span{font-size:30px}.bottom-modal-close small{display:none}}
+
+
+/* Golden-ratio homepage cards */
+@media(min-width:1001px){
+  .hub-options>button,.hub-options>button:nth-child(n),.hub-options.has-active>button.is-active{height:auto;aspect-ratio:1.618/1;transform-origin:center center}
+  .hub-options.has-active>button.is-active{transform:translateY(-24px) scale(1.055)}
+}
