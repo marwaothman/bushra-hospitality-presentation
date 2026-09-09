@@ -115,8 +115,10 @@ export default function Home(){
   const galleryTotal=hasLevelOneArabic?50:60;
   const touchStart=useRef(0);
   const hubOptionsRef=useRef<HTMLDivElement>(null);
+  const backgroundVideoRef=useRef<HTMLVideoElement>(null);
   const transitionTimers=useRef<number[]>([]);
   useEffect(()=>{const id=setTimeout(()=>setLoading(false),1900);return()=>clearTimeout(id)},[]);
+  useEffect(()=>{const video=backgroundVideoRef.current;if(!video)return;video.playbackRate=.72;if(modal)video.pause();else video.play().catch(()=>{})},[modal]);
   useEffect(()=>{const controller=new AbortController();fetch(SANITY_URL,{signal:controller.signal}).then(response=>response.ok?response.json():Promise.reject()).then(data=>setCms(data.result as CmsPayload)).catch(()=>{/* Keep the complete built-in presentation when the CMS is unavailable. */});return()=>controller.abort()},[]);
   useEffect(()=>{const sync=()=>setIsFullscreen(Boolean(document.fullscreenElement));document.addEventListener("fullscreenchange",sync);return()=>document.removeEventListener("fullscreenchange",sync)},[]);
   useEffect(()=>()=>transitionTimers.current.forEach(clearTimeout),[]);
@@ -151,7 +153,7 @@ export default function Home(){
   useEffect(()=>{const key=(e:KeyboardEvent)=>{if(modal)return;if(e.key==="PageDown"||e.key===" "){e.preventDefault();nextPage();return}if(e.key==="PageUp"){e.preventDefault();previousPage();return}if(section==="home"&&e.key==="ArrowRight"){hubOptionsRef.current?.scrollBy({left:hubOptionsRef.current.clientWidth*.72,behavior:"smooth"});return}if(section==="home"&&e.key==="ArrowLeft"){hubOptionsRef.current?.scrollBy({left:-hubOptionsRef.current.clientWidth*.72,behavior:"smooth"});return}if(e.key==="ArrowRight")nextPage();if(e.key==="ArrowLeft")previousPage()};addEventListener("keydown",key);return()=>removeEventListener("keydown",key)},[modal,section]);
   useEffect(()=>{if(section==="home")requestAnimationFrame(()=>hubOptionsRef.current?.scrollTo({left:0,behavior:"auto"}))},[section,lang]);
   return <main className={`experience theme-${focus}`} dir={rtl?"rtl":"ltr"} onPointerMove={e=>{const el=e.currentTarget;el.style.setProperty("--mx",`${e.clientX}px`);el.style.setProperty("--my",`${e.clientY}px`)}}>
-    <div className="brand-film" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background-video2.mp4`} poster={`${MEDIA_BASE}/media/brand/background-poster.jpg`} autoPlay muted loop playsInline preload="auto"/><div className="film-grade"/><div className="film-vignette"/><div className="film-grain"/></div>
+    <div className="brand-film" aria-hidden="true"><video ref={backgroundVideoRef} src={`${MEDIA_BASE}/media/brand/background-video2.mp4`} poster={`${MEDIA_BASE}/media/brand/background-poster.jpg`} onLoadedMetadata={e=>{e.currentTarget.playbackRate=.72}} autoPlay muted loop playsInline preload="auto"/><div className="film-grade"/><div className="film-vignette"/><div className="film-grain"/></div>
     <div className="aurora"/><div className="cursor-light"/><div className="edge-noise"/>
     <header className="nav">
       <button className="brand-lockup" onClick={()=>transition(()=>{setSelected(null);setSection("home")})} aria-label="Bushra Hospitality home"><img className="anniversary-logo" src={`${MEDIA_BASE}/anniversary-logo.svg`} alt="11th anniversary"/><i/><img className="company-wordmark" src={`${MEDIA_BASE}/company-logo-horizontal.svg`} alt="Bushra Hospitality"/></button>
