@@ -618,3 +618,12 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .global-step-nav .utility-step svg{width:21px;height:21px}
 .global-step-nav .utility-step--close{font:300 30px/1 Arial,sans-serif;color:#fff}
 @media(max-width:760px){.global-step-nav .utility-row{gap:6px;padding:5px 8px}.global-step-nav .utility-step{width:38px;height:38px}.global-step-nav .utility-step svg{width:17px;height:17px}.global-step-nav .utility-step--close{font-size:25px}}
+
+
+/* Reachable executive rail and icon-free cards */
+@media(min-width:1001px){
+  .hub-options{justify-content:flex-start;overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;scroll-padding-inline:2px}
+  .hub-options>button{scroll-snap-align:start}
+  .hub-options>button>span{display:none!important}
+  .hub-options strong{inset-inline:24px;bottom:24px}
+}
