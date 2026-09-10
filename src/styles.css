@@ -779,3 +779,21 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 @keyframes comprehensiveGlobeTurn{to{transform:rotate(360deg)}}@keyframes comprehensiveBreath{0%,100%{transform:scale(.96);opacity:.48}50%{transform:scale(1.04);opacity:1}}@keyframes comprehensiveOrbitSweep{to{transform:rotate(348deg)}}@keyframes comprehensiveParticle{0%,100%{transform:scale(.65);opacity:.25}52%{transform:scale(1.55);opacity:1}}@keyframes comprehensiveAura{0%,100%{transform:scale(.92);opacity:.34}50%{transform:scale(1.08);opacity:.9}}
 @media(max-width:1000px){.comprehensive-living-globe{left:31%;top:22%;width:48vw}.comprehensive-orbit button{width:76px;height:76px}.comprehensive-orbit button svg{width:28px;height:28px}.comprehensive-orbit button span{display:none!important}.comprehensive-orbit button:after{inset:5px}.comprehensive-panel{right:16px;left:16px;top:auto;bottom:76px;width:auto}}
 @media(prefers-reduced-motion:reduce){.comprehensive-living-globe:before,.comprehensive-globe-grid,.comprehensive-globe-orbit,.comprehensive-living-globe b,.comprehensive-service-aura{animation:none!important}}
+
+/* Executive simplification: keep the authored image in control; interaction is only revealed on intent. */
+.comprehensive-living-globe{opacity:.18;mix-blend-mode:screen}
+.comprehensive-living-globe:before{opacity:.32;filter:drop-shadow(0 0 14px rgba(44,195,244,.36))}
+.comprehensive-globe-grid,.comprehensive-globe-orbit,.comprehensive-living-globe b{display:none}
+.comprehensive-orbit button{width:clamp(108px,8.6vw,166px);height:clamp(108px,8.6vw,166px)}
+.comprehensive-orbit button svg,.comprehensive-orbit button span{display:none!important}
+.comprehensive-orbit button:after{inset:11%;background:transparent;border:1px solid transparent;box-shadow:none}
+.comprehensive-service-aura{inset:8%;opacity:0;border-color:transparent;box-shadow:none;animation:none;transition:opacity .28s ease,border-color .28s ease,box-shadow .28s ease}
+.comprehensive-orbit button:hover,.comprehensive-orbit button:focus-visible,.comprehensive-orbit button.is-active{transform:translate(-50%,-50%) scale(1.045)!important;filter:none!important}
+.comprehensive-orbit button:hover:after,.comprehensive-orbit button:focus-visible:after{background:rgba(78,205,239,.04);border-color:rgba(104,218,247,.62);box-shadow:0 0 21px rgba(63,196,237,.42),inset 0 0 18px rgba(63,196,237,.12)}
+.comprehensive-orbit button.is-active:after{background:rgba(236,189,95,.05);border-color:rgba(244,201,108,.86);box-shadow:0 0 26px rgba(236,186,89,.68),inset 0 0 20px rgba(236,186,89,.12)}
+.comprehensive-orbit button:hover .comprehensive-service-aura,.comprehensive-orbit button:focus-visible .comprehensive-service-aura,.comprehensive-orbit button.is-active .comprehensive-service-aura{opacity:1;border-color:rgba(95,211,242,.46);box-shadow:0 0 0 9px rgba(60,194,238,.05)}
+.comprehensive-orbit button.is-active .comprehensive-service-aura{border-color:#efc56e;box-shadow:0 0 0 10px rgba(239,197,110,.08),0 0 33px rgba(239,197,110,.58);animation:comprehensiveAura 1.35s ease-in-out infinite}
+.comprehensive-panel{width:min(19vw,350px);background:linear-gradient(115deg,rgba(3,18,30,.84),rgba(9,33,50,.64));box-shadow:0 22px 64px rgba(0,0,0,.42)}
+/* Match the leadership card's image/tile rhythm to the other homepage cards. */
+.hub-options>button:nth-child(3)>img{height:70%;object-position:58% 17%;filter:saturate(.78) contrast(1.04)}
+.hub-options>button:nth-child(3):after{background:linear-gradient(180deg,rgba(3,16,27,.04) 20%,rgba(3,16,27,.1) 55%,rgba(3,16,27,.93) 76%,#071d30 100%)}
