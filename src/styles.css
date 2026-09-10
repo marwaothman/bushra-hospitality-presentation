@@ -706,3 +706,18 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .comprehensive-orbit button span{top:calc(100% + 3px);opacity:0;pointer-events:none;background:rgba(3,15,25,.88);color:#fff;transition:opacity .25s ease,transform .25s ease}
 .comprehensive-orbit button:hover span,.comprehensive-orbit button:focus-visible span,.comprehensive-orbit button.is-active span{opacity:1;transform:translateX(-50%) translateY(2px)}
 @media(max-width:1000px){.comprehensive-orbit{inset:0!important}.comprehensive-orbit button{width:82px;height:82px}.comprehensive-orbit button span{display:none}.comprehensive-orbit button:nth-child(1){left:55%;top:23%}.comprehensive-orbit button:nth-child(2){left:75%;top:31%}.comprehensive-orbit button:nth-child(3){left:78%;top:49%}.comprehensive-orbit button:nth-child(4){left:63%;top:61%}.comprehensive-orbit button:nth-child(5){left:45%;top:59%}.comprehensive-orbit button:nth-child(6){left:40%;top:39%}}
+
+
+/* Executive interaction state: prepared for the generated reaction clips. */
+.comprehensive-backdrop{transform:scale(1.018);animation:comprehensiveDrift 22s ease-in-out infinite alternate;will-change:transform,filter;transition:transform .72s cubic-bezier(.16,1,.3,1),filter .72s ease}
+.comprehensive-modal[data-phase="activating"] .comprehensive-backdrop{transform:scale(1.06) translate3d(-.8%,.4%,0);filter:brightness(.78) saturate(1.08)}
+.comprehensive-modal[data-phase="activating"] .comprehensive-shade{background:radial-gradient(ellipse at 55% 48%,rgba(36,168,211,.2),transparent 34%),linear-gradient(90deg,rgba(2,10,17,.84) 0%,rgba(3,13,23,.28) 34%,rgba(3,13,23,.18) 68%,rgba(2,10,17,.66) 100%),linear-gradient(180deg,rgba(2,10,17,.46),transparent 32%,rgba(2,10,17,.56));transition:background .4s ease}
+.comprehensive-ambient{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none;opacity:.45;mix-blend-mode:screen}
+.comprehensive-ambient i{position:absolute;display:block;width:40vw;height:1px;background:linear-gradient(90deg,transparent,rgba(231,189,112,.9),transparent);filter:blur(.2px);transform:rotate(-24deg);animation:comprehensiveSweep 10s ease-in-out infinite}
+.comprehensive-ambient i:nth-child(1){top:30%;left:-15%;animation-delay:-3s}.comprehensive-ambient i:nth-child(2){top:55%;left:44%;animation-delay:-7s}.comprehensive-ambient i:nth-child(3){top:76%;left:10%;animation-delay:-1s}
+.comprehensive-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.comprehensive-modal[data-phase="activating"] .comprehensive-heading{animation:comprehensiveHeadingPulse .76s cubic-bezier(.16,1,.3,1)}
+@keyframes comprehensiveDrift{from{transform:scale(1.018) translate3d(-.35%,0,0)}to{transform:scale(1.055) translate3d(.35%,-.45%,0)}}
+@keyframes comprehensiveSweep{0%,100%{opacity:.04;transform:translateX(-12vw) rotate(-24deg)}48%{opacity:.8;transform:translateX(28vw) rotate(-24deg)}}
+@keyframes comprehensiveHeadingPulse{0%{opacity:.72;transform:translateY(8px)}100%{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.comprehensive-backdrop,.comprehensive-ambient i{animation:none!important}.comprehensive-modal[data-phase="activating"] .comprehensive-heading{animation:none}}
