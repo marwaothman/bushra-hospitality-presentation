@@ -797,3 +797,22 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 /* Match the leadership card's image/tile rhythm to the other homepage cards. */
 .hub-options>button:nth-child(3)>img{height:70%;object-position:58% 17%;filter:saturate(.78) contrast(1.04)}
 .hub-options>button:nth-child(3):after{background:linear-gradient(180deg,rgba(3,16,27,.04) 20%,rgba(3,16,27,.1) 55%,rgba(3,16,27,.93) 76%,#071d30 100%)}
+
+/* Service detail becomes a local editorial callout, not a fixed page overlay. */
+.comprehensive-heading h2{font-family:A1,"Lama Sans","Segoe UI",Tahoma,sans-serif;font-size:clamp(38px,3vw,62px);font-weight:650;letter-spacing:-.035em}
+.comprehensive-panel{width:min(17.5vw,330px);min-width:270px;padding:24px 26px 22px;border:1px solid rgba(219,181,105,.52);border-top:2px solid #e3bd70;border-right:0;background:linear-gradient(135deg,rgba(6,23,37,.94),rgba(10,42,60,.82));box-shadow:0 22px 58px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(24px);transform-origin:top right}
+.comprehensive-panel:before{background:linear-gradient(120deg,rgba(103,213,244,.12),transparent 42%)}
+.comprehensive-panel:after{width:26%;background:#e3bd70;box-shadow:0 0 15px rgba(227,189,112,.8)}
+.comprehensive-panel h3{margin-top:17px;font-size:clamp(27px,1.85vw,38px)}
+.comprehensive-panel p{margin-top:13px;font-size:clamp(14px,.82vw,17px);line-height:1.8}.comprehensive-panel ul{margin-top:11px;font-size:clamp(12px,.72vw,15px);line-height:1.8}.comprehensive-panel-close{top:12px;left:12px;width:30px;height:30px;font-size:21px}
+.comprehensive-modal[data-selected="0"] .comprehensive-panel{top:clamp(196px,22vh,265px);right:clamp(37vw,41vw,45vw)}
+.comprehensive-modal[data-selected="1"] .comprehensive-panel{top:clamp(275px,31vh,355px);right:clamp(7vw,11vw,15vw)}
+.comprehensive-modal[data-selected="2"] .comprehensive-panel{top:clamp(375px,43vh,480px);right:clamp(7vw,10vw,13vw)}
+.comprehensive-modal[data-selected="3"] .comprehensive-panel{top:auto;bottom:clamp(105px,14vh,160px);right:clamp(32vw,37vw,42vw)}
+.comprehensive-modal[data-selected="4"] .comprehensive-panel{top:auto;bottom:clamp(130px,17vh,190px);right:clamp(47vw,52vw,57vw)}
+.comprehensive-modal[data-selected="5"] .comprehensive-panel{top:clamp(330px,38vh,450px);right:clamp(53vw,57vw,62vw)}
+/* Portrait cover: the white studio backdrop is graded into the same navy–gold visual language. */
+.hub-options>button:nth-child(3){background:radial-gradient(circle at 58% 23%,rgba(218,188,124,.34),transparent 30%),linear-gradient(135deg,#122f45 0%,#061a2c 58%,#020c15 100%)}
+.hub-options>button:nth-child(3)>img{height:70%;mix-blend-mode:multiply;opacity:.95;filter:brightness(1.14) contrast(.98) saturate(1.15)}
+.hub-options>button:nth-child(3):after{background:linear-gradient(90deg,rgba(4,20,34,.18),rgba(4,20,34,.02) 52%,rgba(4,20,34,.34)),linear-gradient(0deg,rgba(3,16,27,.98) 0%,rgba(3,16,27,.22) 58%,rgba(3,16,27,.02) 100%)}
+@media(max-width:1000px){.comprehensive-panel,.comprehensive-modal[data-selected] .comprehensive-panel{top:auto;right:16px;left:16px;bottom:76px;width:auto;min-width:0}}
