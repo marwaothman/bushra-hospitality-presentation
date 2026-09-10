@@ -32,14 +32,6 @@ const comprehensiveServices=[
   {icon:"catering",ar:{title:"التغذية",description:"منظومة غذائية تراعي الجودة والسلامة والتوقيت في جميع محطات الرحلة.",points:["جودة الوجبات","سلامة الغذاء","دقة التوزيع"]},en:{title:"Catering",description:"A food-service system built around quality, safety and precise delivery.",points:["Meal quality","Food safety","Timely distribution"]}},
   {icon:"dispatch",ar:{title:"التفويج",description:"إدارة انسيابية حركة الضيوف وفق توقيتات ومسارات مدروسة حتى اكتمال الرحلة.",points:["جدولة المجموعات","تنظيم الحركة","المتابعة اللحظية"]},en:{title:"Dispatch",description:"Orchestrated guest movement through carefully planned schedules and routes.",points:["Group scheduling","Flow management","Real-time follow-up"]}},
 ] as const;
-const comprehensiveServicePositions=[
-  {x:55.3,y:16.7,path:"M 38 53 Q 48 26 55.3 16.7"},
-  {x:72.5,y:26.6,path:"M 38 53 Q 57 29 72.5 26.6"},
-  {x:75.5,y:53.2,path:"M 38 53 Q 58 49 75.5 53.2"},
-  {x:63.4,y:71.6,path:"M 38 53 Q 49 72 63.4 71.6"},
-  {x:46,y:68.2,path:"M 38 53 Q 38 65 46 68.2"},
-  {x:41.9,y:37.2,path:"M 38 53 Q 35 42 41.9 37.2"},
-] as const;
 const trustSlideCount=6;
 const testimonials=[
   {name:"Mero Queen",quote:"لكم مني خالص الشكر والتقدير على مجهوداتكم وخدماتكم اللامحدودة، جزاكم الله عنا خير الجزاء ودمتم في تألق وإبداع دائم. بشرى الضيافة اسم سيظل في ذاكرتي.",image:`${MEDIA_BASE}/media/testimonials/facebook-01.png`},
@@ -140,7 +132,7 @@ export default function Home(){
   useEffect(()=>{const id=setTimeout(()=>setLoading(false),1900);return()=>clearTimeout(id)},[]);
   useEffect(()=>{const video=backgroundVideoRef.current;if(!video)return;video.playbackRate=.72;if(modal)video.pause();else video.play().catch(()=>{})},[modal]);
   useEffect(()=>{const controller=new AbortController();fetch(SANITY_URL,{signal:controller.signal}).then(response=>response.ok?response.json():Promise.reject()).then(data=>setCms(data.result as CmsPayload)).catch(()=>{/* Keep the complete built-in presentation when the CMS is unavailable. */});return()=>controller.abort()},[]);
-  const selectComprehensiveService=(index:number)=>{if(comprehensiveTimer.current)clearTimeout(comprehensiveTimer.current);setActiveComprehensive(index);setComprehensivePhase("activating");comprehensiveTimer.current=window.setTimeout(()=>setComprehensivePhase("panel"),980)};
+  const selectComprehensiveService=(index:number)=>{if(comprehensiveTimer.current)clearTimeout(comprehensiveTimer.current);setActiveComprehensive(index);setComprehensivePhase("activating");comprehensiveTimer.current=window.setTimeout(()=>setComprehensivePhase("panel"),640)};
   const closeComprehensiveService=()=>{if(comprehensiveTimer.current)clearTimeout(comprehensiveTimer.current);setComprehensivePhase("idle");setActiveComprehensive(null)};
   useEffect(()=>{if(modal!=="comprehensive")return;const navigate=(event:KeyboardEvent)=>{if(event.key==="ArrowLeft"||event.key==="PageDown")selectComprehensiveService(((activeComprehensive??-1)+1)%comprehensiveServices.length);if(event.key==="ArrowRight"||event.key==="PageUp")selectComprehensiveService(((activeComprehensive??0)+comprehensiveServices.length-1)%comprehensiveServices.length)};addEventListener("keydown",navigate);return()=>removeEventListener("keydown",navigate)},[modal,activeComprehensive]);
   useEffect(()=>{const sync=()=>setIsFullscreen(Boolean(document.fullscreenElement));document.addEventListener("fullscreenchange",sync);return()=>document.removeEventListener("fullscreenchange",sync)},[]);
@@ -282,12 +274,8 @@ export default function Home(){
       <div className="comprehensive-shade"/>
       <div className="comprehensive-ambient" aria-hidden="true"><i/><i/><i/></div>
       <header className="comprehensive-heading"><small>{lang==="ar"?"الباقة الشاملة":"COMPREHENSIVE PACKAGE"}</small><h2>{lang==="ar"?"تجربة حج متكاملة 360°":"A complete 360° Hajj experience"}</h2></header>
-      <div className="comprehensive-scene-copy" aria-hidden="true"><span>{lang==="ar"?"اختر خدمة لاستكشاف الرحلة":"Select a service to explore the journey"}</span></div>
-      <svg className={"comprehensive-connection "+(activeComprehensive!==null?"is-active":"")} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        {activeComprehensive!==null&&<><path className="comprehensive-connection-halo" d={comprehensiveServicePositions[activeComprehensive].path}/><path className="comprehensive-connection-line" d={comprehensiveServicePositions[activeComprehensive].path}/><circle className="comprehensive-connection-spark" cx={comprehensiveServicePositions[activeComprehensive].x} cy={comprehensiveServicePositions[activeComprehensive].y} r="1.8"/></>}
-      </svg>
       <div className="comprehensive-orbit" role="list" aria-label={lang==="ar"?"خدمات الباقة الشاملة":"Comprehensive package services"}>
-        {comprehensiveServices.map((service,index)=><button type="button" role="listitem" key={service.icon} className={activeComprehensive===index?"is-active":""} style={{"--service-index":index,"--service-x":comprehensiveServicePositions[index].x,"--service-y":comprehensiveServicePositions[index].y} as React.CSSProperties} onClick={()=>selectComprehensiveService(index)} aria-pressed={activeComprehensive===index} aria-label={service[lang].title}><ComprehensiveServiceIcon kind={service.icon}/><span>{service[lang].title}</span></button>)}
+        {comprehensiveServices.map((service,index)=><button type="button" role="listitem" key={service.icon} className={activeComprehensive===index?"is-active":""} style={{"--service-index":index} as React.CSSProperties} onClick={()=>selectComprehensiveService(index)} aria-pressed={activeComprehensive===index} aria-label={service[lang].title}><ComprehensiveServiceIcon kind={service.icon}/><span>{service[lang].title}</span></button>)}
       </div>
       <p className="comprehensive-status" aria-live="polite">{comprehensivePhase==="activating"?(lang==="ar"?"جاري تفعيل الخدمة المختارة":"Activating selected service"):""}</p>
       {activeComprehensive!==null&&comprehensivePhase==="panel"&&<aside className="comprehensive-panel" key={activeComprehensive} dir={rtl?"rtl":"ltr"}><button type="button" className="comprehensive-panel-close" onClick={closeComprehensiveService} aria-label={lang==="ar"?"إغلاق معلومات الخدمة":"Close service information"}>×</button><small dir="ltr">{String(activeComprehensive+1).padStart(2,"0")} / 06</small><h3>{comprehensiveServices[activeComprehensive][lang].title}</h3><p>{comprehensiveServices[activeComprehensive][lang].description}</p><ul>{comprehensiveServices[activeComprehensive][lang].points.map(point=><li key={point}>{point}</li>)}</ul></aside>}
