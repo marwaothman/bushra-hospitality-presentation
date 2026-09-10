@@ -751,3 +751,7 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .comprehensive-panel-close{z-index:2;top:14px;left:14px;width:34px;height:34px;border-color:rgba(208,168,108,.56);color:#d9b56e;font-size:24px;background:rgba(4,16,26,.44)}
 .comprehensive-panel-close:hover,.comprehensive-panel-close:focus-visible{background:#b08e57;color:#061521;transform:scale(1.06)}
 @media(max-width:1000px){.comprehensive-panel{top:auto;right:16px;left:16px;bottom:76px;width:auto;padding:22px;background:rgba(5,19,31,.91)}.comprehensive-panel h3{font-size:30px}.comprehensive-panel p{font-size:15px}.comprehensive-panel ul{display:none}}
+
+/* Leadership portrait cover: turn the supplied white-background portrait into a composed executive card. */
+.hub-options>button:nth-child(3)>img{height:100%;object-position:58% 20%;filter:saturate(.74) contrast(1.06) brightness(.72)}
+.hub-options>button:nth-child(3):after{background:linear-gradient(90deg,rgba(4,20,34,.76) 0%,rgba(4,20,34,.2) 52%,rgba(4,20,34,.54) 100%),linear-gradient(0deg,rgba(4,20,34,.96) 0%,rgba(4,20,34,.1) 56%)}
