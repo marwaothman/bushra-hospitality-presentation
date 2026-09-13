@@ -839,6 +839,16 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 @media(min-width:1001px){.hub-carousel{transform:translateY(200px)}}
 .experience:has(.hub-scene.has-card-focus) .anniversary-logo{filter:brightness(0) invert(1)!important}
 .experience:has(.hub-scene.has-card-focus) .company-wordmark{filter:none!important;opacity:1!important}
+
+/* Golden-ratio executive copy layout for the focused homepage card. */
+@media(min-width:1001px){
+  .hub-heading.is-detail{position:absolute!important;top:var(--presentation-title-top)!important;right:var(--presentation-title-right)!important;left:var(--presentation-title-right)!important;width:auto!important;max-width:none!important;min-height:0!important;margin:0!important;padding:0!important;display:grid!important;grid-template-columns:.618fr 1fr!important;column-gap:clamp(42px,5vw,96px)!important;align-items:start!important;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important}
+  .hub-heading.is-detail .hub-slogan{grid-column:1!important;justify-self:end!important;margin:0!important;padding:0!important;color:#d0a86c!important;font-size:clamp(64px,3.75vw,76px)!important;line-height:1.08!important;text-align:right!important}
+  .hub-heading.is-detail p{grid-column:2!important;justify-self:start!important;width:100%!important;max-width:720px!important;margin:clamp(16px,2vh,28px) 0 0!important;padding:0!important;color:rgba(255,255,255,.86)!important;font-size:clamp(24px,1.45vw,28px)!important;line-height:1.55!important;text-align:right!important}
+}
+
+/* Compact header for executive presentation screens. */
+@media(min-width:1001px){.nav{height:78px!important;padding-block:8px!important}.brand-lockup{height:48px!important}.anniversary-logo{height:42px!important}.company-wordmark{height:39px!important}.brand-lockup>i{height:34px!important}}
 .hub-heading,.testimonial-heading,.showcase-heading,.leadership-heading,.hospitality-heading,.package-title,.comprehensive-heading{font-family:var(--presentation-title-font)}
 .testimonial-heading,.showcase-heading,.leadership-heading,.hospitality-heading{position:absolute!important;z-index:5;top:var(--presentation-title-top);right:var(--presentation-title-right);left:auto!important;width:min(48vw,780px);margin:0!important;justify-content:flex-start;text-align:right;direction:rtl}
 .testimonial-heading>span,.showcase-heading>span,.leadership-heading>span,.hospitality-heading>span,.testimonial-heading i,.showcase-heading i,.leadership-heading i{display:none!important}
