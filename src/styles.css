@@ -838,6 +838,7 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .hub-focus-backdrop{background:linear-gradient(118deg,#06192b 0%,#123c63 50%,#08263f 100%)!important}
 @media(min-width:1001px){.hub-carousel{transform:translateY(200px)}}
 .experience:has(.hub-scene.has-card-focus) .anniversary-logo{filter:brightness(0) invert(1)!important}
+.experience:has(.hub-scene.has-card-focus) .company-wordmark{filter:none!important;opacity:1!important}
 .hub-heading,.testimonial-heading,.showcase-heading,.leadership-heading,.hospitality-heading,.package-title,.comprehensive-heading{font-family:var(--presentation-title-font)}
 .testimonial-heading,.showcase-heading,.leadership-heading,.hospitality-heading{position:absolute!important;z-index:5;top:var(--presentation-title-top);right:var(--presentation-title-right);left:auto!important;width:min(48vw,780px);margin:0!important;justify-content:flex-start;text-align:right;direction:rtl}
 .testimonial-heading>span,.showcase-heading>span,.leadership-heading>span,.hospitality-heading>span,.testimonial-heading i,.showcase-heading i,.leadership-heading i{display:none!important}
