@@ -849,6 +849,14 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 
 /* Compact header for executive presentation screens. */
 @media(min-width:1001px){.nav{height:78px!important;padding-block:8px!important}.brand-lockup{height:48px!important}.anniversary-logo{height:42px!important}.company-wordmark{height:39px!important}.brand-lockup>i{height:34px!important}}
+
+/* Canonical homepage focus layout: shared by every card, never content-dependent. */
+@media(min-width:1001px){
+  :root{--focus-copy-top:clamp(150px,16vh,300px);--focus-copy-edge:clamp(42px,5vw,96px);--focus-title-width:620px;--focus-copy-width:720px;--focus-title-size:clamp(64px,3.75vw,108px);--focus-copy-size:clamp(24px,1.46vw,42px)}
+  .hub-heading.is-detail{position:absolute!important;z-index:5!important;top:var(--focus-copy-top)!important;right:var(--focus-copy-edge)!important;left:var(--focus-copy-edge)!important;width:auto!important;max-width:none!important;min-height:0!important;height:auto!important;margin:0!important;padding:0!important;display:grid!important;grid-template-columns:38.2% 61.8%!important;column-gap:0!important;align-items:start!important;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important}
+  .hub-heading.is-detail .hub-slogan{grid-column:1!important;grid-row:1!important;justify-self:end!important;width:var(--focus-title-width)!important;max-width:100%!important;margin:0!important;padding:0!important;color:#d0a86c!important;font-size:var(--focus-title-size)!important;font-weight:650!important;line-height:1.08!important;letter-spacing:-.03em!important;text-align:right!important}
+  .hub-heading.is-detail p{grid-column:2!important;grid-row:1!important;justify-self:start!important;align-self:start!important;width:var(--focus-copy-width)!important;max-width:100%!important;margin:clamp(14px,1.8vh,28px) 0 0!important;padding:0!important;color:rgba(255,255,255,.88)!important;font-size:var(--focus-copy-size)!important;font-weight:400!important;line-height:1.55!important;letter-spacing:0!important;text-align:right!important}
+}
 .hub-heading,.testimonial-heading,.showcase-heading,.leadership-heading,.hospitality-heading,.package-title,.comprehensive-heading{font-family:var(--presentation-title-font)}
 .testimonial-heading,.showcase-heading,.leadership-heading,.hospitality-heading{position:absolute!important;z-index:5;top:var(--presentation-title-top);right:var(--presentation-title-right);left:auto!important;width:min(48vw,780px);margin:0!important;justify-content:flex-start;text-align:right;direction:rtl}
 .testimonial-heading>span,.showcase-heading>span,.leadership-heading>span,.hospitality-heading>span,.testimonial-heading i,.showcase-heading i,.leadership-heading i{display:none!important}
