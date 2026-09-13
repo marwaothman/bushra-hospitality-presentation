@@ -868,3 +868,45 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .hub-options>button:nth-child(3){background:#0b2438!important}.hub-options>button:nth-child(3)>img{height:70%!important;mix-blend-mode:normal!important;opacity:1!important;filter:saturate(.93) contrast(1.03) brightness(.96)!important}.hub-options>button:nth-child(3):after{background:linear-gradient(180deg,rgba(3,16,27,.03) 18%,rgba(3,16,27,.12) 56%,rgba(3,16,27,.94) 78%,#071d30 100%)!important}
 @keyframes hubFocusReveal{from{opacity:0;transform:scale(1.045)}to{opacity:1;transform:scale(1)}}
 @media(max-width:1000px){:root{--presentation-title-top:calc(var(--mobile-header,76px) + 22px);--presentation-title-right:20px;--presentation-title-size:clamp(30px,7vw,46px)}.testimonial-heading,.showcase-heading,.leadership-heading,.hospitality-heading,.package-title,.comprehensive-heading,.hub-heading{width:calc(100% - 40px)!important}.hub-focus-backdrop{background-position:center}.hub-scene.has-card-focus .hub-carousel{opacity:.84}.experience:has(.hub-scene.has-card-focus) .nav{background:rgba(2,12,20,.66)!important}}
+
+/* Final shared editorial composition for every focused homepage card.
+   The title and story are deliberately opposite each other, aligned at the top. */
+@media(min-width:1001px){
+  .hub-heading.is-detail{
+    top:clamp(154px,17vh,292px)!important;
+    right:clamp(52px,5vw,100px)!important;
+    left:clamp(52px,5vw,100px)!important;
+    width:auto!important;
+    display:grid!important;
+    grid-template-columns:minmax(360px,1fr) minmax(420px,.92fr)!important;
+    column-gap:clamp(88px,9vw,190px)!important;
+    align-items:start!important;
+    direction:ltr!important;
+  }
+  .hub-heading.is-detail .hub-slogan{
+    grid-column:2!important;
+    grid-row:1!important;
+    justify-self:end!important;
+    width:min(100%,650px)!important;
+    margin:0!important;
+    direction:rtl!important;
+    font-size:clamp(68px,4.15vw,112px)!important;
+    line-height:1.05!important;
+    letter-spacing:-.035em!important;
+    text-align:right!important;
+    text-wrap:balance;
+  }
+  .hub-heading.is-detail p{
+    grid-column:1!important;
+    grid-row:1!important;
+    justify-self:start!important;
+    width:min(100%,730px)!important;
+    max-width:730px!important;
+    margin:0!important;
+    padding-top:clamp(8px,1vh,16px)!important;
+    direction:rtl!important;
+    font-size:clamp(23px,1.42vw,38px)!important;
+    line-height:1.52!important;
+    text-align:right!important;
+  }
+}
