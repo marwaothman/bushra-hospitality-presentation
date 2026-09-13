@@ -122,6 +122,15 @@ export default function Home(){
     {title:t.testimonials,brief:lang==="ar"?"أصوات ضيوفنا وشركائنا تحكي تجربة بشرى كما عاشوها.":"Guests and partners share the Bushra experience in their own words."},
     {title:t.videos,brief:lang==="ar"?"مشاهد مختارة توثق حضور بشرى وخدماتها في الميدان.":"Selected moments documenting Bushra's services and presence in the field."},
   ];
+  const hubFocusImages=[
+    "/media/brand/comprehensive-package-cover.webp",
+    `${MEDIA_BASE}/media/trust/trust-slide-2.jpg`,
+    "/media/brand/leadership-cover-v2.jpg",
+    `${MEDIA_BASE}/media/hospitality/makkah-accommodation-poster.jpg`,
+    `${MEDIA_BASE}/media/level-1/services-poster.jpg`,
+    `${MEDIA_BASE}/media/testimonials/ibrahim-al-saghir-poster.jpg`,
+    `${MEDIA_BASE}/media/showcase/01.jpg`,
+  ];
   const hasLevelOneArabic=selected===1&&lang==="ar";
   const galleryTotal=hasLevelOneArabic?50:60;
   const touchStart=useRef(0);
@@ -179,12 +188,13 @@ export default function Home(){
     </header>
 
     <section className={`hub-scene ${section==="home"?"is-here":""} ${activeHub!==null?"has-card-focus":""}`}>
+      {activeHub!==null&&<div className="hub-focus-backdrop" style={{backgroundImage:`url("${hubFocusImages[activeHub]}")`}} aria-hidden="true"/>}
       <div className={`hub-heading ${activeHub!==null?"is-detail":""}`}><h1 className="hub-slogan">{activeHub===null?t.kicker:hubDetails[activeHub].title}</h1>{activeHub!==null&&<p>{hubDetails[activeHub].brief}</p>}</div>
       <div className="hub-carousel">
         <div className={`hub-options ${activeHub!==null?"has-active":""}`} ref={hubOptionsRef} onPointerLeave={()=>setActiveHub(null)}>
           <button className={`hub-comprehensive-card ${activeHub===0?"is-active":""}`} onPointerEnter={()=>setActiveHub(0)} onFocus={()=>setActiveHub(0)} onClick={()=>{setActiveComprehensive(null);setModal("comprehensive")}}><img src="/media/brand/comprehensive-package-cover.webp" alt=""/><strong>{lang==="ar"?"الباقة الشاملة":"Comprehensive Package"}</strong><small>360°</small></button>
           <button className={activeHub===1?"is-active":""} onPointerEnter={()=>setActiveHub(1)} onFocus={()=>setActiveHub(1)} onClick={()=>{setActiveTrust(0);setModal("trust")}}><img src={`${MEDIA_BASE}/media/trust/trust-slide-2.jpg`} alt=""/><span><TrustIcon/></span><strong>{t.trust}</strong></button>
-          <button className={activeHub===2?"is-active":""} onPointerEnter={()=>setActiveHub(2)} onFocus={()=>setActiveHub(2)} onClick={()=>transition(()=>setSection("team"))}><img src="/media/brand/leadership-cover.jpg" alt=""/><span><TeamIcon/></span><strong>{t.team}</strong></button>
+          <button className={activeHub===2?"is-active":""} onPointerEnter={()=>setActiveHub(2)} onFocus={()=>setActiveHub(2)} onClick={()=>transition(()=>setSection("team"))}><img src="/media/brand/leadership-cover-v2.jpg" alt=""/><span><TeamIcon/></span><strong>{t.team}</strong></button>
           <button className={activeHub===3?"is-active":""} onPointerEnter={()=>setActiveHub(3)} onFocus={()=>setActiveHub(3)} onClick={()=>transition(()=>setSection("hospitality"))}><img src={`${MEDIA_BASE}/media/hospitality/makkah-accommodation-poster.jpg`} alt=""/><span><HospitalityIcon/></span><strong>{t.hospitality}</strong></button>
           <button className={activeHub===4?"is-active":""} onPointerEnter={()=>setActiveHub(4)} onFocus={()=>setActiveHub(4)} onClick={()=>transition(()=>setSection("packages"))}><img src={`${MEDIA_BASE}/media/level-1/services-poster.jpg`} alt=""/><span><PackagesIcon/></span><strong>{t.packages}</strong></button>
           <button className={activeHub===5?"is-active":""} onPointerEnter={()=>setActiveHub(5)} onFocus={()=>setActiveHub(5)} onClick={()=>transition(()=>setSection("testimonials"))}><img src={`${MEDIA_BASE}/media/testimonials/ibrahim-al-saghir-poster.jpg`} alt=""/><span><QuoteIcon/></span><strong>{t.testimonials}</strong></button>
