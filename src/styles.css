@@ -825,6 +825,14 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .hub-focus-backdrop:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,14,24,.88) 0%,rgba(2,14,24,.45) 38%,rgba(2,14,24,.2) 70%,rgba(2,14,24,.38)),linear-gradient(0deg,rgba(2,14,24,.65),transparent 52%)}
 .hub-scene.has-card-focus .hub-heading,.hub-scene.has-card-focus .hub-carousel{position:relative;z-index:2}.hub-scene.has-card-focus .hub-heading{color:#fff}.hub-scene.has-card-focus .hub-options>button:not(.is-active){opacity:.32!important;filter:saturate(.55) brightness(.64)!important;transform:scale(.97)!important}.hub-scene.has-card-focus .hub-options>button.is-active{transform:translateY(-10px) scale(1.045)!important}
 .experience:has(.hub-scene.has-card-focus) .nav{background:linear-gradient(180deg,rgba(2,12,20,.72),rgba(2,12,20,.18))!important;border-color:rgba(255,255,255,.1)!important;box-shadow:none!important}.experience:has(.hub-scene.has-card-focus) .brand-lockup img{filter:brightness(0) invert(1);opacity:.94}.experience:has(.hub-scene.has-card-focus) .lang-switch{background:rgba(3,16,27,.36)}
+
+/* Homepage card focus: one continuous cinematic grade, including the header. */
+.hub-scene.has-card-focus{z-index:110}
+.hub-scene.has-card-focus:before{content:none}
+.hub-scene.has-card-focus .hub-focus-backdrop{position:fixed;inset:0;z-index:0}
+.hub-focus-backdrop:after{background:linear-gradient(112deg,rgba(3,18,31,.94) 0%,rgba(8,38,65,.76) 46%,rgba(5,25,43,.82) 100%),linear-gradient(0deg,rgba(2,13,24,.78),rgba(2,13,24,.08) 62%)}
+.experience:has(.hub-scene.has-card-focus) .nav{background:transparent!important;border-color:rgba(255,255,255,.13)!important}
+.hub-scene.has-card-focus .hub-heading,.hub-scene.has-card-focus .hub-heading .hub-slogan,.hub-scene.has-card-focus .hub-heading p{background:transparent!important;box-shadow:none!important;border:0!important}
 .hub-heading,.testimonial-heading,.showcase-heading,.leadership-heading,.hospitality-heading,.package-title,.comprehensive-heading{font-family:var(--presentation-title-font)}
 .testimonial-heading,.showcase-heading,.leadership-heading,.hospitality-heading{position:absolute!important;z-index:5;top:var(--presentation-title-top);right:var(--presentation-title-right);left:auto!important;width:min(48vw,780px);margin:0!important;justify-content:flex-start;text-align:right;direction:rtl}
 .testimonial-heading>span,.showcase-heading>span,.leadership-heading>span,.hospitality-heading>span,.testimonial-heading i,.showcase-heading i,.leadership-heading i{display:none!important}
