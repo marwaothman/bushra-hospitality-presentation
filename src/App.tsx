@@ -171,7 +171,7 @@ export default function Home(){
     <div className="brand-film" aria-hidden="true"><video ref={backgroundVideoRef} src={`${MEDIA_BASE}/media/brand/background-video2.mp4`} poster={`${MEDIA_BASE}/media/brand/background-poster.jpg`} onLoadedMetadata={e=>{e.currentTarget.playbackRate=.72}} autoPlay muted loop playsInline preload="auto"/><div className="film-grade"/><div className="film-vignette"/><div className="film-grain"/></div>
     <div className="aurora"/><div className="cursor-light"/><div className="edge-noise"/>
     <header className="nav">
-      <button className="brand-lockup" onClick={()=>transition(()=>{setSelected(null);setSection("home")})} aria-label="Bushra Hospitality home"><img className="anniversary-logo" src={`${MEDIA_BASE}/anniversary-logo.svg`} alt="11th anniversary"/><i/><img className="company-wordmark" src={`${MEDIA_BASE}/company-logo-horizontal.svg`} alt="Bushra Hospitality"/></button>
+      <button className="brand-lockup" onClick={()=>transition(()=>{setSelected(null);setSection("home")})} aria-label="Bushra Hospitality home"><img className="anniversary-logo" src={`${MEDIA_BASE}/anniversary-logo.svg`} alt="11th anniversary"/><i/><img className="company-wordmark" src={activeHub!==null?"/media/brand/company-logo-dark.svg":`${MEDIA_BASE}/company-logo-horizontal.svg`} alt="Bushra Hospitality"/></button>
       <div className="lang-switch" role="group" aria-label="Language selection">
         <button className={lang==="ar"?"is-active":""} onClick={()=>setLang("ar")} aria-label="العربية" aria-pressed={lang==="ar"}><span>عربي</span></button>
         <button className={lang==="en"?"is-active":""} onClick={()=>setLang("en")} aria-label="English" aria-pressed={lang==="en"}><span>English</span></button>
