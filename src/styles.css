@@ -627,6 +627,26 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .global-step-nav .utility-step--close{font:300 30px/1 Arial,sans-serif;color:#d0a86c}
 @media(max-width:760px){.global-step-nav .utility-row{gap:6px;padding:5px 8px}.global-step-nav .utility-step{width:38px;height:38px}.global-step-nav .utility-step svg{width:17px;height:17px}.global-step-nav .utility-step--close{font-size:25px}}
 
+/* Global presentation safe area: every overlay begins below the fixed header. */
+.experience{--presentation-header:78px;--presentation-footer:58px}
+.modal-layer .video-screen-stage,.gallery--real .screen-stage{inset:calc(var(--presentation-header) + 4px) 0 var(--presentation-footer)}
+.video-screen-frame{width:min(94vw,calc((100dvh - var(--presentation-header) - var(--presentation-footer) - 16px) * 1.777),1500px);max-height:calc(100dvh - var(--presentation-header) - var(--presentation-footer) - 16px)}
+.gallery--real .gallery-frame{width:min(94vw,calc((100dvh - var(--presentation-header) - var(--presentation-footer) - 16px) * 1.414),1500px);max-height:calc(100dvh - var(--presentation-header) - var(--presentation-footer) - 16px)}
+.control-observation-gallery .gallery-frame{width:min(92vw,calc((100dvh - var(--presentation-header) - var(--presentation-footer) - 16px) * 1.5),1540px);height:min(calc(100dvh - var(--presentation-header) - var(--presentation-footer) - 16px),calc(92vw / 1.5))}
+.trust-slide-stage{top:calc(var(--presentation-header) + 10px)}
+.testimonial-evidence-stage{top:calc(var(--presentation-header) + 10px)}
+.cinema:not(.cinema--video),.trust-modal,.qr-modal{padding-top:var(--presentation-header);padding-bottom:var(--presentation-footer)}
+
+@media(max-width:760px){
+  .experience{--presentation-header:68px;--presentation-footer:54px}
+  .modal-layer .video-screen-stage,.gallery--real .screen-stage{inset:calc(var(--presentation-header) + 4px) 0 var(--presentation-footer);padding:0 8px}
+  .video-screen-frame{width:min(96vw,calc((100dvh - var(--presentation-header) - var(--presentation-footer) - 12px) * 1.777));max-height:calc(100dvh - var(--presentation-header) - var(--presentation-footer) - 12px)}
+  .gallery--real .gallery-frame{width:min(96vw,calc((100dvh - var(--presentation-header) - var(--presentation-footer) - 12px) * 1.414));height:auto;max-height:calc(100dvh - var(--presentation-header) - var(--presentation-footer) - 12px)}
+  .control-observation-gallery .gallery-frame{width:min(100vw,calc((100dvh - var(--presentation-header) - var(--presentation-footer)) * 1.5));height:min(calc(100dvh - var(--presentation-header) - var(--presentation-footer)),calc(100vw / 1.5))}
+  .trust-slide-stage,.testimonial-evidence-stage{top:calc(var(--presentation-header) + 6px)}
+}
+@media(max-width:760px) and (orientation:landscape){.experience{--presentation-header:54px;--presentation-footer:42px}}
+
 
 /* Reachable executive rail and icon-free cards */
 @media(min-width:1001px){
