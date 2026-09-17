@@ -248,13 +248,13 @@ export default function Home(){
     </section>
 
     <section className={`hospitality-scene ${section==="hospitality"?"is-here":""}`} aria-labelledby="hospitality-title">
-      <header className="hospitality-heading"><small>{lang==="ar"?"منظومة الضيافة المتكاملة":"INTEGRATED HOSPITALITY SYSTEM"}</small><h2 id="hospitality-title">{t.hospitalityTitle}</h2><p>{lang==="ar"?"منظومة تشغيلية متكاملة ترافق ضيف الرحمن في كل محطة":"An integrated operating system accompanying every guest through each stage of the journey."}</p><b>{lang==="ar"?"11 قطاعاً متكاملاً · رحلة واحدة للضيف":"11 INTEGRATED SECTORS · ONE GUEST JOURNEY"}</b></header>
+      <header className="hospitality-heading"><small>{lang==="ar"?"منظومة الضيافة المتكاملة":"INTEGRATED HOSPITALITY SYSTEM"}</small><h2 id="hospitality-title">{t.hospitalityTitle}</h2><p>{lang==="ar"?"منظومة تشغيلية متكاملة ترافق ضيف الرحمن في كل محطة":"An integrated operating system accompanying every guest through each stage of the journey."}</p></header>
       <div className="hospitality-phase-rail" role="tablist" aria-label={lang==="ar"?"مراحل رحلة الضيافة":"Hospitality journey phases"}>
-        {hospitalityPhases.map((phase,index)=><button type="button" role="tab" aria-selected={activeHospitalityPhase===index} className={activeHospitalityPhase===index?"is-active":""} key={phase.en} onClick={()=>setActiveHospitalityPhase(index)}><i>{String(index+1).padStart(2,"0")}</i><span>{phase[lang]}</span><em>{phase.indices.length}</em></button>)}
+        {hospitalityPhases.map((phase,index)=><button type="button" role="tab" aria-selected={activeHospitalityPhase===index} className={activeHospitalityPhase===index?"is-active":""} key={phase.en} onClick={()=>setActiveHospitalityPhase(index)}><span>{phase[lang]}</span></button>)}
       </div>
       <div className="journey-map" role="list" aria-live="polite">
         {hospitalityPhases[activeHospitalityPhase].indices.map((stageIndex,position)=>{const stage=managedStages[stageIndex];return <button type="button" role="listitem" className="journey-stage" key={stage.ar} style={{"--stage-index":position} as React.CSSProperties} onClick={()=>{setActiveHospitality(stageIndex);if(stageIndex===2)setActiveReception(0);if(stageIndex===9)setActiveControlObservation(0);setModal("hospitality")}}>
-          <span className="journey-number">{String(stageIndex+1).padStart(2,"0")}</span><span className="journey-node">{stage.kind==="video"?<Play/>:<Frames/>}</span><strong>{stage[lang]}</strong><small>{stage.kind==="video"?t.videoMedia:t.galleryMedia}</small>
+          <span className="journey-node"><Arrow/></span><strong>{stage[lang]}</strong>
         </button>})}
       </div>
     </section>
