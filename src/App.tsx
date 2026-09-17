@@ -55,6 +55,19 @@ const hospitalityStages=[
   {ar:"الرصد والتحكم",en:"Control & Observation",kind:"gallery"},
   {ar:"فريق السعادة ورضا الضيف",en:"Guest Happiness Team",kind:"gallery"},
 ] as const;
+const hospitalityValue=[
+  {ar:"رحلة رقمية موثوقة تبدأ قبل الوصول",en:"A trusted digital journey before arrival"},
+  {ar:"إقامة جاهزة ومترابطة في مكة",en:"Ready, connected accommodation in Makkah"},
+  {ar:"استقبال منظم يليق بضيوف الرحمن",en:"A coordinated welcome worthy of every guest"},
+  {ar:"حركة آمنة بانسيابية تشغيلية",en:"Safe movement through operational precision"},
+  {ar:"جاهزية متكاملة في المشاعر المقدسة",en:"Integrated readiness across the holy sites"},
+  {ar:"جودة وسلامة في كل وجبة",en:"Quality and safety in every meal"},
+  {ar:"فرق مؤهلة حيث تدعو الحاجة",en:"Qualified teams wherever service is needed"},
+  {ar:"استمرارية الخدمة ودعم الميدان",en:"Service continuity and field support"},
+  {ar:"متابعة لحظية ترفع كفاءة التنفيذ",en:"Live oversight that strengthens execution"},
+  {ar:"قرارات أسرع برؤية تشغيلية موحدة",en:"Faster decisions through one operational view"},
+  {ar:"صوت الضيف يتحول إلى تحسين مستمر",en:"The guest voice driving continuous improvement"},
+] as const;
 
 type CmsPayload={
   settings?:{homepageTitleAr?:string;homepageTitleEn?:string}|null;
@@ -248,13 +261,13 @@ export default function Home(){
     </section>
 
     <section className={`hospitality-scene ${section==="hospitality"?"is-here":""}`} aria-labelledby="hospitality-title">
-      <header className="hospitality-heading"><small>{lang==="ar"?"منظومة الضيافة المتكاملة":"INTEGRATED HOSPITALITY SYSTEM"}</small><h2 id="hospitality-title">{t.hospitalityTitle}</h2><p>{lang==="ar"?"منظومة تشغيلية متكاملة ترافق ضيف الرحمن في كل محطة":"An integrated operating system accompanying every guest through each stage of the journey."}</p></header>
+      <header className="hospitality-heading"><small>{lang==="ar"?"منظومة الضيافة المتكاملة":"INTEGRATED HOSPITALITY SYSTEM"}</small><h2 id="hospitality-title">{t.hospitalityTitle}</h2><p>{lang==="ar"?"أربع مراحل تشغيلية، وأحد عشر قطاعًا متكاملًا، وتجربة ضيف واحدة مترابطة.":"Four operational stages. Eleven integrated sectors. One seamless guest experience."}</p></header>
       <div className="hospitality-phase-rail" role="tablist" aria-label={lang==="ar"?"مراحل رحلة الضيافة":"Hospitality journey phases"}>
         {hospitalityPhases.map((phase,index)=><button type="button" role="tab" aria-selected={activeHospitalityPhase===index} className={activeHospitalityPhase===index?"is-active":""} key={phase.en} onClick={()=>setActiveHospitalityPhase(index)}><span>{phase[lang]}</span></button>)}
       </div>
       <div className="journey-map" role="list" aria-live="polite">
         {hospitalityPhases[activeHospitalityPhase].indices.map((stageIndex,position)=>{const stage=managedStages[stageIndex];return <button type="button" role="listitem" className="journey-stage" key={stage.ar} style={{"--stage-index":position} as React.CSSProperties} onClick={()=>{setActiveHospitality(stageIndex);if(stageIndex===2)setActiveReception(0);if(stageIndex===9)setActiveControlObservation(0);setModal("hospitality")}}>
-          <span className="journey-node"><Arrow/></span><strong>{stage[lang]}</strong>
+          <span className="journey-node"><Arrow/></span><strong>{stage[lang]}</strong><p>{hospitalityValue[stageIndex][lang]}</p>
         </button>})}
       </div>
     </section>

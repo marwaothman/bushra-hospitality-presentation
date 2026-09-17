@@ -313,6 +313,40 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .hub-options>button:nth-child(6){--tower-shift:10px;height:calc(90% - 20px)}
 }
 
+/* Executive operating journey — scoped exclusively to قطاعاتنا. */
+@media(min-width:1001px){
+  .hospitality-scene{padding:clamp(116px,12vh,150px) clamp(46px,5vw,100px) 92px!important;background:radial-gradient(ellipse at 50% 54%,rgba(21,70,111,.38),transparent 48%),linear-gradient(118deg,#031522 0%,#082a43 52%,#031725 100%)!important}
+  .hospitality-scene .hospitality-heading{position:relative!important;top:auto!important;right:auto!important;left:auto!important;width:min(1380px,88vw)!important;margin:0 auto!important;display:grid!important;grid-template-columns:minmax(420px,.95fr) minmax(470px,1.05fr)!important;grid-template-areas:"lead tag" "lead title"!important;column-gap:clamp(64px,7vw,130px)!important;align-items:end!important;direction:ltr!important;text-align:right!important}
+  .hospitality-scene .hospitality-heading small{grid-area:tag;display:block!important;margin:0 0 10px!important;color:#d0a86c;font-size:11px;font-weight:650;letter-spacing:.08em;direction:rtl}
+  .hospitality-scene .hospitality-heading h2{grid-area:title;font-size:clamp(50px,4vw,76px)!important;direction:rtl}
+  .hospitality-scene .hospitality-heading p{grid-area:lead;align-self:end;max-width:650px!important;margin:0 0 5px!important;color:rgba(255,255,255,.84)!important;font-size:clamp(18px,1.25vw,24px)!important;line-height:1.65!important;direction:rtl}
+  .experience[dir="ltr"] .hospitality-scene .hospitality-heading{direction:ltr!important;text-align:left!important;grid-template-areas:"tag lead" "title lead"!important}
+  .experience[dir="ltr"] .hospitality-scene .hospitality-heading small,.experience[dir="ltr"] .hospitality-scene .hospitality-heading h2,.experience[dir="ltr"] .hospitality-scene .hospitality-heading p{direction:ltr!important}
+  .hospitality-scene .hospitality-phase-rail{width:min(1040px,72vw)!important;margin:clamp(22px,2.8vh,34px) auto 0!important;padding:6px!important;gap:5px!important;border:1px solid rgba(208,168,108,.16)!important;border-radius:999px!important;background:rgba(2,18,30,.55)!important;box-shadow:0 20px 55px rgba(0,0,0,.2)!important;backdrop-filter:blur(18px)}
+  .hospitality-scene .hospitality-phase-rail button{min-height:54px!important;padding:10px 18px!important;border:0!important;border-radius:999px!important;background:transparent!important;display:flex!important;justify-content:center!important;text-align:center!important;color:rgba(255,255,255,.58)!important}
+  .hospitality-scene .hospitality-phase-rail button:hover,.hospitality-scene .hospitality-phase-rail button:focus-visible{background:rgba(255,255,255,.06)!important;color:#fff!important}
+  .hospitality-scene .hospitality-phase-rail button.is-active{background:linear-gradient(135deg,#d5ae72,#aa844e)!important;color:#071d30!important;box-shadow:0 13px 30px rgba(0,0,0,.28)!important;transform:none!important}
+  .hospitality-scene .journey-map{width:min(1240px,84vw)!important;margin:clamp(26px,3vh,38px) auto 0!important;gap:clamp(18px,1.8vw,30px)!important;align-items:stretch!important}
+  .hospitality-scene .journey-map:before{display:none!important}
+  .hospitality-scene .journey-stage,.hospitality-scene .journey-stage:nth-child(n){height:clamp(176px,22vh,220px)!important;min-height:176px!important;max-width:360px!important;padding:28px 27px 24px!important;align-items:flex-start!important;justify-content:flex-end!important;gap:10px!important;text-align:right!important;border:1px solid rgba(255,255,255,.09)!important;border-radius:18px!important;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(7,35,57,.82) 60%,rgba(3,18,30,.96))!important;box-shadow:0 24px 58px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.08)!important;backdrop-filter:blur(18px)}
+  .hospitality-scene .journey-stage:before{content:""!important;position:absolute!important;inset:0!important;border:0!important;border-radius:inherit!important;background:linear-gradient(135deg,rgba(208,168,108,.13),transparent 46%)!important;opacity:0!important;transition:opacity .35s ease!important}
+  .hospitality-scene .journey-node{position:absolute;top:24px;inset-inline-end:24px;width:44px!important;height:44px!important;border-color:rgba(208,168,108,.36)!important;background:rgba(2,19,32,.58)!important;box-shadow:none!important;transition:transform .45s cubic-bezier(.16,1,.3,1),background .35s,border-color .35s!important}
+  .hospitality-scene .journey-node:after{display:none!important}
+  .hospitality-scene .journey-node svg{width:20px!important;height:12px!important;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+  .hospitality-scene .journey-stage strong{position:relative;z-index:1;max-width:100%!important;min-height:0!important;justify-content:flex-start!important;color:#fff;font-size:clamp(17px,1.1vw,21px)!important;line-height:1.35!important;text-align:inherit!important}
+  .hospitality-scene .journey-stage p{position:relative;z-index:1;max-width:270px;margin:0;color:rgba(255,255,255,.58);font-size:clamp(11px,.78vw,14px);line-height:1.55;opacity:0;transform:translateY(8px);transition:opacity .35s ease,transform .45s cubic-bezier(.16,1,.3,1)}
+  .hospitality-scene .journey-stage:hover,.hospitality-scene .journey-stage:focus-visible{transform:translateY(-8px)!important;border-color:rgba(208,168,108,.5)!important;background:linear-gradient(145deg,rgba(208,168,108,.16),rgba(9,45,72,.9) 58%,rgba(3,18,30,.98))!important;box-shadow:0 34px 72px rgba(0,0,0,.38),0 0 0 1px rgba(208,168,108,.08)!important;outline:none}
+  .hospitality-scene .journey-stage:hover:before,.hospitality-scene .journey-stage:focus-visible:before{opacity:1!important}
+  .hospitality-scene .journey-stage:hover p,.hospitality-scene .journey-stage:focus-visible p{opacity:1;transform:none}
+  .hospitality-scene .journey-stage:hover .journey-node,.hospitality-scene .journey-stage:focus-visible .journey-node{transform:translateX(-3px);border-color:#d0a86c!important;background:rgba(208,168,108,.13)!important}
+  .experience[dir="ltr"] .hospitality-scene .journey-stage{text-align:left!important}
+  .experience[dir="ltr"] .hospitality-scene .journey-stage:hover .journey-node,.experience[dir="ltr"] .hospitality-scene .journey-stage:focus-visible .journey-node{transform:translateX(3px)}
+}
+@media(max-width:1000px){
+  .hospitality-scene .journey-stage p{margin:0;color:rgba(255,255,255,.58);font-size:11px;line-height:1.45}
+  .hospitality-scene .journey-stage{border-radius:14px!important}
+}
+
 /* Keep the sectors heading in document flow; global presentation-title rules must not cover its phase controls. */
 .hospitality-scene .hospitality-heading{position:relative!important;top:auto!important;right:auto!important;left:auto!important;width:min(1560px,94vw)!important;margin:0 auto!important;z-index:2!important}
 @media(max-width:1000px){.hospitality-scene .hospitality-heading{width:100%!important}}
@@ -990,3 +1024,34 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
     text-align:right!important;
   }
 }
+
+/* Final sectors composition — kept last so shared presentation rules cannot override it. */
+@media(min-width:1001px){
+  .hospitality-scene{padding:clamp(116px,12vh,150px) clamp(46px,5vw,100px) 92px!important;background:radial-gradient(ellipse at 50% 54%,rgba(21,70,111,.38),transparent 48%),linear-gradient(118deg,#031522 0%,#082a43 52%,#031725 100%)!important}
+  .hospitality-scene .hospitality-heading{position:relative!important;top:auto!important;right:auto!important;left:auto!important;width:min(1380px,88vw)!important;margin:0 auto!important;display:grid!important;grid-template-columns:minmax(420px,.95fr) minmax(470px,1.05fr)!important;grid-template-areas:"lead tag" "lead title"!important;column-gap:clamp(64px,7vw,130px)!important;align-items:end!important;direction:ltr!important;text-align:right!important}
+  .hospitality-scene .hospitality-heading small{grid-area:tag;display:block!important;margin:0 0 10px!important;color:#d0a86c;font-size:11px;font-weight:650;letter-spacing:.08em;direction:rtl}
+  .hospitality-scene .hospitality-heading h2{grid-area:title;font-size:clamp(50px,4vw,76px)!important;direction:rtl}
+  .hospitality-scene .hospitality-heading p{grid-area:lead;align-self:end;max-width:650px!important;margin:0 0 5px!important;color:rgba(255,255,255,.84)!important;font-size:clamp(18px,1.25vw,24px)!important;line-height:1.65!important;direction:rtl}
+  .experience[dir="ltr"] .hospitality-scene .hospitality-heading{direction:ltr!important;text-align:left!important;grid-template-areas:"tag lead" "title lead"!important}
+  .experience[dir="ltr"] .hospitality-scene .hospitality-heading small,.experience[dir="ltr"] .hospitality-scene .hospitality-heading h2,.experience[dir="ltr"] .hospitality-scene .hospitality-heading p{direction:ltr!important}
+  .hospitality-scene .hospitality-phase-rail{width:min(1040px,72vw)!important;margin:clamp(22px,2.8vh,34px) auto 0!important;padding:6px!important;gap:5px!important;border:1px solid rgba(208,168,108,.16)!important;border-radius:999px!important;background:rgba(2,18,30,.55)!important;box-shadow:0 20px 55px rgba(0,0,0,.2)!important;backdrop-filter:blur(18px)}
+  .hospitality-scene .hospitality-phase-rail button{min-height:54px!important;padding:10px 18px!important;border:0!important;border-radius:999px!important;background:transparent!important;display:flex!important;justify-content:center!important;text-align:center!important;color:rgba(255,255,255,.58)!important}
+  .hospitality-scene .hospitality-phase-rail button:hover,.hospitality-scene .hospitality-phase-rail button:focus-visible{background:rgba(255,255,255,.06)!important;color:#fff!important}
+  .hospitality-scene .hospitality-phase-rail button.is-active{background:linear-gradient(135deg,#d5ae72,#aa844e)!important;color:#071d30!important;box-shadow:0 13px 30px rgba(0,0,0,.28)!important;transform:none!important}
+  .hospitality-scene .journey-map{width:min(1240px,84vw)!important;margin:clamp(26px,3vh,38px) auto 0!important;gap:clamp(18px,1.8vw,30px)!important;align-items:stretch!important}
+  .hospitality-scene .journey-map:before{display:none!important}
+  .hospitality-scene .journey-stage,.hospitality-scene .journey-stage:nth-child(n){height:clamp(176px,22vh,220px)!important;min-height:176px!important;max-width:360px!important;padding:28px 27px 24px!important;align-items:flex-start!important;justify-content:flex-end!important;gap:10px!important;text-align:right!important;border:1px solid rgba(255,255,255,.09)!important;border-radius:18px!important;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(7,35,57,.82) 60%,rgba(3,18,30,.96))!important;box-shadow:0 24px 58px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.08)!important;backdrop-filter:blur(18px)}
+  .hospitality-scene .journey-stage:before{content:""!important;position:absolute!important;inset:0!important;border:0!important;border-radius:inherit!important;background:linear-gradient(135deg,rgba(208,168,108,.13),transparent 46%)!important;opacity:0!important;transition:opacity .35s ease!important}
+  .hospitality-scene .journey-node{position:absolute;top:24px;inset-inline-end:24px;width:44px!important;height:44px!important;border-color:rgba(208,168,108,.36)!important;background:rgba(2,19,32,.58)!important;box-shadow:none!important;transition:transform .45s cubic-bezier(.16,1,.3,1),background .35s,border-color .35s!important}
+  .hospitality-scene .journey-node:after{display:none!important}
+  .hospitality-scene .journey-node svg{width:20px!important;height:12px!important;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+  .hospitality-scene .journey-stage strong{position:relative;z-index:1;max-width:100%!important;min-height:0!important;justify-content:flex-start!important;color:#fff;font-size:clamp(17px,1.1vw,21px)!important;line-height:1.35!important;text-align:inherit!important}
+  .hospitality-scene .journey-stage p{position:relative;z-index:1;max-width:270px;margin:0;color:rgba(255,255,255,.58);font-size:clamp(11px,.78vw,14px);line-height:1.55;opacity:0;transform:translateY(8px);transition:opacity .35s ease,transform .45s cubic-bezier(.16,1,.3,1)}
+  .hospitality-scene .journey-stage:hover,.hospitality-scene .journey-stage:focus-visible{transform:translateY(-8px)!important;border-color:rgba(208,168,108,.5)!important;background:linear-gradient(145deg,rgba(208,168,108,.16),rgba(9,45,72,.9) 58%,rgba(3,18,30,.98))!important;box-shadow:0 34px 72px rgba(0,0,0,.38),0 0 0 1px rgba(208,168,108,.08)!important;outline:none}
+  .hospitality-scene .journey-stage:hover:before,.hospitality-scene .journey-stage:focus-visible:before{opacity:1!important}
+  .hospitality-scene .journey-stage:hover p,.hospitality-scene .journey-stage:focus-visible p{opacity:1;transform:none}
+  .hospitality-scene .journey-stage:hover .journey-node,.hospitality-scene .journey-stage:focus-visible .journey-node{transform:translateX(-3px);border-color:#d0a86c!important;background:rgba(208,168,108,.13)!important}
+  .experience[dir="ltr"] .hospitality-scene .journey-stage{text-align:left!important}
+  .experience[dir="ltr"] .hospitality-scene .journey-stage:hover .journey-node,.experience[dir="ltr"] .hospitality-scene .journey-stage:focus-visible .journey-node{transform:translateX(3px)}
+}
+@media(max-width:1000px){.hospitality-scene .journey-stage p{margin:0;color:rgba(255,255,255,.58);font-size:11px;line-height:1.45}.hospitality-scene .journey-stage{border-radius:14px!important}}
