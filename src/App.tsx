@@ -1,7 +1,7 @@
 const MEDIA_BASE="https://bushra-hospitality-packages.marwaothman999.chatgpt.site";
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
 import QRCode from "qrcode";
 
 type Lang="ar"|"en"; type Level=1|2|3; type Modal="video"|"gallery"|"details"|"showcase"|"hospitality"|"trust"|"testimonial"|"testimonialVideo"|"comprehensive"|"qr"|null; type Section="home"|"packages"|"testimonials"|"videos"|"team"|"hospitality"; type ComprehensivePhase="idle"|"activating"|"panel";
@@ -125,6 +125,15 @@ export default function Home(){
     {title:t.testimonials,brief:lang==="ar"?"أصوات ضيوفنا وشركائنا تحكي تجربة بشرى كما عاشوها.":"Guests and partners share the Bushra experience in their own words."},
     {title:t.videos,brief:lang==="ar"?"مشاهد مختارة توثق حضور بشرى وخدماتها في الميدان.":"Selected moments documenting Bushra's services and presence in the field."},
   ];
+  const hubBackgrounds=[
+    "/media/brand/comprehensive-package-cover.webp",
+    `${MEDIA_BASE}/media/trust/trust-slide-2.jpg`,
+    "/media/brand/leadership-cover-v2.jpg",
+    `${MEDIA_BASE}/media/hospitality/makkah-accommodation-poster.jpg`,
+    `${MEDIA_BASE}/media/level-1/services-poster.jpg`,
+    `${MEDIA_BASE}/media/testimonials/ibrahim-al-saghir-poster.jpg`,
+    `${MEDIA_BASE}/media/showcase/01.jpg`,
+  ];
   const hasLevelOneArabic=selected===1&&lang==="ar";
   const galleryTotal=hasLevelOneArabic?50:60;
   const touchStart=useRef(0);
@@ -138,6 +147,7 @@ export default function Home(){
   useEffect(()=>{const controller=new AbortController();fetch(SANITY_URL,{signal:controller.signal}).then(response=>response.ok?response.json():Promise.reject()).then(data=>setCms(data.result as CmsPayload)).catch(()=>{/* Keep the complete built-in presentation when the CMS is unavailable. */});return()=>controller.abort()},[]);
   const selectComprehensiveService=(index:number)=>{if(comprehensiveTimer.current)clearTimeout(comprehensiveTimer.current);setActiveComprehensive(index);setComprehensivePhase("activating");comprehensiveTimer.current=window.setTimeout(()=>setComprehensivePhase("panel"),640)};
   const closeComprehensiveService=()=>{if(comprehensiveTimer.current)clearTimeout(comprehensiveTimer.current);setComprehensivePhase("idle");setActiveComprehensive(null)};
+  const scrollHub=(direction:-1|1)=>{const track=hubOptionsRef.current;if(!track)return;const card=track.querySelector<HTMLElement>("button");const gap=Number.parseFloat(getComputedStyle(track).columnGap||getComputedStyle(track).gap)||0;track.scrollBy({left:direction*((card?.getBoundingClientRect().width||track.clientWidth*.32)+gap),behavior:"smooth"})};
   useEffect(()=>{if(modal!=="comprehensive")return;const navigate=(event:KeyboardEvent)=>{if(event.key==="ArrowLeft"||event.key==="PageDown")selectComprehensiveService(((activeComprehensive??-1)+1)%comprehensiveServices.length);if(event.key==="ArrowRight"||event.key==="PageUp")selectComprehensiveService(((activeComprehensive??0)+comprehensiveServices.length-1)%comprehensiveServices.length)};addEventListener("keydown",navigate);return()=>removeEventListener("keydown",navigate)},[modal,activeComprehensive]);
   useEffect(()=>{const sync=()=>setIsFullscreen(Boolean(document.fullscreenElement));document.addEventListener("fullscreenchange",sync);return()=>document.removeEventListener("fullscreenchange",sync)},[]);
   useEffect(()=>()=>{transitionTimers.current.forEach(clearTimeout);if(comprehensiveTimer.current)clearTimeout(comprehensiveTimer.current)},[]);
@@ -183,10 +193,10 @@ export default function Home(){
     </header>
 
     <section className={`hub-scene ${section==="home"?"is-here":""} ${activeHub!==null?"has-card-focus":""}`}>
-      {activeHub!==null&&<div className="hub-focus-backdrop" aria-hidden="true"/>}
+      {activeHub!==null&&<div className="hub-focus-backdrop" style={{"--hub-focus-image":`url(${hubBackgrounds[activeHub]})`} as CSSProperties} aria-hidden="true"/>}
       <div className={`hub-heading ${activeHub!==null?"is-detail":""}`}><h1 className="hub-slogan">{activeHub===null?t.kicker:hubDetails[activeHub].title}</h1>{activeHub!==null&&<p>{hubDetails[activeHub].brief}</p>}</div>
       <div className="hub-carousel">
-        <div className={`hub-options ${activeHub!==null?"has-active":""}`} ref={hubOptionsRef} onPointerLeave={()=>setActiveHub(null)}>
+        <div className={`hub-options ${activeHub!==null?"has-active":""}`} ref={hubOptionsRef} onPointerLeave={()=>setActiveHub(null)} onBlur={event=>{if(!event.currentTarget.contains(event.relatedTarget as Node))setActiveHub(null)}} onWheel={event=>{if(Math.abs(event.deltaY)>Math.abs(event.deltaX)){event.preventDefault();event.currentTarget.scrollBy({left:event.deltaY,behavior:"auto"})}}}>
           <button className={`hub-comprehensive-card ${activeHub===0?"is-active":""}`} onPointerEnter={()=>setActiveHub(0)} onFocus={()=>setActiveHub(0)} onClick={()=>{setActiveComprehensive(null);setModal("comprehensive")}}><img src="/media/brand/comprehensive-package-cover.webp" alt=""/><strong>{lang==="ar"?"الباقة الشاملة":"Comprehensive Package"}</strong><small>360°</small></button>
           <button className={activeHub===1?"is-active":""} onPointerEnter={()=>setActiveHub(1)} onFocus={()=>setActiveHub(1)} onClick={()=>{setActiveTrust(0);setModal("trust")}}><img src={`${MEDIA_BASE}/media/trust/trust-slide-2.jpg`} alt=""/><span><TrustIcon/></span><strong>{t.trust}</strong></button>
           <button className={activeHub===2?"is-active":""} onPointerEnter={()=>setActiveHub(2)} onFocus={()=>setActiveHub(2)} onClick={()=>transition(()=>setSection("team"))}><img src="/media/brand/leadership-cover-v2.jpg" alt=""/><span><TeamIcon/></span><strong>{t.team}</strong></button>
@@ -195,8 +205,8 @@ export default function Home(){
           <button className={activeHub===5?"is-active":""} onPointerEnter={()=>setActiveHub(5)} onFocus={()=>setActiveHub(5)} onClick={()=>transition(()=>setSection("testimonials"))}><img src={`${MEDIA_BASE}/media/testimonials/ibrahim-al-saghir-poster.jpg`} alt=""/><span><QuoteIcon/></span><strong>{t.testimonials}</strong></button>
           <button className={activeHub===6?"is-active":""} onPointerEnter={()=>setActiveHub(6)} onFocus={()=>setActiveHub(6)} onClick={()=>transition(()=>setSection("videos"))}><img src={`${MEDIA_BASE}/media/showcase/01.jpg`} alt=""/><span><FilmsIcon/></span><strong>{t.videos}</strong></button>
         </div>
-        <button className="hub-side-arrow hub-side-arrow--left" type="button" onClick={()=>hubOptionsRef.current?.scrollBy({left:-hubOptionsRef.current.clientWidth*.72,behavior:"smooth"})} aria-label={lang==="ar"?"البطاقات السابقة":"Previous cards"}><Chevron/></button>
-        <button className="hub-side-arrow hub-side-arrow--right" type="button" onClick={()=>hubOptionsRef.current?.scrollBy({left:hubOptionsRef.current.clientWidth*.72,behavior:"smooth"})} aria-label={lang==="ar"?"البطاقات التالية":"Next cards"}><Chevron/></button>
+        <button className="hub-side-arrow hub-side-arrow--left" type="button" onClick={()=>scrollHub(-1)} aria-label={lang==="ar"?"البطاقات السابقة":"Previous cards"}><Chevron/></button>
+        <button className="hub-side-arrow hub-side-arrow--right" type="button" onClick={()=>scrollHub(1)} aria-label={lang==="ar"?"البطاقات التالية":"Next cards"}><Chevron/></button>
       </div>
     </section>
 
