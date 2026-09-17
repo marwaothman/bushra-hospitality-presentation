@@ -312,6 +312,10 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .hub-options>button:nth-child(5){--tower-shift:2px;height:98%}
   .hub-options>button:nth-child(6){--tower-shift:10px;height:calc(90% - 20px)}
 }
+
+/* Keep the sectors heading in document flow; global presentation-title rules must not cover its phase controls. */
+.hospitality-scene .hospitality-heading{position:relative!important;top:auto!important;right:auto!important;left:auto!important;width:min(1560px,94vw)!important;margin:0 auto!important;z-index:2!important}
+@media(max-width:1000px){.hospitality-scene .hospitality-heading{width:100%!important}}
 @media(min-width:1001px) and (max-height:760px){
   .hub-options{height:min(54vh,470px);transform:translateY(15px)}
   .hub-options>button,.hub-options>button:nth-child(n){min-height:260px}
