@@ -109,12 +109,18 @@ function ParticleField(){
 }
 
 export default function Home(){
-  const [lang,setLang]=useState<Lang>("ar"),[loading,setLoading]=useState(true),[transitioning,setTransitioning]=useState(false),[section,setSection]=useState<Section>("home"),[selected,setSelected]=useState<Level|null>(null),[focus,setFocus]=useState<Level>(1),[modal,setModal]=useState<Modal>(null),[slide,setSlide]=useState(0),[activeShowcase,setActiveShowcase]=useState(0),[activeHospitality,setActiveHospitality]=useState(0),[activeReception,setActiveReception]=useState(0),[activeControlObservation,setActiveControlObservation]=useState(0),[activeTestimonial,setActiveTestimonial]=useState(0),[activeTrust,setActiveTrust]=useState(0),[activeComprehensive,setActiveComprehensive]=useState<number|null>(null),[comprehensivePhase,setComprehensivePhase]=useState<ComprehensivePhase>("idle"),[isFullscreen,setIsFullscreen]=useState(false),[activeHub,setActiveHub]=useState<number|null>(null),[qrUrl,setQrUrl]=useState("");
+  const [lang,setLang]=useState<Lang>("ar"),[loading,setLoading]=useState(true),[transitioning,setTransitioning]=useState(false),[section,setSection]=useState<Section>("home"),[selected,setSelected]=useState<Level|null>(null),[focus,setFocus]=useState<Level>(1),[modal,setModal]=useState<Modal>(null),[slide,setSlide]=useState(0),[activeShowcase,setActiveShowcase]=useState(0),[activeHospitality,setActiveHospitality]=useState(0),[activeHospitalityPhase,setActiveHospitalityPhase]=useState(0),[activeReception,setActiveReception]=useState(0),[activeControlObservation,setActiveControlObservation]=useState(0),[activeTestimonial,setActiveTestimonial]=useState(0),[activeTrust,setActiveTrust]=useState(0),[activeComprehensive,setActiveComprehensive]=useState<number|null>(null),[comprehensivePhase,setComprehensivePhase]=useState<ComprehensivePhase>("idle"),[isFullscreen,setIsFullscreen]=useState(false),[activeHub,setActiveHub]=useState<number|null>(null),[qrUrl,setQrUrl]=useState("");
   const [cms,setCms]=useState<CmsPayload|null>(null);
   const [refreshKey,setRefreshKey]=useState(0);
   const managedPacks=([1,2,3] as Level[]).reduce((all,level)=>{const item=cms?.packages?.find(entry=>entry.level===level);all[level]={...packs[level],ar:item?.titleAr||packs[level].ar,en:item?.titleEn||packs[level].en};return all},{} as Record<Level,{ar:string;en:string;no:string;tone:string}>);
   const managedLeadership=leadership.map((leader,index)=>{const item=cms?.leaders?.find(entry=>entry.order===index+1);return {...leader,ar:{name:item?.nameAr||leader.ar.name,role:item?.roleAr||leader.ar.role},en:{name:item?.nameEn||leader.en.name,role:item?.roleEn||leader.en.role}}});
   const managedStages=(cms?.stages?.length?cms.stages:hospitalityStages).map((stage,index)=>{const fallback=hospitalityStages[Math.min(index,hospitalityStages.length-1)];return {ar:("titleAr" in stage&&stage.titleAr)||fallback.ar,en:("titleEn" in stage&&stage.titleEn)||fallback.en,kind:("mediaType" in stage&&stage.mediaType==="images"?"gallery":"video") as "gallery"|"video"}});
+  const hospitalityPhases=[
+    {ar:"قبل الوصول",en:"Before Arrival",indices:[0]},
+    {ar:"الوصول والإقامة",en:"Arrival & Accommodation",indices:[2,3,1]},
+    {ar:"تشغيل المشاعر",en:"Holy Sites Operations",indices:[4,5,6]},
+    {ar:"التحكم وتجربة الضيف",en:"Control & Guest Experience",indices:[7,8,9,10]},
+  ];
   const t={...words[lang],kicker:(lang==="ar"?cms?.settings?.homepageTitleAr:cms?.settings?.homepageTitleEn)||words[lang].kicker},rtl=lang==="ar";
   const hubDetails=[
     {title:lang==="ar"?"الباقة الشاملة":"Comprehensive Package",brief:lang==="ar"?"رحلة واحدة تجمع الطيران والنقل والفنادق والمشاعر والتغذية والتفويج ضمن تجربة متكاملة 360°.":"One journey connecting aviation, transportation, hotels, holy sites, catering and dispatch in a complete 360° experience."},
@@ -242,11 +248,14 @@ export default function Home(){
     </section>
 
     <section className={`hospitality-scene ${section==="hospitality"?"is-here":""}`} aria-labelledby="hospitality-title">
-      <header className="hospitality-heading"><h2 id="hospitality-title">{t.hospitalityTitle}</h2></header>
-      <div className="journey-map" role="list">
-        {managedStages.map((stage,index)=><button type="button" role="listitem" className="journey-stage" key={stage.ar} style={{"--stage-index":index} as React.CSSProperties} onClick={()=>{setActiveHospitality(index);if(index===2)setActiveReception(0);if(index===9)setActiveControlObservation(0);setModal("hospitality")}}>
-<span className="journey-node">{stage.kind==="video"?<Play/>:<Frames/>}</span><strong>{stage[lang]}</strong>
-        </button>)}
+      <header className="hospitality-heading"><small>{lang==="ar"?"منظومة الضيافة المتكاملة":"INTEGRATED HOSPITALITY SYSTEM"}</small><h2 id="hospitality-title">{t.hospitalityTitle}</h2><p>{lang==="ar"?"منظومة تشغيلية متكاملة ترافق ضيف الرحمن في كل محطة":"An integrated operating system accompanying every guest through each stage of the journey."}</p><b>{lang==="ar"?"11 قطاعاً متكاملاً · رحلة واحدة للضيف":"11 INTEGRATED SECTORS · ONE GUEST JOURNEY"}</b></header>
+      <div className="hospitality-phase-rail" role="tablist" aria-label={lang==="ar"?"مراحل رحلة الضيافة":"Hospitality journey phases"}>
+        {hospitalityPhases.map((phase,index)=><button type="button" role="tab" aria-selected={activeHospitalityPhase===index} className={activeHospitalityPhase===index?"is-active":""} key={phase.en} onClick={()=>setActiveHospitalityPhase(index)}><i>{String(index+1).padStart(2,"0")}</i><span>{phase[lang]}</span><em>{phase.indices.length}</em></button>)}
+      </div>
+      <div className="journey-map" role="list" aria-live="polite">
+        {hospitalityPhases[activeHospitalityPhase].indices.map((stageIndex,position)=>{const stage=managedStages[stageIndex];return <button type="button" role="listitem" className="journey-stage" key={stage.ar} style={{"--stage-index":position} as React.CSSProperties} onClick={()=>{setActiveHospitality(stageIndex);if(stageIndex===2)setActiveReception(0);if(stageIndex===9)setActiveControlObservation(0);setModal("hospitality")}}>
+          <span className="journey-number">{String(stageIndex+1).padStart(2,"0")}</span><span className="journey-node">{stage.kind==="video"?<Play/>:<Frames/>}</span><strong>{stage[lang]}</strong><small>{stage.kind==="video"?t.videoMedia:t.galleryMedia}</small>
+        </button>})}
       </div>
     </section>
 
