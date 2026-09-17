@@ -1,7 +1,7 @@
 const MEDIA_BASE="https://bushra-hospitality-packages.marwaothman999.chatgpt.site";
 "use client";
 
-import { type CSSProperties, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import QRCode from "qrcode";
 
 type Lang="ar"|"en"; type Level=1|2|3; type Modal="video"|"gallery"|"details"|"showcase"|"hospitality"|"trust"|"testimonial"|"testimonialVideo"|"comprehensive"|"qr"|null; type Section="home"|"packages"|"testimonials"|"videos"|"team"|"hospitality"; type ComprehensivePhase="idle"|"activating"|"panel";
@@ -125,15 +125,6 @@ export default function Home(){
     {title:t.testimonials,brief:lang==="ar"?"أصوات ضيوفنا وشركائنا تحكي تجربة بشرى كما عاشوها.":"Guests and partners share the Bushra experience in their own words."},
     {title:t.videos,brief:lang==="ar"?"مشاهد مختارة توثق حضور بشرى وخدماتها في الميدان.":"Selected moments documenting Bushra's services and presence in the field."},
   ];
-  const hubBackgrounds=[
-    "/media/brand/comprehensive-package-cover.webp",
-    `${MEDIA_BASE}/media/trust/trust-slide-2.jpg`,
-    "/media/brand/leadership-cover-v2.jpg",
-    `${MEDIA_BASE}/media/hospitality/makkah-accommodation-poster.jpg`,
-    `${MEDIA_BASE}/media/level-1/services-poster.jpg`,
-    `${MEDIA_BASE}/media/testimonials/ibrahim-al-saghir-poster.jpg`,
-    `${MEDIA_BASE}/media/showcase/01.jpg`,
-  ];
   const hasLevelOneArabic=selected===1&&lang==="ar";
   const galleryTotal=hasLevelOneArabic?50:60;
   const touchStart=useRef(0);
@@ -193,7 +184,7 @@ export default function Home(){
     </header>
 
     <section className={`hub-scene ${section==="home"?"is-here":""} ${activeHub!==null?"has-card-focus":""}`}>
-      {activeHub!==null&&<div className="hub-focus-backdrop" style={{"--hub-focus-image":`url(${hubBackgrounds[activeHub]})`} as CSSProperties} aria-hidden="true"/>}
+      {activeHub!==null&&<div className="hub-focus-backdrop" aria-hidden="true"/>}
       <div className={`hub-heading ${activeHub!==null?"is-detail":""}`}><h1 className="hub-slogan">{activeHub===null?t.kicker:hubDetails[activeHub].title}</h1>{activeHub!==null&&<p>{hubDetails[activeHub].brief}</p>}</div>
       <div className="hub-carousel">
         <div className={`hub-options ${activeHub!==null?"has-active":""}`} ref={hubOptionsRef} onPointerLeave={()=>setActiveHub(null)} onBlur={event=>{if(!event.currentTarget.contains(event.relatedTarget as Node))setActiveHub(null)}} onWheel={event=>{if(Math.abs(event.deltaY)>Math.abs(event.deltaX)){event.preventDefault();event.currentTarget.scrollBy({left:event.deltaY,behavior:"auto"})}}}>
