@@ -1106,3 +1106,26 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .trust-book-nav button:last-child svg{transform:none!important}
 @media(max-width:1000px){.trust-book-nav button:first-child{left:8px!important}.trust-book-nav button:last-child{right:8px!important}}
 @media(max-width:620px){.trust-book-nav button{width:38px!important;height:62px!important;margin-top:-31px!important}.trust-book-nav button svg{width:23px!important;height:43px!important}.trust-book-nav button:first-child{left:1px!important}.trust-book-nav button:last-child{right:1px!important}}
+
+/* Correct the arrow layer: its height now matches the book stage, so 50% is the book midpoint. */
+.trust-book-nav{top:calc(var(--presentation-header,78px) + 16px)!important;bottom:92px!important;height:auto!important}
+@media(max-width:1000px){.trust-book-nav{top:calc(var(--presentation-header,68px) + 14px)!important;bottom:88px!important}}
+@media(max-width:620px){.trust-book-nav{top:calc(var(--presentation-header,68px) + 10px)!important;bottom:82px!important}}
+
+/* Fast, coordinated page changes from the homepage. */
+.hub-scene,.content-scene,.team-scene,.showcase-scene,.hospitality-scene{
+  transform:translateY(14px) scale(.992);
+  filter:blur(2px);
+  transition:opacity .32s ease,transform .52s cubic-bezier(.16,1,.3,1),filter .34s ease,visibility 0s .54s;
+}
+.hub-scene.is-here,.content-scene.is-here,.team-scene.is-here,.showcase-scene.is-here,.hospitality-scene.is-here{
+  transform:none;
+  filter:none;
+  transition-delay:0s;
+}
+.home-scene,.package-scene{transition:opacity .32s ease,transform .52s cubic-bezier(.16,1,.3,1),filter .34s ease}
+.home-scene.is-away{transform:translateY(14px) scale(.992);filter:blur(2px)}
+.testimonial-scene.is-here{animation-duration:.5s}
+.team-scene.is-here .leader-card{animation-duration:.55s;animation-delay:calc(var(--leader-index) * .045s)}
+.showcase-scene.is-here .showcase-card{animation-duration:.5s;animation-delay:calc(var(--showcase-index) * .04s)}
+.hub-options>button:active{transition-duration:.12s!important;transform:translateY(-5px) scale(.985)!important}
