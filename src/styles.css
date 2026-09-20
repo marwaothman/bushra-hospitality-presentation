@@ -1070,7 +1070,6 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 @media(max-width:620px){.trust-book-heading{top:78px}.trust-book-heading small{font-size:8px}.trust-book-heading h2{font-size:23px}.trust-book-stage{inset:118px 8px 68px}.trust-book{width:min(92vw,520px);height:min(67dvh,700px)}.trust-book-stage.is-spread .trust-book-page--left{display:none}.trust-book-stage.is-spread .trust-book-page--right{width:100%;border-radius:9px}.trust-book-spine{display:none}.trust-book-stage.is-cover .trust-book{width:min(88vw,520px)}.trust-book-nav b{min-width:68px;font-size:8px}}
 @media(prefers-reduced-motion:reduce){.trust-book-page{animation:none!important}}
 
-
 /* Final executive refinement for the trust book viewer. */
 .trust-book-modal{background:radial-gradient(circle at 50% 40%,#123b5a 0%,#061b2c 48%,#020d16 100%)!important}
 .trust-book-modal .gallery-video-bg{opacity:.2;filter:blur(12px) brightness(.3) saturate(.5);transform:scale(1.06)}
@@ -1096,3 +1095,14 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .trust-book-nav>b{position:absolute;left:50%;bottom:-68px;transform:translateX(-50%);min-width:110px!important;color:rgba(255,255,255,.78)!important;font-size:11px!important}
 @media(max-width:1000px){.trust-book-stage{inset:calc(var(--presentation-header,68px) + 14px) 64px 88px!important}.trust-book{width:min(84vw,920px)!important;height:min(67dvh,680px)!important}.trust-book-stage.is-cover .trust-book{width:min(66vw,620px)!important}.trust-book-nav{inset:calc(var(--presentation-header,68px) + 14px) 0 74px!important}.trust-book-nav button:first-child{left:14px}.trust-book-nav button:last-child{right:14px}.trust-book-nav>i{bottom:-43px}.trust-book-nav>b{bottom:-60px}}
 @media(max-width:620px){.trust-book-stage{inset:calc(var(--presentation-header,68px) + 10px) 48px 82px!important}.trust-book,.trust-book-stage.is-cover .trust-book{width:min(82vw,500px)!important;height:min(68dvh,650px)!important}.trust-book-nav{inset:calc(var(--presentation-header,68px) + 10px) 0 68px!important}.trust-book-nav button{width:44px;height:44px;margin-top:-22px}.trust-book-nav button:first-child{left:4px}.trust-book-nav button:last-child{right:4px}.trust-book-nav>i{bottom:-38px}.trust-book-nav>b{bottom:-54px}}
+
+/* Book navigation uses the same open chevron language as the homepage. */
+.trust-book-nav button{width:54px!important;height:86px!important;margin-top:-43px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;color:#d0a86c!important}
+.trust-book-nav button:hover,.trust-book-nav button:focus-visible{transform:scale(1.1)!important;background:transparent!important;outline:none}
+.trust-book-nav button svg{width:32px!important;height:58px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.35!important}
+.trust-book-nav button:first-child{left:max(18px,calc((100vw - min(78vw,1340px))/2 - 62px))!important}
+.trust-book-nav button:last-child{right:max(18px,calc((100vw - min(78vw,1340px))/2 - 62px))!important}
+.trust-book-nav button:first-child svg{transform:scaleX(-1)!important}
+.trust-book-nav button:last-child svg{transform:none!important}
+@media(max-width:1000px){.trust-book-nav button:first-child{left:8px!important}.trust-book-nav button:last-child{right:8px!important}}
+@media(max-width:620px){.trust-book-nav button{width:38px!important;height:62px!important;margin-top:-31px!important}.trust-book-nav button svg{width:23px!important;height:43px!important}.trust-book-nav button:first-child{left:1px!important}.trust-book-nav button:last-child{right:1px!important}}
