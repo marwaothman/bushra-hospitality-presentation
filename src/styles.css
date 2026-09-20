@@ -1129,3 +1129,24 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .team-scene.is-here .leader-card{animation-duration:.55s;animation-delay:calc(var(--leader-index) * .045s)}
 .showcase-scene.is-here .showcase-card{animation-duration:.5s;animation-delay:calc(var(--showcase-index) * .04s)}
 .hub-options>button:active{transition-duration:.12s!important;transform:translateY(-5px) scale(.985)!important}
+
+/* Executive magazine treatment: preserve every PDF page and add only restrained physical cues. */
+.trust-book-stage{perspective:2600px}
+.trust-book{transform-style:preserve-3d;transform:rotateX(.35deg)}
+.trust-book-stage.is-cover .trust-book{transform:rotateX(.65deg) rotateY(-1.15deg);filter:drop-shadow(0 34px 38px rgba(0,0,0,.4))}
+.trust-book-stage.is-cover .trust-book-page--right{overflow:visible;border-radius:5px!important;box-shadow:0 3px 0 rgba(220,213,202,.9),0 6px 0 rgba(153,143,128,.72),0 28px 58px rgba(0,0,0,.36),inset 0 0 0 1px rgba(176,142,87,.22)!important}
+.trust-book-stage.is-cover .trust-book-page--right:before{content:"";position:absolute;z-index:-1;inset:3px -4px -6px 4px;border-radius:5px;background:#d8d0c4;box-shadow:7px 10px 18px rgba(0,0,0,.2);pointer-events:none}
+.trust-book-stage.is-cover .trust-book-page--right:after{z-index:2;border-radius:5px;background:linear-gradient(90deg,rgba(255,255,255,.13),transparent 7%,transparent 93%,rgba(16,26,35,.11))}
+.trust-book-stage.is-cover .trust-book-page img{position:relative;z-index:1;width:100%;height:100%;margin:0;object-fit:contain;border-radius:5px;background:#f5f0e7;transform:none}
+.trust-book-stage.is-spread .trust-book-page--left{transform:rotateY(1deg);box-shadow:inset -22px 0 30px -28px rgba(0,0,0,.7),inset 0 0 0 1px rgba(53,42,24,.16)}
+.trust-book-stage.is-spread .trust-book-page--right{transform:rotateY(-1deg);box-shadow:inset 22px 0 30px -28px rgba(0,0,0,.7),inset 0 0 0 1px rgba(53,42,24,.16)}
+.trust-book-stage.is-spread .trust-book-spine{width:34px!important;opacity:.82;filter:blur(5px)!important}
+.trust-book-stage.is-spread .trust-book-shadow{width:min(70vw,1190px)!important;height:38px!important;opacity:.68}
+.trust-book-stage.is-cover~.trust-book-nav button:first-child{left:max(18px,calc((100vw - min(50vw,760px))/2 - 88px))!important}
+.trust-book-stage.is-cover~.trust-book-nav button:last-child{right:max(18px,calc((100vw - min(50vw,760px))/2 - 88px))!important}
+@keyframes trustCoverArrive{from{opacity:0;transform:translateY(20px) rotateX(3deg) scale(.965)}to{opacity:1;transform:none}}
+@keyframes trustPageNext{0%{opacity:.7;transform:rotateY(-34deg) translateZ(10px)}64%{opacity:1;transform:rotateY(2deg) translateZ(2px)}100%{transform:rotateY(-1deg)}}
+@keyframes trustPagePrev{0%{opacity:.7;transform:rotateY(34deg) translateZ(10px)}64%{opacity:1;transform:rotateY(-2deg) translateZ(2px)}100%{transform:rotateY(1deg)}}
+@keyframes trustPageSettle{0%{filter:brightness(.86)}100%{filter:none}}
+@media(max-width:1000px){.trust-book-stage.is-cover~.trust-book-nav button:first-child{left:8px!important}.trust-book-stage.is-cover~.trust-book-nav button:last-child{right:8px!important}}
+@media(max-width:620px){.trust-book-stage.is-cover .trust-book{transform:rotateX(.4deg)}.trust-book-stage.is-cover .trust-book-page--right:before{inset:2px -2px -4px 2px}}
