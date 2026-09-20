@@ -1150,3 +1150,16 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 @keyframes trustPageSettle{0%{filter:brightness(.86)}100%{filter:none}}
 @media(max-width:1000px){.trust-book-stage.is-cover~.trust-book-nav button:first-child{left:8px!important}.trust-book-stage.is-cover~.trust-book-nav button:last-child{right:8px!important}}
 @media(max-width:620px){.trust-book-stage.is-cover .trust-book{transform:rotateX(.4deg)}.trust-book-stage.is-cover .trust-book-page--right:before{inset:2px -2px -4px 2px}}
+
+/* PageFlip prototype: mesh-based page deformation rather than rotating rectangles. */
+.trust-pageflip-stage{position:absolute;z-index:4;inset:calc(var(--presentation-header,78px) + 12px) clamp(76px,8vw,150px) 92px;display:grid;place-items:center;overflow:visible}
+.trust-pageflip-direction{width:min(84vw,1540px);height:min(71dvh,760px);display:grid;place-items:center;transform:scaleX(-1);filter:drop-shadow(0 34px 36px rgba(0,0,0,.42))}
+.trust-pageflip{width:100%;height:100%}
+.trust-flip-page{overflow:hidden;background:#f5f0e7;box-shadow:inset 0 0 0 1px rgba(61,47,28,.16)}
+.trust-flip-page img{display:block;width:100%;height:100%;object-fit:contain;background:#f5f0e7;transform:scaleX(-1);user-select:none;-webkit-user-drag:none}
+.trust-flip-page--cover{background:#153c67}
+.trust-pageflip-nav{top:calc(var(--presentation-header,78px) + 12px)!important;bottom:92px!important}
+.trust-pageflip-nav button:first-child{left:max(18px,calc((100vw - min(84vw,1540px))/2 - 62px))!important}
+.trust-pageflip-nav button:last-child{right:max(18px,calc((100vw - min(84vw,1540px))/2 - 62px))!important}
+@media(max-width:1000px){.trust-pageflip-stage{inset:calc(var(--presentation-header,68px) + 10px) 54px 88px}.trust-pageflip-direction{width:min(91vw,1040px);height:min(69dvh,700px)}.trust-pageflip-nav{top:calc(var(--presentation-header,68px) + 10px)!important;bottom:88px!important}.trust-pageflip-nav button:first-child{left:7px!important}.trust-pageflip-nav button:last-child{right:7px!important}}
+@media(max-width:620px){.trust-pageflip-stage{inset:calc(var(--presentation-header,68px) + 8px) 38px 82px}.trust-pageflip-direction{width:min(86vw,560px);height:min(68dvh,650px)}.trust-pageflip-nav{top:calc(var(--presentation-header,68px) + 8px)!important;bottom:82px!important}.trust-pageflip-nav button:first-child{left:0!important}.trust-pageflip-nav button:last-child{right:0!important}}
