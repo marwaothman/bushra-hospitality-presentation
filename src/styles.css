@@ -1129,3 +1129,20 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .team-scene.is-here .leader-card{animation-duration:.55s;animation-delay:calc(var(--leader-index) * .045s)}
 .showcase-scene.is-here .showcase-card{animation-duration:.5s;animation-delay:calc(var(--showcase-index) * .04s)}
 .hub-options>button:active{transition-duration:.12s!important;transform:translateY(-5px) scale(.985)!important}
+
+/* Premium executive evidence book — physical cover, restrained stage and editorial depth. */
+.trust-book-stage.is-cover{transform:translateY(10px)}
+.trust-book-stage.is-cover .trust-book{width:min(56vw,850px)!important;height:min(70dvh,760px)!important;filter:drop-shadow(0 46px 54px rgba(0,0,0,.5))}
+.trust-book-stage.is-cover .trust-book-page--right{overflow:visible;border-radius:4px!important;background:#f3eee5;box-shadow:0 1px 0 #d8cfc0,0 5px 0 #bfb4a3,0 9px 0 #8f8372,0 34px 74px rgba(0,0,0,.48),inset 0 0 0 1px rgba(176,142,87,.35)!important}
+.trust-book-stage.is-cover .trust-book-page--right:before{content:"";position:absolute;z-index:-1;inset:7px -7px -12px 7px;border-radius:4px;background:linear-gradient(90deg,#e9e1d5,#b9ac99 78%,#796c5c);box-shadow:12px 18px 28px rgba(0,0,0,.28);transform:perspective(800px) rotateY(-.8deg);pointer-events:none}
+.trust-book-stage.is-cover .trust-book-page--right:after{z-index:2;background:linear-gradient(90deg,rgba(255,255,255,.18),transparent 7%,transparent 91%,rgba(30,23,16,.13))}
+.trust-book-stage.is-cover .trust-book-page img{position:relative;z-index:1;width:108%;max-width:none;height:100%;margin-left:-4%;object-fit:cover;border-radius:3px;transform:translateZ(1px)}
+.trust-book-stage.is-cover .trust-book-shadow{width:min(51vw,780px)!important;height:54px!important;bottom:-1%!important;filter:blur(30px)!important;opacity:.88}
+.trust-book-stage.is-spread .trust-book{filter:drop-shadow(0 42px 50px rgba(0,0,0,.46))}
+.trust-book-stage.is-cover~.trust-book-nav button:first-child{left:max(20px,calc((100vw - min(56vw,850px))/2 - 66px))!important}
+.trust-book-stage.is-cover~.trust-book-nav button:last-child{right:max(20px,calc((100vw - min(56vw,850px))/2 - 66px))!important}
+.trust-book-modal~.global-step-nav{opacity:.7;transition:opacity .28s ease,visibility .3s}
+.trust-book-modal~.global-step-nav:hover,.trust-book-modal~.global-step-nav:focus-within{opacity:1}
+@keyframes trustCoverArrive{0%{opacity:0;transform:translateY(42px) rotateX(7deg) scale(.9)}62%{opacity:1;transform:translateY(-3px) rotateX(-1deg) scale(1.012)}100%{transform:none}}
+@media(max-width:1000px){.trust-book-stage.is-cover .trust-book{width:min(70vw,680px)!important}.trust-book-stage.is-cover~.trust-book-nav button:first-child{left:8px!important}.trust-book-stage.is-cover~.trust-book-nav button:last-child{right:8px!important}}
+@media(max-width:620px){.trust-book-stage.is-cover{transform:translateY(4px)}.trust-book-stage.is-cover .trust-book{width:min(84vw,520px)!important}.trust-book-stage.is-cover .trust-book-page img{width:104%;margin-left:-2%}}
