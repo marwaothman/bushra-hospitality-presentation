@@ -1507,3 +1507,20 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .testimonial-feature-copy h3{margin:0}
 .testimonial-evidence-rail>button{grid-template-rows:1fr}
 .testimonial-evidence-rail>button>b{align-self:center}
+
+
+/* Mirror the focused homepage story for English: title left, supporting copy right. */
+@media(min-width:1001px){
+  .experience[dir="ltr"] .hub-heading.is-detail .hub-slogan{
+    grid-column:1!important;
+    justify-self:start!important;
+    direction:ltr!important;
+    text-align:left!important;
+  }
+  .experience[dir="ltr"] .hub-heading.is-detail p{
+    grid-column:2!important;
+    justify-self:start!important;
+    direction:ltr!important;
+    text-align:left!important;
+  }
+}
