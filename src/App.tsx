@@ -143,6 +143,8 @@ export default function Home(){
   const initialView=useRef(readPresentationView()).current;
   const [lang,setLang]=useState<Lang>(initialView?.lang??"ar"),[loading,setLoading]=useState(!initialView),[transitioning,setTransitioning]=useState(false),[section,setSection]=useState<Section>(initialView?.section??"home"),[selected,setSelected]=useState<Level|null>(initialView?.selected??null),[focus,setFocus]=useState<Level>(initialView?.focus??1),[modal,setModal]=useState<Modal>(initialView?.modal??null),[slide,setSlide]=useState(initialView?.slide??0),[activeShowcase,setActiveShowcase]=useState(initialView?.activeShowcase??0),[activeHospitality,setActiveHospitality]=useState(initialView?.activeHospitality??0),[activeHospitalityPhase,setActiveHospitalityPhase]=useState(initialView?.activeHospitalityPhase??0),[activeReception,setActiveReception]=useState(initialView?.activeReception??0),[activeControlObservation,setActiveControlObservation]=useState(initialView?.activeControlObservation??0),[activeTestimonial,setActiveTestimonial]=useState(initialView?.activeTestimonial??0),[activeTrust,setActiveTrust]=useState(initialView?.activeTrust??0),[trustTurn,setTrustTurn]=useState<"next"|"prev">("next"),[compactBook,setCompactBook]=useState(false),[activeComprehensive,setActiveComprehensive]=useState<number|null>(null),[comprehensivePhase,setComprehensivePhase]=useState<ComprehensivePhase>("idle"),[isFullscreen,setIsFullscreen]=useState(false),[activeHub,setActiveHub]=useState<number|null>(null),[qrUrl,setQrUrl]=useState("");
   const [cms,setCms]=useState<CmsPayload|null>(null);
+  const [testimonialFocus,setTestimonialFocus]=useState(0);
+  const [testimonialFilter,setTestimonialFilter]=useState<"all"|"video"|"comments">("all");
   const managedPacks=([1,2,3] as Level[]).reduce((all,level)=>{const item=cms?.packages?.find(entry=>entry.level===level);all[level]={...packs[level],ar:item?.titleAr||packs[level].ar,en:item?.titleEn||packs[level].en};return all},{} as Record<Level,{ar:string;en:string;no:string;tone:string}>);
   const managedLeadership=leadership.map((leader,index)=>{const item=cms?.leaders?.find(entry=>entry.order===index+1);return {...leader,ar:{name:item?.nameAr||leader.ar.name,role:item?.roleAr||leader.ar.role},en:{name:item?.nameEn||leader.en.name,role:item?.roleEn||leader.en.role}}});
   const managedStages=(cms?.stages?.length?cms.stages:hospitalityStages).map((stage,index)=>{const fallback=hospitalityStages[Math.min(index,hospitalityStages.length-1)];return {ar:("titleAr" in stage&&stage.titleAr)||fallback.ar,en:("titleEn" in stage&&stage.titleEn)||fallback.en,kind:("mediaType" in stage&&stage.mediaType==="images"?"gallery":"video") as "gallery"|"video"}});
@@ -259,10 +261,25 @@ export default function Home(){
       </div>
     </section>
 
-    <section className={`testimonial-scene ${section==="testimonials"?"is-here":""}`} dir="rtl">
+    <section className={`testimonial-scene testimonial-library-scene ${section==="testimonials"?"is-here":""}`} dir={rtl?"rtl":"ltr"}>
       {section==="testimonials"&&<div className="testimonial-stage">
-        <header className="testimonial-heading"><span><QuoteIcon/></span><div><small>آراء موثقة من ضيوفنا</small><h2>شهادات من التجربة</h2></div></header>
-        <div className="testimonial-grid"><button type="button" className="testimonial-tile testimonial-video-tile" onClick={()=>setModal("testimonialVideo")}><span className="testimonial-video-poster"><img src={testimonialVideo.poster} alt=""/><i/><b><Play/></b></span><span className="testimonial-person"><strong>{testimonialVideo[lang]}</strong><i>{lang==="ar"?"شهادة مصورة":"Video testimonial"}</i></span><span className="testimonial-open"><Arrow/></span></button>{testimonials.map((item,index)=><button type="button" className="testimonial-tile" key={item.name} onClick={()=>{setActiveTestimonial(index);setModal("testimonial")}}><span className="testimonial-mark">“</span><blockquote>«{item.quote}»</blockquote><span className="testimonial-person"><strong>{item.name}</strong><i>Facebook</i></span><span className="testimonial-thumb"><img src={item.image} alt=""/></span><span className="testimonial-open"><Arrow/></span></button>)}</div>
+        <header className="testimonial-heading"><span><QuoteIcon/></span><div><small>{lang==="ar"?"أصوات موثقة من ضيوفنا وشركائنا":"VERIFIED GUEST & PARTNER VOICES"}</small><h2>{t.testimonials}</h2></div></header>
+        <nav className="testimonial-filters" aria-label={lang==="ar"?"تصفية الشهادات":"Filter testimonials"}>
+          {(["all","video","comments"] as const).map(filter=><button type="button" key={filter} className={testimonialFilter===filter?"is-active":""} onClick={()=>{setTestimonialFilter(filter);setTestimonialFocus(filter==="comments"?1:0)}}>{filter==="all"?(lang==="ar"?"الكل":"All"):filter==="video"?(lang==="ar"?"شهادات مصورة":"Video Stories"):(lang==="ar"?"آراء الضيوف":"Guest Comments")}</button>)}
+        </nav>
+        <div className="testimonial-evidence-stage-main">
+          {testimonialFocus===0?<>
+            <button type="button" className="testimonial-feature-media" onClick={()=>setModal("testimonialVideo")} aria-label={`${lang==="ar"?"تشغيل":"Play"} ${testimonialVideo[lang]}`}><img src={testimonialVideo.poster} alt=""/><i/><b><Play/></b></button>
+            <article className="testimonial-feature-copy"><small>{lang==="ar"?"شهادة مصورة":"VIDEO TESTIMONIAL"}</small><h3>{testimonialVideo[lang]}</h3><p>{lang==="ar"?"صوت موثّق يروي تجربة بشرى كما عاشها الضيف، ويجسّد أثر الخدمة في الميدان.":"A verified voice sharing the Bushra experience as it was lived—and the impact of service on the ground."}</p><button type="button" onClick={()=>setModal("testimonialVideo")}><span>{lang==="ar"?"استمع إلى التجربة":"Watch the story"}</span><Arrow/></button></article>
+          </>:<>
+            <button type="button" className="testimonial-feature-proof" onClick={()=>{setActiveTestimonial(testimonialFocus-1);setModal("testimonial")}} aria-label={lang==="ar"?"عرض الشهادة الأصلية":"View original testimonial"}><img src={testimonials[testimonialFocus-1].image} alt=""/><span>{lang==="ar"?"عرض الدليل الأصلي":"View original evidence"}</span></button>
+            <article className="testimonial-feature-copy testimonial-feature-quote"><small>{lang==="ar"?"رأي موثّق":"VERIFIED COMMENT"}</small><blockquote>«{testimonials[testimonialFocus-1].quote}»</blockquote><strong>{testimonials[testimonialFocus-1].name}</strong><button type="button" onClick={()=>{setActiveTestimonial(testimonialFocus-1);setModal("testimonial")}}><span>{lang==="ar"?"عرض الشهادة":"View testimonial"}</span><Arrow/></button></article>
+          </>}
+        </div>
+        <nav className="testimonial-evidence-rail" aria-label={lang==="ar"?"مكتبة الشهادات":"Testimonial library"}>
+          {(testimonialFilter!=="comments")&&<button type="button" className={testimonialFocus===0?"is-active":""} onClick={()=>setTestimonialFocus(0)}><span><img src={testimonialVideo.poster} alt=""/><i><Play/></i></span><b>{testimonialVideo[lang]}</b><small>{lang==="ar"?"شهادة مصورة":"Video story"}</small></button>}
+          {(testimonialFilter!=="video")&&testimonials.map((item,index)=><button type="button" className={testimonialFocus===index+1?"is-active":""} key={item.name} onClick={()=>setTestimonialFocus(index+1)}><span><img src={item.image} alt=""/><i>“</i></span><b>{item.name}</b><small>{lang==="ar"?"رأي موثّق":"Verified comment"}</small></button>)}
+        </nav>
       </div>}
     </section>
 
