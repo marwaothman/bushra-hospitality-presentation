@@ -1442,3 +1442,43 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 @keyframes showcaseFeatureIn{from{opacity:.25;transform:scale(1.035)}to{opacity:1;transform:scale(1)}}
 @media(max-width:1000px){.showcase-library{top:calc(var(--mobile-header,68px) + 110px);right:16px;bottom:64px;left:16px;gap:10px}.showcase-feature{min-height:220px}.showcase-feature-copy{left:20px;bottom:20px;max-width:72%}.showcase-feature-copy>strong{font-size:22px}.showcase-filmstrip{grid-template-columns:38px minmax(0,1fr) 38px;gap:7px}.showcase-strip-arrow{width:38px;height:38px}.showcase-strip-track{grid-auto-columns:190px}.showcase-strip-card{height:70px;grid-template-columns:58px minmax(0,1fr)}.showcase-strip-card>span{width:58px;height:54px}.showcase-feature-play{width:64px;height:64px}.showcase-scene .showcase-heading p{display:none!important}}
 @media(max-width:620px){.showcase-library{top:calc(var(--mobile-header,68px) + 76px);bottom:58px}.showcase-feature-copy>i{display:none}.showcase-feature-copy>strong{font-size:17px}.showcase-feature-copy{max-width:78%}.showcase-filmstrip{grid-template-columns:34px minmax(0,1fr) 34px}.showcase-strip-arrow{width:34px;height:34px}.showcase-strip-track{grid-auto-columns:165px}.showcase-strip-card{height:62px;grid-template-columns:48px minmax(0,1fr);padding:5px 8px 5px 5px}.showcase-strip-card>span{width:48px;height:50px}}
+
+
+/* Keep the film title inside the playing video and above the global controls. */
+.showcase-modal .showcase-video-title{bottom:clamp(100px,13vh,145px)}
+@media(max-width:620px){.showcase-modal .showcase-video-title{bottom:72px}}
+
+/* Bilingual title geometry: Arabic anchors right; English mirrors it to the left. */
+.experience[dir="ltr"] .testimonial-heading,
+.experience[dir="ltr"] .showcase-heading,
+.experience[dir="ltr"] .leadership-heading,
+.experience[dir="ltr"] .package-title{
+  right:auto!important;
+  left:var(--presentation-title-right)!important;
+  text-align:left!important;
+  direction:ltr!important;
+}
+.experience[dir="ltr"] .hub-heading:not(.is-detail){
+  right:auto!important;
+  left:var(--presentation-title-right)!important;
+  text-align:left!important;
+  direction:ltr!important;
+}
+.experience[dir="ltr"] .hub-heading:not(.is-detail) p,
+.experience[dir="ltr"] .leadership-heading p{
+  margin-right:auto!important;
+  margin-left:0!important;
+  text-align:left!important;
+}
+.experience[dir="ltr"] .comprehensive-modal .comprehensive-heading{
+  right:auto!important;
+  left:clamp(30px,3.4vw,68px)!important;
+  text-align:left!important;
+  direction:ltr!important;
+}
+@media(max-width:1000px){
+  .experience[dir="ltr"] .comprehensive-modal .comprehensive-heading{right:auto!important;left:20px!important}
+}
+@media(max-width:620px){
+  .experience[dir="ltr"] .comprehensive-modal .comprehensive-heading{right:auto!important;left:14px!important}
+}
