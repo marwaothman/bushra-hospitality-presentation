@@ -20,7 +20,14 @@ const leadership=[
   {image:`${MEDIA_BASE}/media/team/essam-qattan.webp`,ar:{name:"عصام بن سليمان قطان",role:"المدير التنفيذي للخدمات المساندة"},en:{name:"Essam bin Suleiman Qattan",role:"Executive Director of Support Services"}},
 ] as const;
 const showcaseVideos=[
-  {title:"استقبال حجاج ليبيا",src:`${MEDIA_BASE}/media/showcase/01.mp4`,poster:`${MEDIA_BASE}/media/showcase/01.jpg`},
+  {ar:"استقبال حجاج ليبيا",en:"Welcoming Libyan Pilgrims",src:`${MEDIA_BASE}/media/showcase/01.mp4`,poster:`${MEDIA_BASE}/media/showcase/01.jpg`},
+  {ar:"استقبال حجاج مصر",en:"Welcoming Egyptian Pilgrims",src:`${MEDIA_BASE}/media/hospitality/reception/egypt.mp4`,poster:`${MEDIA_BASE}/media/hospitality/reception/egypt.jpg`},
+  {ar:"استقبال حجاج إندونيسيا",en:"Welcoming Indonesian Pilgrims",src:`${MEDIA_BASE}/media/hospitality/reception/indonesia.mp4`,poster:`${MEDIA_BASE}/media/hospitality/reception/indonesia.jpg`},
+  {ar:"استقبال حجاج بنغلاديش",en:"Welcoming Bangladeshi Pilgrims",src:`${MEDIA_BASE}/media/hospitality/reception/bangladesh.mp4`,poster:`${MEDIA_BASE}/media/hospitality/reception/bangladesh.jpg`},
+  {ar:"بطاقة نسك لرحلة أيسر",en:"Nusuk Card for an Easier Journey",src:`${MEDIA_BASE}/media/hospitality/nusuk-card.mp4`,poster:`${MEDIA_BASE}/media/hospitality/nusuk-card-poster.jpg`},
+  {ar:"تجربة إسكان مكة",en:"Makkah Accommodation Experience",src:`${MEDIA_BASE}/media/hospitality/makkah-accommodation-v2.mp4`,poster:`${MEDIA_BASE}/media/hospitality/makkah-accommodation-v2-poster.jpg`},
+  {ar:"النقل بين محطات الرحلة",en:"Transportation Across the Journey",src:`${MEDIA_BASE}/media/hospitality/transportation.mp4`,poster:`${MEDIA_BASE}/media/hospitality/transportation-poster.jpg`},
+  {ar:"شهادة من تجربة الضيف",en:"A Story from the Guest Experience",src:`${MEDIA_BASE}/media/testimonials/ibrahim-al-saghir.mp4`,poster:`${MEDIA_BASE}/media/testimonials/ibrahim-al-saghir-poster.jpg`},
 ] as const;
 const receptionVideos=[
   {ar:"استقبال حجاج ليبيا",en:"Welcoming Libyan Pilgrims",src:`${MEDIA_BASE}/media/hospitality/reception/libya.mp4`,poster:`${MEDIA_BASE}/media/hospitality/reception/libya.jpg`},
@@ -159,6 +166,7 @@ export default function Home(){
   const galleryTotal=hasLevelOneArabic?50:60;
   const touchStart=useRef(0);
   const hubOptionsRef=useRef<HTMLDivElement>(null);
+  const showcaseStripRef=useRef<HTMLDivElement>(null);
   const backgroundVideoRef=useRef<HTMLVideoElement>(null);
   const transitionTimers=useRef<number[]>([]);
   const comprehensiveTimer=useRef<number|undefined>(undefined);
@@ -167,6 +175,7 @@ export default function Home(){
   useEffect(()=>{const video=backgroundVideoRef.current;if(!video)return;video.playbackRate=.72;if(modal)video.pause();else video.play().catch(()=>{})},[modal]);
   useEffect(()=>{QRCode.toDataURL(location.href,{width:360,margin:2,color:{dark:"#133c67",light:"#ffffff"}}).then(setQrUrl).catch(()=>setQrUrl(""))},[]);
   useEffect(()=>{const controller=new AbortController();fetch(SANITY_URL,{signal:controller.signal}).then(response=>response.ok?response.json():Promise.reject()).then(data=>setCms(data.result as CmsPayload)).catch(()=>{/* Keep the complete built-in presentation when the CMS is unavailable. */});return()=>controller.abort()},[]);
+  useEffect(()=>{if(section!=="videos")return;const track=showcaseStripRef.current;const card=track?.querySelector<HTMLElement>(`.showcase-strip-card:nth-child(${activeShowcase+1})`);if(!track||!card)return;const trackBox=track.getBoundingClientRect();const cardBox=card.getBoundingClientRect();track.scrollBy({left:cardBox.left+cardBox.width/2-(trackBox.left+trackBox.width/2),behavior:"smooth"})},[activeShowcase,section]);
   const selectComprehensiveService=(index:number)=>{if(activeComprehensive===index&&comprehensivePhase==="panel"){closeComprehensiveService();return}if(comprehensiveTimer.current)clearTimeout(comprehensiveTimer.current);setActiveComprehensive(index);setComprehensivePhase("activating");comprehensiveTimer.current=window.setTimeout(()=>setComprehensivePhase("panel"),180)};
   const closeComprehensiveService=()=>{if(comprehensiveTimer.current)clearTimeout(comprehensiveTimer.current);setComprehensivePhase("idle");setActiveComprehensive(null)};
   const turnTrust=(direction:"next"|"prev")=>{setTrustTurn(direction);setActiveTrust(current=>compactBook?(current+(direction==="next"?1:trustSlideCount-1))%trustSlideCount:direction==="next"?(current===0?1:current===1?3:current===3?5:0):(current===0?5:current===5?3:current===3?1:0))};
@@ -258,12 +267,23 @@ export default function Home(){
     </section>
 
     <section className={`showcase-scene ${section==="videos"?"is-here":""}`} aria-labelledby="showcase-title">
-      <header className="showcase-heading"><span>03 / FILMS</span><h2 id="showcase-title">{t.videos}</h2><i/></header>
-      <div className="showcase-grid">
-        {showcaseVideos.map((video,index)=><button type="button" className="showcase-card" key={video.src} onClick={()=>{setActiveShowcase(index);setModal("showcase")}} style={{"--showcase-index":index} as React.CSSProperties}>
-          <span className="showcase-poster"><img src={video.poster} alt=""/><i/><b><Play/></b></span>
-          <strong>{video.title}</strong><small>{String(index+1).padStart(2,"0")}</small>
-        </button>)}
+      <header className="showcase-heading"><h2 id="showcase-title">{t.videos}</h2></header>
+      <div className="showcase-library" onTouchStart={e=>touchStart.current=e.changedTouches[0].clientX} onTouchEnd={e=>{const delta=e.changedTouches[0].clientX-touchStart.current;if(Math.abs(delta)>45)setActiveShowcase(i=>(i+(delta<0?1:showcaseVideos.length-1))%showcaseVideos.length)}}>
+        <button type="button" className="showcase-feature" onClick={()=>setModal("showcase")} aria-label={`${lang==="ar"?"تشغيل":"Play"} ${showcaseVideos[activeShowcase][lang]}`}>
+          <img key={showcaseVideos[activeShowcase].poster} src={showcaseVideos[activeShowcase].poster} alt=""/>
+          <span className="showcase-feature-shade"/>
+          <span className="showcase-feature-play"><Play/></span>
+          <span className="showcase-feature-copy"><strong>{showcaseVideos[activeShowcase][lang]}</strong></span>
+        </button>
+        <nav className="showcase-filmstrip" aria-label={lang==="ar"?"اختيار الفيلم":"Select a film"}>
+          <button type="button" className="showcase-strip-arrow showcase-strip-prev" onClick={()=>setActiveShowcase(i=>(i+showcaseVideos.length-1)%showcaseVideos.length)} aria-label={lang==="ar"?"الفيلم السابق":"Previous film"}><Chevron/></button>
+          <div className="showcase-strip-track" ref={showcaseStripRef}>
+            {showcaseVideos.map((video,index)=><button type="button" className={`showcase-strip-card ${index===activeShowcase?"is-active":""}`} key={video.src} onClick={()=>setActiveShowcase(index)} aria-pressed={index===activeShowcase} style={{"--showcase-index":index} as React.CSSProperties}>
+              <span><img src={video.poster} alt=""/><i/></span><strong>{video[lang]}</strong>
+            </button>)}
+          </div>
+          <button type="button" className="showcase-strip-arrow showcase-strip-next" onClick={()=>setActiveShowcase(i=>(i+1)%showcaseVideos.length)} aria-label={lang==="ar"?"الفيلم التالي":"Next film"}><Chevron/></button>
+        </nav>
       </div>
     </section>
 
@@ -312,7 +332,7 @@ export default function Home(){
     </div>}
 
     {modal==="details"&&<div className="cinema details-modal modal-layer" role="dialog" aria-modal="true"><div className="cinema-rings"><i/><i/><i/></div><div className="cinema-copy details-copy"><span>0{selected} / 03</span><DetailsIcon/><h3>{t.details.replace("\n"," ")}</h3><p>{t.soon}</p></div></div>}
-    {modal==="showcase"&&<div className="cinema cinema--video showcase-modal modal-layer" role="dialog" aria-modal="true" aria-label={showcaseVideos[activeShowcase].title}><div className="cinema-video-bg" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background-video2.mp4`} poster={`${MEDIA_BASE}/media/brand/background-poster.jpg`} muted playsInline preload="metadata"/><div className="cinema-video-overlay"/></div><div className="video-screen-stage"><div className="video-screen-frame"><video key={showcaseVideos[activeShowcase].src} className="services-video" src={showcaseVideos[activeShowcase].src} poster={showcaseVideos[activeShowcase].poster} controls autoPlay playsInline preload="metadata">Your browser does not support video playback.</video><div className="video-vignette"/></div><h3 className="showcase-video-title">{showcaseVideos[activeShowcase].title}</h3><span className="video-screen-shadow"/></div></div>}
+    {modal==="showcase"&&<div className="cinema cinema--video showcase-modal modal-layer" role="dialog" aria-modal="true" aria-label={showcaseVideos[activeShowcase][lang]}><div className="cinema-video-bg" aria-hidden="true"><video src={`${MEDIA_BASE}/media/brand/background-video2.mp4`} poster={`${MEDIA_BASE}/media/brand/background-poster.jpg`} muted playsInline preload="metadata"/><div className="cinema-video-overlay"/></div><div className="video-screen-stage"><div className="video-screen-frame"><video key={showcaseVideos[activeShowcase].src} className="services-video" src={showcaseVideos[activeShowcase].src} poster={showcaseVideos[activeShowcase].poster} controls autoPlay playsInline preload="metadata">Your browser does not support video playback.</video><div className="video-vignette"/></div><h3 className="showcase-video-title">{showcaseVideos[activeShowcase][lang]}</h3><span className="video-screen-shadow"/></div></div>}
 
     {modal==="comprehensive"&&<div className="comprehensive-modal modal-layer" role="dialog" aria-modal="true" aria-label={lang==="ar"?"الباقة الشاملة":"Comprehensive Package"} data-phase={comprehensivePhase} data-selected={activeComprehensive??"none"}>
       <img className="comprehensive-backdrop" src="/media/brand/comprehensive-package-cover.webp" alt=""/>
