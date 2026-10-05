@@ -114,6 +114,7 @@ function TeamIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><circle c
 function HospitalityIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 45c8-1 13 1 19 7h6c6-6 11-8 19-7M14 39V22l18-12 18 12v17"/><path d="M23 39V27h18v12M32 10v29"/><circle cx="32" cy="48" r="4"/></svg>}
 function TrustIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6 51 14v16c0 13-8 23-19 28C21 53 13 43 13 30V14Z"/><path d="m22 31 7 7 14-16"/><circle cx="32" cy="19" r="3"/></svg>}
 function HomeIcon(){return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9h-6v-6H9v6H3Z"/></svg>}
+function BackIcon(){return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7"/><path d="M8 12h10"/></svg>}
 function FullscreenIcon({active=false}:{active?:boolean}){return active?<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6"/></svg>:<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg>}
 function RefreshIcon(){return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M19 12a7 7 0 1 0-2 5"/></svg>}
 function QrIcon(){return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h7v7H3ZM14 3h7v7h-7ZM3 14h7v7H3ZM14 14h3v3h-3ZM18 18h3v3h-3ZM18 14h3M14 19v2"/></svg>}
@@ -172,8 +173,38 @@ export default function Home(){
   const backgroundVideoRef=useRef<HTMLVideoElement>(null);
   const transitionTimers=useRef<number[]>([]);
   const comprehensiveTimer=useRef<number|undefined>(undefined);
+  const historyReady=useRef(false);
+  const restoringHistory=useRef(false);
+  const [historyDepth,setHistoryDepth]=useState(0);
   useEffect(()=>{if(!loading)return;const id=setTimeout(()=>setLoading(false),700);return()=>clearTimeout(id)},[loading]);
   useEffect(()=>{try{sessionStorage.setItem(VIEW_STORAGE_KEY,JSON.stringify({lang,section,selected,focus,modal,slide,activeShowcase,activeHospitality,activeHospitalityPhase,activeReception,activeControlObservation,activeTestimonial,activeTrust} satisfies PresentationView))}catch{/* State persistence is optional in restricted browser contexts. */}},[lang,section,selected,focus,modal,slide,activeShowcase,activeHospitality,activeHospitalityPhase,activeReception,activeControlObservation,activeTestimonial,activeTrust]);
+  useEffect(()=>{
+    const restore=(event:PopStateEvent)=>{
+      const entry=event.state as {bushraView?:PresentationView;bushraDepth?:number}|null;
+      if(!entry?.bushraView)return;
+      restoringHistory.current=true;
+      setHistoryDepth(entry.bushraDepth??0);
+      const view=entry.bushraView;
+      setLang(view.lang);setSection(view.section);setSelected(view.selected);setFocus(view.focus);setModal(view.modal);setSlide(view.slide);setActiveShowcase(view.activeShowcase);setActiveHospitality(view.activeHospitality);setActiveHospitalityPhase(view.activeHospitalityPhase);setActiveReception(view.activeReception);setActiveControlObservation(view.activeControlObservation);setActiveTestimonial(view.activeTestimonial);setActiveTrust(view.activeTrust);
+    };
+    addEventListener("popstate",restore);
+    return()=>removeEventListener("popstate",restore);
+  },[]);
+  useEffect(()=>{
+    const view={lang,section,selected,focus,modal,slide,activeShowcase,activeHospitality,activeHospitalityPhase,activeReception,activeControlObservation,activeTestimonial,activeTrust} satisfies PresentationView;
+    const destination=modal??(selected?`level-${selected}`:section);
+    const hash=destination==="home"?"":`#${destination}`;
+    const url=`${location.pathname}${location.search}${hash}`;
+    if(!historyReady.current){
+      const existingDepth=Number((history.state as {bushraDepth?:number}|null)?.bushraDepth??0);
+      history.replaceState({bushraView:view,bushraDepth:existingDepth},"",url);
+      historyReady.current=true;setHistoryDepth(existingDepth);return;
+    }
+    if(restoringHistory.current){restoringHistory.current=false;return}
+    const nextDepth=historyDepth+1;
+    history.pushState({bushraView:view,bushraDepth:nextDepth},"",url);
+    setHistoryDepth(nextDepth);
+  },[section,selected,modal]);
   useEffect(()=>{const video=backgroundVideoRef.current;if(!video)return;video.playbackRate=.72;if(modal)video.pause();else video.play().catch(()=>{})},[modal]);
   useEffect(()=>{QRCode.toDataURL(location.href,{width:360,margin:2,color:{dark:"#133c67",light:"#ffffff"}}).then(setQrUrl).catch(()=>setQrUrl(""))},[]);
   useEffect(()=>{const controller=new AbortController();fetch(SANITY_URL,{signal:controller.signal}).then(response=>response.ok?response.json():Promise.reject()).then(data=>setCms(data.result as CmsPayload)).catch(()=>{/* Keep the complete built-in presentation when the CMS is unavailable. */});return()=>controller.abort()},[]);
@@ -194,6 +225,14 @@ export default function Home(){
   };
   const pick=(n:Level)=>{setModal(null);setSlide(0);setFocus(n);setSelected(n)};
   const goHome=()=>transition(()=>{setModal(null);setSelected(null);setSection("home")});
+  const canNavigateBack=historyDepth>0||modal!==null||selected!==null||section!=="home";
+  const navigateBack=()=>{
+    if(historyDepth>0){history.back();return}
+    if(modal==="trustVideo"){setModal("trust");return}
+    if(modal){setModal(null);return}
+    if(selected){setSelected(null);return}
+    if(section!=="home")goHome();
+  };
   const openSection=(next:Section)=>{transitionTimers.current.forEach(clearTimeout);setTransitioning(false);setActiveHub(null);setModal(null);setSelected(null);setSection(next)};
   const refreshPresentation=()=>{try{sessionStorage.setItem(VIEW_STORAGE_KEY,JSON.stringify({lang,section,selected,focus,modal,slide,activeShowcase,activeHospitality,activeHospitalityPhase,activeReception,activeControlObservation,activeTestimonial,activeTrust} satisfies PresentationView))}finally{location.reload()}};
   const toggleFullscreen=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{/* Fullscreen can be blocked by the browser or an embedded frame. */}};
@@ -390,7 +429,7 @@ export default function Home(){
     {modal==="qr"&&<div className="qr-modal modal-layer" role="dialog" aria-modal="true" aria-label={lang==="ar"?"رمز رابط العرض":"Presentation QR code"}><div className="qr-card"><small>{lang==="ar"?"افتح العرض على جهاز آخر":"OPEN ON ANOTHER DEVICE"}</small><h3>{lang==="ar"?"امسح الرمز للمتابعة":"Scan to continue"}</h3>{qrUrl&&<img src={qrUrl} alt={lang==="ar"?"رمز رابط العرض":"Presentation link QR code"}/>}<p dir="ltr">{location.href}</p></div></div>}
 
     <nav className="page-step-nav global-step-nav" aria-label={rtl?"التنقل بين الصفحات":"Page navigation"}>
-      <div className="utility-row"><button type="button" className="utility-step" onClick={goHome} aria-label={rtl?"العودة إلى الصفحة الرئيسية":"Go to homepage"}><HomeIcon/></button><button type="button" className="utility-step" onClick={toggleFullscreen} aria-label={isFullscreen?(rtl?"الخروج من ملء الشاشة":"Exit full screen"):(rtl?"عرض بملء الشاشة":"Enter full screen")}><FullscreenIcon active={isFullscreen}/></button><button type="button" className="utility-step" onClick={refreshPresentation} aria-label={rtl?"تحديث العرض":"Refresh presentation"}><RefreshIcon/></button><button type="button" className="utility-step" onClick={()=>setModal("qr")} aria-label={lang==="ar"?"عرض رمز الاستجابة السريعة":"Show QR code"}><QrIcon/></button><button type="button" className="utility-step utility-step--close" onClick={()=>modal==="trustVideo"?setModal("trust"):modal?setModal(null):goHome()} aria-label={modal==="trustVideo"?(lang==="ar"?"العودة إلى شواهد الثقة":"Return to Evidence of Trust"):modal?t.close:(rtl?"العودة للرئيسية":"Return home")}>×</button></div>
+      <div className="utility-row"><button type="button" className="utility-step utility-step--back" onClick={navigateBack} disabled={!canNavigateBack} aria-label={rtl?"العودة إلى الشاشة السابقة":"Back to previous screen"}><BackIcon/></button><button type="button" className="utility-step" onClick={goHome} aria-label={rtl?"العودة إلى الصفحة الرئيسية":"Go to homepage"}><HomeIcon/></button><button type="button" className="utility-step" onClick={toggleFullscreen} aria-label={isFullscreen?(rtl?"الخروج من ملء الشاشة":"Exit full screen"):(rtl?"عرض بملء الشاشة":"Enter full screen")}><FullscreenIcon active={isFullscreen}/></button><button type="button" className="utility-step" onClick={refreshPresentation} aria-label={rtl?"تحديث العرض":"Refresh presentation"}><RefreshIcon/></button><button type="button" className="utility-step" onClick={()=>setModal("qr")} aria-label={lang==="ar"?"عرض رمز الاستجابة السريعة":"Show QR code"}><QrIcon/></button><button type="button" className="utility-step utility-step--close" onClick={()=>modal==="trustVideo"?setModal("trust"):modal?setModal(null):goHome()} aria-label={modal==="trustVideo"?(lang==="ar"?"العودة إلى شواهد الثقة":"Return to Evidence of Trust"):modal?t.close:(rtl?"العودة للرئيسية":"Return home")}>×</button></div>
     </nav>
 
     <div className={`page-transition-logo ${transitioning?"is-visible":""}`} aria-hidden="true"><div><span/><DrawLogo/></div></div>
