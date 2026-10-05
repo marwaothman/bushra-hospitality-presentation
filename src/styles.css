@@ -315,6 +315,10 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .hub-options>button:nth-child(6){--tower-shift:10px;height:calc(90% - 20px)}
 }
 
+/* Ministry evaluation film entry inside Evidence of Trust. */
+.trust-video-launch{position:absolute;z-index:8;top:calc(var(--presentation-header) + clamp(20px,2.8vh,36px));left:clamp(26px,4vw,76px);width:min(330px,25vw);height:78px;padding:7px 16px 7px 7px;display:grid;grid-template-columns:94px minmax(0,1fr);align-items:center;gap:14px;border:1px solid rgba(208,168,108,.48);background:rgba(3,21,35,.82);color:#fff;text-align:right;cursor:pointer;box-shadow:0 20px 48px rgba(0,0,0,.26);backdrop-filter:blur(14px);transition:transform .35s,border-color .35s,background .35s}.trust-video-launch:hover,.trust-video-launch:focus-visible{transform:translateY(-3px);border-color:#d0a86c;background:rgba(11,43,66,.94);outline:none}.trust-video-launch>span{position:relative;width:94px;height:62px;overflow:hidden}.trust-video-launch img{width:100%;height:100%;display:block;object-fit:cover}.trust-video-launch>span:after{content:"";position:absolute;inset:0;background:rgba(2,14,23,.2)}.trust-video-launch i{position:absolute;z-index:2;inset:0;margin:auto;width:34px;height:34px;display:grid;place-items:center;border:1px solid rgba(208,168,108,.8);border-radius:50%;background:rgba(2,16,27,.72);color:#d0a86c}.trust-video-launch svg{width:17px;fill:none;stroke:currentColor;stroke-width:1}.trust-video-launch path{fill:currentColor;stroke:none}.trust-video-launch strong{font-size:clamp(12px,.85vw,16px);font-weight:600;line-height:1.45}.experience[dir="ltr"] .trust-video-launch{padding:7px 7px 7px 16px;text-align:left}.trust-video-modal .showcase-video-title{bottom:clamp(100px,13vh,145px)}
+@media(max-width:760px){.trust-video-launch{top:calc(var(--mobile-header) + 72px);left:12px;width:220px;height:62px;grid-template-columns:70px minmax(0,1fr);gap:9px;padding:5px 9px 5px 5px}.trust-video-launch>span{width:70px;height:50px}.trust-video-launch strong{font-size:11px}}
+
 /* Deterministic final geometry. */
 @media(min-width:1001px){
   .experience{--presentation-header:48px}
@@ -1443,7 +1447,6 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 @media(max-width:1000px){.showcase-library{top:calc(var(--mobile-header,68px) + 110px);right:16px;bottom:64px;left:16px;gap:10px}.showcase-feature{min-height:220px}.showcase-feature-copy{left:20px;bottom:20px;max-width:72%}.showcase-feature-copy>strong{font-size:22px}.showcase-filmstrip{grid-template-columns:38px minmax(0,1fr) 38px;gap:7px}.showcase-strip-arrow{width:38px;height:38px}.showcase-strip-track{grid-auto-columns:190px}.showcase-strip-card{height:70px;grid-template-columns:58px minmax(0,1fr)}.showcase-strip-card>span{width:58px;height:54px}.showcase-feature-play{width:64px;height:64px}.showcase-scene .showcase-heading p{display:none!important}}
 @media(max-width:620px){.showcase-library{top:calc(var(--mobile-header,68px) + 76px);bottom:58px}.showcase-feature-copy>i{display:none}.showcase-feature-copy>strong{font-size:17px}.showcase-feature-copy{max-width:78%}.showcase-filmstrip{grid-template-columns:34px minmax(0,1fr) 34px}.showcase-strip-arrow{width:34px;height:34px}.showcase-strip-track{grid-auto-columns:165px}.showcase-strip-card{height:62px;grid-template-columns:48px minmax(0,1fr);padding:5px 8px 5px 5px}.showcase-strip-card>span{width:48px;height:50px}}
 
-
 /* Keep the film title inside the playing video and above the global controls. */
 .showcase-modal .showcase-video-title{bottom:clamp(100px,13vh,145px)}
 @media(max-width:620px){.showcase-modal .showcase-video-title{bottom:72px}}
@@ -1483,7 +1486,6 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .experience[dir="ltr"] .comprehensive-modal .comprehensive-heading{right:auto!important;left:14px!important}
 }
 
-
 /* Executive evidence stage — scalable testimonial library. */
 .testimonial-library-scene{padding:0!important;background:radial-gradient(circle at 28% 42%,rgba(23,66,96,.5),transparent 42%),linear-gradient(118deg,#03111d,#082a43 52%,#03111d)!important}
 .testimonial-library-scene .testimonial-stage{position:absolute;inset:var(--presentation-header) 0 0;width:100%;max-width:none;height:auto;padding:clamp(100px,12vh,132px) clamp(40px,6vw,112px) 84px;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:minmax(0,1fr) auto;gap:clamp(14px,2vh,24px) clamp(24px,3vw,50px)}
@@ -1502,12 +1504,10 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 @media(max-width:1000px){.testimonial-library-scene .testimonial-stage{padding:95px 20px 72px}.testimonial-filters{top:70px;left:20px}.experience[dir="ltr"] .testimonial-filters{right:20px;left:auto}.testimonial-filters button{min-width:0;padding:8px 12px}.testimonial-evidence-stage-main{grid-template-columns:minmax(0,1.25fr) minmax(250px,.75fr)}.testimonial-feature-copy{padding:25px}.testimonial-feature-copy p{display:none}.testimonial-evidence-rail{grid-auto-columns:220px}}
 @media(max-width:620px){.testimonial-library-scene .testimonial-stage{inset:var(--mobile-header) 0 0;padding:120px 12px 64px;gap:8px}.testimonial-library-scene .testimonial-heading{top:14px!important}.testimonial-filters{top:72px;right:12px!important;left:12px!important;justify-content:center}.testimonial-filters button{flex:1;font-size:10px;padding:8px 6px}.testimonial-evidence-stage-main{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto}.testimonial-feature-copy{padding:17px 18px}.testimonial-feature-copy h3{font-size:20px;margin:8px 0}.testimonial-feature-copy p{display:none}.testimonial-feature-copy>button{margin-top:12px}.testimonial-feature-quote blockquote{margin:8px 0;font-size:15px;line-height:1.5}.testimonial-feature-proof{padding:15px}.testimonial-feature-proof img{max-height:27vh}.testimonial-evidence-rail{grid-auto-columns:180px}.testimonial-evidence-rail>button{height:62px;grid-template-columns:50px minmax(0,1fr)}.testimonial-evidence-rail>button>span{width:50px;height:50px}}
 
-
 /* Keep the evidence stage intentionally minimal: names and primary stories only. */
 .testimonial-feature-copy h3{margin:0}
 .testimonial-evidence-rail>button{grid-template-rows:1fr}
 .testimonial-evidence-rail>button>b{align-self:center}
-
 
 /* Mirror the focused homepage story for English: title left, supporting copy right. */
 @media(min-width:1001px){
