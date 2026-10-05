@@ -1545,3 +1545,12 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
     text-align:left!important;
   }
 }
+
+/* Trust book geometry must remain last in the cascade. */
+.trust-book-stage.is-cover .trust-book{width:min(62vw,900px)!important;height:min(43.87vw,636px)!important;aspect-ratio:1754/1241;transform:rotateX(1.1deg) rotateY(-1.5deg) translateY(-4px)!important;filter:drop-shadow(0 42px 48px rgba(0,0,0,.46))!important}
+.trust-book-stage.is-cover .trust-book-page--right{box-shadow:0 3px 0 #e4ded3,0 6px 0 #c9c0b3,0 9px 0 rgba(128,117,101,.76),14px 24px 56px rgba(0,0,0,.42),inset 0 0 0 1px rgba(176,142,87,.27)!important}
+.trust-book-stage.is-cover .trust-book-page--right:before{inset:4px -8px -10px 8px!important;background:linear-gradient(90deg,#d9d1c5,#eee8df 72%,#b7ab99)!important;box-shadow:10px 14px 24px rgba(0,0,0,.24)!important}
+.trust-book-stage.is-cover~.trust-book-nav button:first-child{left:max(12px,calc((100vw - min(62vw,900px))/2 - 47px))!important}
+.trust-book-stage.is-cover~.trust-book-nav button:last-child{right:max(12px,calc((100vw - min(62vw,900px))/2 - 47px))!important}
+@media(max-width:1000px){.trust-book-stage.is-cover .trust-book{width:min(78vw,760px)!important;height:min(55.2vw,538px)!important}.trust-book-stage.is-cover~.trust-book-nav button:first-child{left:8px!important}.trust-book-stage.is-cover~.trust-book-nav button:last-child{right:8px!important}}
+@media(max-width:620px){.trust-book-stage.is-cover .trust-book{width:min(86vw,540px)!important;height:min(60.85vw,382px)!important}.trust-book-stage.is-cover~.trust-book-nav button:first-child{left:1px!important}.trust-book-stage.is-cover~.trust-book-nav button:last-child{right:1px!important}}
