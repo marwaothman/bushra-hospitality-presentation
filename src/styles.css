@@ -467,6 +467,12 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .hospitality-modal-copy{width:88vw}.hospitality-modal-icon{width:82px;height:82px;margin:20px auto 15px}.hospitality-modal-icon svg{width:40px;height:40px}.hospitality-modal-copy h3{font-size:clamp(25px,8vw,38px);line-height:1.25}.hospitality-modal-copy p{font-size:13px}
 }
 
+/* Motion orchestration shells keep animation separate from visual components. */
+.portal-motion-shell,.pick-motion-shell{position:relative;min-width:0;min-height:0}
+.portal-motion-shell{height:100%}.portal-motion-shell>.portal{height:100%}
+.pick-motion-shell{height:100%}.pick-motion-shell>.experience-pick{height:100%!important}
+@media(prefers-reduced-motion:reduce){.portal-motion-shell,.pick-motion-shell{transform:none!important;transition:none!important}}
+
 @media(max-width:760px) and (orientation:landscape){
   .experience{--mobile-header:54px}.nav{padding-block:5px}.brand-lockup{height:38px}.anniversary-logo{height:25px}.company-wordmark{height:24px}.lang-switch button{height:28px}
   .hub-scene,.content-scene,.home-scene,.package-scene,.team-scene,.showcase-scene,.hospitality-scene{padding-top:calc(var(--mobile-header) + 6px);padding-bottom:52px}
