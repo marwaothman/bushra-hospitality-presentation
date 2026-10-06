@@ -1503,6 +1503,112 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   text-align:left!important;
   direction:ltr!important;
 }
+
+/* Executive packages overview — a focused comparison, not a decorative hero. */
+@media(min-width:761px){
+  .packages-overview{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto minmax(0,1fr)!important;
+    align-content:start!important;
+    gap:clamp(24px,3.2vh,42px)!important;
+    padding:clamp(124px,14vh,158px) clamp(48px,6vw,118px) clamp(78px,8vh,96px)!important;
+  }
+  .packages-overview .care-copy{
+    width:min(100%,1500px)!important;
+    max-width:none!important;
+    margin:0 auto!important;
+    padding:0!important;
+    text-align:right!important;
+  }
+  .packages-overview .care-copy h1{
+    margin:0!important;
+    font-size:clamp(42px,4.15vw,76px)!important;
+    line-height:1.02!important;
+    letter-spacing:-.035em!important;
+    text-shadow:0 16px 48px rgba(0,0,0,.28)!important;
+  }
+  .packages-overview .care-copy h1 span{display:inline!important}
+  .packages-overview .care-copy h1 span+span:before{content:" ";white-space:pre}
+  .packages-overview .care-copy p{
+    max-width:650px!important;
+    margin:14px 0 0 auto!important;
+    color:rgba(255,255,255,.76)!important;
+    font-size:clamp(15px,1.05vw,20px)!important;
+    line-height:1.55!important;
+  }
+  .packages-overview .portal-stage{
+    position:relative!important;
+    width:min(100%,1500px)!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:0 auto!important;
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:clamp(18px,2vw,34px)!important;
+    align-items:stretch!important;
+    perspective:1600px!important;
+  }
+  .packages-overview .portal{
+    position:relative!important;
+    inset:auto!important;
+    width:100%!important;
+    height:clamp(330px,44vh,465px)!important;
+    max-width:none!important;
+    opacity:1!important;
+    filter:none!important;
+    transform:none!important;
+  }
+  .packages-overview .portal-glass{
+    padding:clamp(24px,2.2vw,38px)!important;
+    align-items:stretch!important;
+    background:linear-gradient(145deg,rgba(19,60,103,.96),rgba(7,29,49,.985))!important;
+    border:1px solid rgba(208,168,108,.26)!important;
+    box-shadow:0 24px 58px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.1)!important;
+    transition:transform .52s cubic-bezier(.16,1,.3,1),border-color .35s,box-shadow .52s!important;
+  }
+  .packages-overview .portal-glass:after{inset:11px!important;border-color:rgba(208,168,108,.12)!important}
+  .packages-overview .portal-level{
+    position:relative;z-index:2;display:block;color:#d0a86c;
+    font-size:clamp(10px,.68vw,13px);font-weight:650;letter-spacing:.09em;
+  }
+  .packages-overview .portal-care-symbol{
+    width:clamp(96px,7vw,126px)!important;height:clamp(96px,7vw,126px)!important;
+    margin:auto!important;transform:translateZ(24px)!important;
+  }
+  .packages-overview .portal-care-symbol:before{width:78%!important;height:78%!important}
+  .packages-overview .portal-care-symbol:after{width:58%!important;height:58%!important}
+  .packages-overview .care-level-icon{width:52%!important;height:52%!important}
+  .packages-overview .portal-title{
+    margin:0!important;color:#fff!important;font-size:clamp(24px,1.7vw,34px)!important;
+    font-weight:650!important;line-height:1.15!important;text-align:right!important;
+  }
+  .packages-overview .portal-positioning{
+    position:relative;z-index:2;display:block;margin-top:8px;color:rgba(255,255,255,.66);
+    font-size:clamp(13px,.9vw,17px);font-weight:450;text-align:right;
+  }
+  .packages-overview .portal-enter{
+    margin-top:20px!important;padding-top:16px!important;color:#d0a86c!important;
+    border-color:rgba(208,168,108,.24)!important;font-size:clamp(11px,.72vw,14px)!important;
+    font-weight:600!important;
+  }
+  .packages-overview .portal:hover .portal-glass,
+  .packages-overview .portal:focus-visible .portal-glass,
+  .packages-overview .portal.is-focused .portal-glass{
+    transform:translateY(-9px)!important;border-color:rgba(208,168,108,.72)!important;
+    box-shadow:0 34px 74px rgba(0,0,0,.34),0 0 0 1px rgba(208,168,108,.16),inset 0 1px rgba(255,255,255,.12)!important;
+  }
+  .experience[dir="ltr"] .packages-overview .care-copy{text-align:left!important}
+  .experience[dir="ltr"] .packages-overview .care-copy p{margin-left:0!important;margin-right:auto!important}
+  .experience[dir="ltr"] .packages-overview .portal-title,
+  .experience[dir="ltr"] .packages-overview .portal-positioning{text-align:left!important}
+  .experience[dir="ltr"] .packages-overview .portal-enter svg{transform:scaleX(-1)}
+}
+
+@media(max-width:760px){
+  .packages-overview .portal-level{display:block;margin-bottom:8px;color:#d0a86c;font-size:9px;font-weight:650}
+  .packages-overview .portal-positioning{display:block;margin-top:6px;color:rgba(255,255,255,.64);font-size:10px;line-height:1.3;text-align:center}
+}
 @media(max-width:1000px){
   .experience[dir="ltr"] .comprehensive-modal .comprehensive-heading{right:auto!important;left:20px!important}
 }
