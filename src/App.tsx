@@ -367,11 +367,11 @@ export default function Home(){
 
     <section className={`package-scene ${selected?"is-here":""}`}>
       {selected&&<><div className="giant-index">{managedPacks[selected].no}</div><button className="back-button" onClick={()=>transition(()=>setSelected(null))}><Arrow/><span>{t.back}</span></button>
-        <div className="package-title"><span>0{selected} / 03</span><h2>{managedPacks[selected][lang]}</h2><i/></div>
+        <div className="package-title"><span>0{selected} / 03</span><h2>{managedPacks[selected][lang]}</h2><p>{lang==="ar"?(selected===1?"عناية استثنائية في كل محطة":selected===2?"راحة متقدمة طوال الرحلة":"خدمة موثوقة تلبي الاحتياج"):(selected===1?"Exceptional care at every stage":selected===2?"Elevated comfort throughout the journey":"Trusted service designed around every need")}</p><i/></div>
         <div className="experience-picks">
-          <button type="button" className="experience-pick video-pick" onClick={()=>setModal("video")}><span className="pick-media"><i className="liquid"/><Play/></span><span className="pick-copy"><strong>{t.services.split("\n").map(x=><span key={x}>{x}</span>)}</strong></span></button>
-          <button type="button" className="experience-pick gallery-pick" onClick={()=>{setSlide(0);setModal("gallery")}}><span className="pick-media"><i className="liquid"/><Frames/></span><span className="pick-copy"><strong>{t.journey.split("\n").map(x=><span key={x}>{x}</span>)}</strong></span></button>
-          <button type="button" className="experience-pick details-pick" onClick={()=>setModal("details")}><span className="pick-media"><i className="liquid"/><DetailsIcon/></span><span className="pick-copy"><strong>{t.details.split("\n").map(x=><span key={x}>{x}</span>)}</strong></span></button>
+          <button type="button" className="experience-pick video-pick" onClick={()=>setModal("video")}><span className="pick-media"><img src={`${MEDIA_BASE}/media/level-${selected}/services-poster.jpg`} alt=""/><i className="liquid"/><Play/></span><span className="pick-copy"><strong>{t.services.split("\n").map(x=><span key={x}>{x}</span>)}</strong><em>{lang==="ar"?"استكشف التجربة":"Explore experience"}<Arrow/></em></span></button>
+          <button type="button" className="experience-pick gallery-pick" onClick={()=>{setSlide(0);setModal("gallery")}}><span className="pick-media"><img src={`${MEDIA_BASE}/media/level-${selected}/${lang}/1.webp`} alt=""/><i className="liquid"/><Frames/></span><span className="pick-copy"><strong>{t.journey.split("\n").map(x=><span key={x}>{x}</span>)}</strong><em>{lang==="ar"?"استعرض الرحلة":"View journey"}<Arrow/></em></span></button>
+          <button type="button" className="experience-pick details-pick" onClick={()=>setModal("details")}><span className="pick-media"><img src={`${MEDIA_BASE}/media/level-${selected}/${lang}/2.webp`} alt=""/><i className="liquid"/><DetailsIcon/></span><span className="pick-copy"><strong>{t.details.split("\n").map(x=><span key={x}>{x}</span>)}</strong><em>{lang==="ar"?"اعرف المزيد":"Learn more"}<Arrow/></em></span></button>
         </div>
         <div className="package-orbit"><span/><span/><span/></div>
       </>}
