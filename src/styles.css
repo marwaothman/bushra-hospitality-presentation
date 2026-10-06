@@ -1631,7 +1631,7 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   }
   .package-scene.is-here .package-title>span{
     display:block!important;margin-bottom:8px;color:#d0a86c;
-    font:650 11px/1 sans-serif;letter-spacing:.12em;
+    font:650 11px/1 sans-serif;letter-spacing:.12em;direction:ltr;
   }
   .package-scene.is-here .package-title h2{
     margin:0!important;max-width:none!important;color:#d0a86c!important;
@@ -1689,8 +1689,7 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .package-scene.is-here .pick-copy{
     position:relative!important;inset:auto!important;z-index:4;
     min-height:130px;padding:clamp(22px,2vw,32px)!important;
-    display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
-    align-items:end!important;gap:16px!important;text-align:right!important;
+    display:block!important;text-align:right!important;
     background:linear-gradient(145deg,rgba(19,60,103,.98),rgba(5,26,44,.99))!important;
   }
   .package-scene.is-here .pick-copy strong{
@@ -1700,8 +1699,8 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .package-scene.is-here .pick-copy strong span{display:inline!important}
   .package-scene.is-here .pick-copy strong span+span:before{content:" ";white-space:pre}
   .package-scene.is-here .pick-copy em{
-    align-self:end!important;display:flex!important;align-items:center!important;gap:9px!important;
-    margin:0!important;padding:0 0 7px!important;border:0!important;border-bottom:1px solid rgba(208,168,108,.42)!important;
+    display:flex!important;align-items:center!important;justify-content:space-between!important;gap:9px!important;width:100%!important;
+    margin:16px 0 0!important;padding:0 0 7px!important;border:0!important;border-bottom:1px solid rgba(208,168,108,.42)!important;
     border-radius:0!important;background:none!important;color:#d0a86c!important;
     font-size:clamp(10px,.72vw,13px)!important;font-style:normal!important;white-space:nowrap!important;
   }
