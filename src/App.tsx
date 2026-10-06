@@ -287,7 +287,7 @@ export default function Home(){
       </div>
     </section>
 
-    <section className={`home-scene ${section!=="packages"||selected?"is-away":""}`}>
+    <section className={`home-scene packages-overview ${section!=="packages"||selected?"is-away":""}`}>
       <div className="hero-copy care-copy">
         <h1>{t.careTitle.split("\n").map(x=><span key={x}>{x}</span>)}</h1>
         <p>{t.careLead}</p>
@@ -295,7 +295,7 @@ export default function Home(){
       <div className="portal-stage">
         <div className="orbit orbit-a"/><div className="orbit orbit-b"/>
         {([1,2,3] as Level[]).map(level=><button type="button" key={level} onPointerEnter={()=>setFocus(level)} onPointerDown={()=>setFocus(level)} onFocus={()=>setFocus(level)} onClick={()=>pick(level)} className={`portal portal-${level} ${focus===level?"is-focused":""}`} aria-label={managedPacks[level][lang]}>
-          <span className="portal-halo"/><span className="portal-glass"><span className={`portal-care-symbol portal-care-symbol-${level}`}><CareLevelIcon level={level}/></span><span className="portal-title">{managedPacks[level][lang]}</span><span className="portal-enter">{t.enter}<Arrow/></span></span>
+          <span className="portal-halo"/><span className="portal-glass"><span className="portal-level">{lang==="ar"?`المستوى ${level===1?"الأول":level===2?"الثاني":"الثالث"}`:`LEVEL ${String(level).padStart(2,"0")}`}</span><span className={`portal-care-symbol portal-care-symbol-${level}`}><CareLevelIcon level={level}/></span><span className="portal-title">{managedPacks[level][lang]}</span><span className="portal-positioning">{lang==="ar"?(level===1?"عناية استثنائية":level===2?"راحة متقدمة":"خدمة موثوقة"):(level===1?"Exceptional care":level===2?"Elevated comfort":"Trusted service")}</span><span className="portal-enter">{lang==="ar"?"استكشف المستوى":"Explore level"}<Arrow/></span></span>
         </button>)}
       </div>
     </section>
