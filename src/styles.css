@@ -473,6 +473,19 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .pick-motion-shell{height:100%}.pick-motion-shell>.experience-pick{height:100%!important}
 @media(prefers-reduced-motion:reduce){.portal-motion-shell,.pick-motion-shell{transform:none!important;transition:none!important}}
 
+/* Directional package reveal and content-specific editorial accents. */
+.package-dashboard{position:contents}
+@supports not (position:contents){.package-dashboard{display:contents}}
+@media(min-width:761px){
+  .package-scene.is-here .package-dashboard{grid-column:1;grid-row:1/-1;display:grid;grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);gap:clamp(24px,3vh,38px);width:min(100%,1500px);height:100%;margin:0 auto}
+  .package-scene.is-here .package-dashboard .package-title,.package-scene.is-here .package-dashboard .experience-picks{width:100%!important}
+  .package-scene.is-here .video-pick .pick-media:before{background:linear-gradient(180deg,rgba(3,18,30,.02),rgba(3,18,30,.64)),linear-gradient(110deg,rgba(176,142,87,.15),transparent 48%)}
+  .package-scene.is-here .gallery-pick .pick-media:before{background:linear-gradient(180deg,rgba(3,18,30,.03),rgba(3,18,30,.58)),linear-gradient(110deg,rgba(112,163,194,.17),transparent 48%)}
+  .package-scene.is-here .details-pick .pick-media:before{background:linear-gradient(180deg,rgba(3,18,30,.08),rgba(3,18,30,.75)),linear-gradient(110deg,rgba(255,255,255,.08),transparent 48%)}
+  .package-scene.is-here .video-pick{--card-accent:#d0a86c}.package-scene.is-here .gallery-pick{--card-accent:#8ab7cf}.package-scene.is-here .details-pick{--card-accent:#c4b394}
+  .package-scene.is-here .experience-pick:hover,.package-scene.is-here .experience-pick:focus-visible{border-color:var(--card-accent)!important}
+}
+
 @media(max-width:760px) and (orientation:landscape){
   .experience{--mobile-header:54px}.nav{padding-block:5px}.brand-lockup{height:38px}.anniversary-logo{height:25px}.company-wordmark{height:24px}.lang-switch button{height:28px}
   .hub-scene,.content-scene,.home-scene,.package-scene,.team-scene,.showcase-scene,.hospitality-scene{padding-top:calc(var(--mobile-header) + 6px);padding-bottom:52px}
