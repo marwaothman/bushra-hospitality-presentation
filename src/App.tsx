@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import QRCode from "qrcode";
 import { motion, useReducedMotion } from "motion/react";
 
-type Lang="ar"|"en"; type Level=1|2|3; type Modal="video"|"gallery"|"details"|"showcase"|"hospitality"|"trust"|"trustVideo"|"testimonial"|"testimonialVideo"|"comprehensive"|"qr"|null; type Section="home"|"hajj1448"|"packages"|"testimonials"|"videos"|"team"|"hospitality"; type ComprehensivePhase="idle"|"activating"|"panel";
+type Lang="ar"|"en"; type Level=1|2|3; type Modal="video"|"gallery"|"details"|"showcase"|"hospitality"|"trust"|"trustVideo"|"testimonial"|"testimonialVideo"|"comprehensive"|"qr"|null; type Section="home"|"hajj1448"|"hajj1448Algeria"|"packages"|"testimonials"|"videos"|"team"|"hospitality"; type ComprehensivePhase="idle"|"activating"|"panel";
 type PresentationView={lang:Lang;section:Section;selected:Level|null;focus:Level;modal:Modal;slide:number;activeShowcase:number;activeHospitality:number;activeHospitalityPhase:number;activeReception:number;activeControlObservation:number;activeTestimonial:number;activeTrust:number};
 const VIEW_STORAGE_KEY="bushra-presentation-view-v1";
 function readPresentationView():PresentationView|null{try{const saved=sessionStorage.getItem(VIEW_STORAGE_KEY);return saved?JSON.parse(saved) as PresentationView:null}catch{return null}}
@@ -120,6 +120,7 @@ function TeamIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><circle c
 function HospitalityIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 45c8-1 13 1 19 7h6c6-6 11-8 19-7M14 39V22l18-12 18 12v17"/><path d="M23 39V27h18v12M32 10v29"/><circle cx="32" cy="48" r="4"/></svg>}
 function TrustIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6 51 14v16c0 13-8 23-19 28C21 53 13 43 13 30V14Z"/><path d="m22 31 7 7 14-16"/><circle cx="32" cy="19" r="3"/></svg>}
 function Hajj1448Icon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M13 50h38M18 50V26h28v24M23 26l9-12 9 12M25 35h14M25 41h14"/><path d="M9 19c7-7 15-10 23-10M55 19C48 12 40 9 32 9"/><circle cx="9" cy="19" r="2"/><circle cx="55" cy="19" r="2"/></svg>}
+function MeetingIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 49V24h44v25M6 53h52M20 24v-7h24v7"/><circle cx="23" cy="35" r="4"/><circle cx="41" cy="35" r="4"/><path d="M16 47c1-6 4-9 7-9s6 3 7 9M34 47c1-6 4-9 7-9s6 3 7 9"/></svg>}
 function CountryFlag({country}:{country:(typeof hajj1448Countries)[number]["id"]}){
   if(country==="libya")return <svg viewBox="0 0 90 60" role="img" aria-label="علم ليبيا"><path fill="#e70013" d="M0 0h90v15H0z"/><path fill="#000" d="M0 15h90v30H0z"/><path fill="#239e46" d="M0 45h90v15H0z"/><path fill="#fff" d="M50 23a9 9 0 1 0 0 14 8 8 0 1 1 0-14Z"/><path fill="#fff" d="m54 26 1.2 3.5h3.7l-3 2.2 1.1 3.5-3-2.1-3 2.1 1.1-3.5-3-2.2h3.7Z"/></svg>;
   if(country==="algeria")return <svg viewBox="0 0 90 60" role="img" aria-label="علم الجزائر"><path fill="#fff" d="M0 0h90v60H0z"/><path fill="#006233" d="M0 0h45v60H0z"/><path fill="#d21034" d="M54 20a13 13 0 1 0 0 20 11 11 0 1 1 0-20Z"/><path fill="#d21034" d="m57 24 2 6h6.3l-5.1 3.7 1.9 6-5.1-3.6-5.1 3.6 1.9-6-5.1-3.7H55Z"/></svg>;
@@ -259,6 +260,7 @@ export default function Home(){
     else if(section==="testimonials")setSection("packages");
     else if(section==="packages")setSection("hospitality");
     else if(section==="hospitality")setSection("team");
+    else if(section==="hajj1448Algeria")setSection("hajj1448");
     else if(section==="hajj1448")setSection("home");
     else if(section==="team")setSection("home");
   });
@@ -266,7 +268,7 @@ export default function Home(){
     setModal(null);
     if(selected){if(selected<3)pick((selected+1) as Level);else{setSelected(null);setSection("testimonials")}return}
     if(section==="home")setSection("team");
-    else if(section==="hajj1448")setSection("team");
+    else if(section==="hajj1448"||section==="hajj1448Algeria")setSection("team");
     else if(section==="team")setSection("hospitality");
     else if(section==="hospitality")setSection("packages");
     else if(section==="packages")pick(focus);
@@ -312,11 +314,30 @@ export default function Home(){
       </header>
       <div className="hajj1448-country-stage" role="list" aria-label={lang==="ar"?"الدول المخدومة في موسم حج 1448هـ":"Countries served during Hajj 1448 AH"}>
         <span className="hajj1448-route" aria-hidden="true"/>
-        {hajj1448Countries.map((country,index)=><motion.button type="button" role="listitem" className="hajj1448-country" key={country.id} initial={reduceMotion?false:{opacity:0,y:24}} animate={section==="hajj1448"?{opacity:1,y:0}:{opacity:0,y:24}} transition={{duration:reduceMotion?.01:.62,delay:reduceMotion?0:index*.09,ease:[.16,1,.3,1]}}>
+        {hajj1448Countries.map((country,index)=><motion.button type="button" role="listitem" className="hajj1448-country" key={country.id} onClick={()=>country.id==="algeria"&&setSection("hajj1448Algeria")} aria-label={country.id==="algeria"?(lang==="ar"?"فتح لقاءات الجزائر":"Open Algeria meetings"):country[lang]} initial={reduceMotion?false:{opacity:0,y:24}} animate={section==="hajj1448"?{opacity:1,y:0}:{opacity:0,y:24}} transition={{duration:reduceMotion?.01:.62,delay:reduceMotion?0:index*.09,ease:[.16,1,.3,1]}}>
           <span className="country-flag"><CountryFlag country={country.id}/></span>
           <span className="country-copy"><small>{lang==="ar"?"بعثة حجاج":"PILGRIM MISSION"}</small><strong>{country[lang]}</strong></span>
           <span className="country-arrow"><Arrow/></span>
         </motion.button>)}
+      </div>
+    </section>
+
+    <section className={`hajj1448-scene hajj1448-meetings-scene ${section==="hajj1448Algeria"?"is-here":""}`} aria-labelledby="algeria-meetings-title">
+      <header className="hajj1448-heading hajj1448-meetings-heading">
+        <small>{lang==="ar"?"الجزائر · موسم حج 1448هـ":"ALGERIA · HAJJ 1448 AH"}</small>
+        <h2 id="algeria-meetings-title">{lang==="ar"?"اللقاءات التنسيقية":"Coordination Meetings"}</h2>
+        <p>{lang==="ar"?"مساحة توثق مراحل التنسيق والاستعداد المشترك لخدمة حجاج الجزائر.":"Documenting the stages of joint coordination and readiness in service of Algerian pilgrims."}</p>
+      </header>
+      <div className="hajj1448-meetings-stage">
+        <button type="button" className="hajj1448-meeting-card">
+          <span className="meeting-emblem"><MeetingIcon/></span>
+          <span className="meeting-copy">
+            <small>{lang==="ar"?"اللقاء التنسيقي الأول":"FIRST COORDINATION MEETING"}</small>
+            <strong>{lang==="ar"?"اللقاء التنسيقي الأول بين شركة بشرى الضيافة والديوان الوطني للحج والعمرة":"The First Coordination Meeting between Bushra Hospitality and the National Office for Hajj and Umrah"}</strong>
+            <em>{lang==="ar"?"موسم حج 1448هـ / 2027م":"Hajj Season 1448 AH / 2027"}</em>
+          </span>
+          <span className="meeting-arrow"><Arrow/></span>
+        </button>
       </div>
     </section>
 
