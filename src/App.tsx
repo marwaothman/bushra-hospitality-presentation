@@ -169,10 +169,9 @@ function MeetingReadinessSlide({lang}:{lang:Lang}){
   const ar=lang==="ar";
   const [selected,setSelected]=useState(0);
   const current=ministryTimeline[selected];
-  const windowStart=Math.min(Math.max(selected-2,0),ministryTimeline.length-5);
   const visible=Array.from({length:5},(_,position)=>{
-    const index=windowStart+position;
-    return {...ministryTimeline[index],index,offset:index-selected};
+    const index=selected+position-2;
+    return index>=0&&index<ministryTimeline.length?{...ministryTimeline[index],index,offset:index-selected}:null;
   });
   const statusLabel=current.status==="done"?(ar?"مكتمل":"Completed"):current.status==="ahead"?(ar?"متقدم على الخطة":"Ahead of plan"):current.status==="active"?(ar?"قيد التنفيذ":"In progress"):(ar?"مرحلة قادمة":"Upcoming");
   const nextAction=current.status==="done"||current.status==="ahead"
@@ -195,7 +194,7 @@ function MeetingReadinessSlide({lang}:{lang:Lang}){
       <button type="button" className="roadmap-scroll roadmap-scroll--start" onClick={()=>move(-1)} disabled={selected===0} aria-label={ar?"المحطة السابقة":"Previous milestone"}><Chevron/></button>
       <div className="roadmap-strip" role="list">
         <i className="roadmap-line" aria-hidden="true"/>
-        {visible.map(stage=><button type="button" key={stage.index} role="listitem" className={`roadmap-point is-${stage.status} is-offset-${Math.abs(stage.offset)} ${selected===stage.index?"is-selected":""}`} onClick={()=>setSelected(stage.index)} aria-pressed={selected===stage.index}><time>{ar?stage.dateAr:stage.dateEn}</time><i><span>{stage.status==="done"||stage.status==="ahead"?"✓":stage.status==="active"?"◐":"◆"}</span></i><strong>{ar?stage.ar:stage.en}</strong></button>)}
+        {visible.map((stage,position)=>stage?<button type="button" key={stage.index} role="listitem" className={`roadmap-point is-${stage.status} is-offset-${Math.abs(stage.offset)} ${selected===stage.index?"is-selected":""}`} onClick={()=>setSelected(stage.index)} aria-pressed={selected===stage.index}><time>{ar?stage.dateAr:stage.dateEn}</time><i><span>{stage.status==="done"||stage.status==="ahead"?"✓":stage.status==="active"?"◐":"◆"}</span></i><strong>{ar?stage.ar:stage.en}</strong></button>:<span key={`empty-${position}`} className="roadmap-point-placeholder" aria-hidden="true"/>)}
       </div>
       <button type="button" className="roadmap-scroll roadmap-scroll--end" onClick={()=>move(1)} disabled={selected===ministryTimeline.length-1} aria-label={ar?"المحطة التالية":"Next milestone"}><Chevron/></button>
     </div>
