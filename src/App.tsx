@@ -6,7 +6,7 @@ import QRCode from "qrcode";
 import { motion, useReducedMotion } from "motion/react";
 
 type Lang="ar"|"en"; type Level=1|2|3; type Modal="video"|"gallery"|"details"|"showcase"|"hospitality"|"trust"|"trustVideo"|"testimonial"|"testimonialVideo"|"comprehensive"|"meeting"|"qr"|null; type Section="home"|"hajj1448"|"hajj1448Algeria"|"packages"|"testimonials"|"videos"|"team"|"hospitality"; type ComprehensivePhase="idle"|"activating"|"panel";
-type PresentationView={lang:Lang;section:Section;selected:Level|null;focus:Level;modal:Modal;slide:number;activeShowcase:number;activeHospitality:number;activeHospitalityPhase:number;activeReception:number;activeControlObservation:number;activeTestimonial:number;activeTrust:number};
+type PresentationView={lang:Lang;section:Section;selected:Level|null;focus:Level;modal:Modal;slide:number;meetingSlide?:number;activeShowcase:number;activeHospitality:number;activeHospitalityPhase:number;activeReception:number;activeControlObservation:number;activeTestimonial:number;activeTrust:number};
 const VIEW_STORAGE_KEY="bushra-presentation-view-v1";
 function readPresentationView():PresentationView|null{try{const saved=sessionStorage.getItem(VIEW_STORAGE_KEY);return saved?JSON.parse(saved) as PresentationView:null}catch{return null}}
 const packs={
@@ -92,11 +92,9 @@ const hajj1448Countries=[
   {id:"algeria",ar:"الجزائر",en:"Algeria"},
   {id:"tunisia",ar:"تونس",en:"Tunisia"},
 ] as const;
-const meetingSlides=[
-  {kind:"image",src:"/media/hajj1448/algeria-meeting-cover.png",altAr:"غلاف اللقاء التنسيقي الأول بين شركة بشرى الضيافة والديوان الوطني للحج والعمرة",altEn:"Cover of the first coordination meeting between Bushra Hospitality and the National Office for Hajj and Umrah"},
-  {kind:"image",src:"/media/hajj1448/yasser-bawyan-profile.png",altAr:"ياسر باويان، مستشار الرئيس التنفيذي",altEn:"Yasser Bawyan, Advisor to the Chief Executive Officer"},
-  {kind:"readiness",altAr:"موقف الجاهزية التنفيذي لموسم حج 1448هـ",altEn:"Executive readiness status for Hajj 1448 AH"},
-] as const;
+const pdfMeetingSlides=Array.from({length:23},(_,index)=>({kind:"image" as const,src:`/media/hajj1448/meeting-deck/slide-${String(index+1).padStart(2,"0")}.webp`,altAr:`اللقاء التنسيقي الأول - الشريحة ${index+1}`,altEn:`First Coordination Meeting - slide ${index+1}`}));
+const meetingSlides=[...pdfMeetingSlides.slice(0,21),{kind:"readiness" as const,altAr:"خارطة الجاهزية التشغيلية لموسم حج 1448هـ",altEn:"Operational readiness roadmap for Hajj 1448 AH"},...pdfMeetingSlides.slice(21)];
+const meetingPlanSlideIndex=21;
 const ministryTimeline=[
   {status:"done",dateAr:"12 ذو الحجة 1447هـ · 29 مايو 2026م",dateEn:"29 May 2026",ar:"إطلاق البرنامج الزمني والتواصل",en:"Timeline launch and engagement",detailsAr:["الإعلان عن البرنامج الزمني لأعمال موسم حج 1448هـ.","بدء التواصل مع مكاتب شؤون الحج بشأن خدمات الموسم."],detailsEn:["Publish the Hajj 1448 operational timeline.","Begin engagement with Hajj affairs offices."],actualAr:"مكتمل",actualEn:"Completed",ownerAr:"وزارة الحج والعمرة",ownerEn:"Ministry of Hajj and Umrah"},
   {status:"done",dateAr:"15 محرم 1448هـ · 30 يونيو 2026م",dateEn:"30 Jun 2026",ar:"تفضيلات السكن وإتاحة المخيمات",en:"Accommodation preferences and camps",detailsAr:["استقبال تفضيلات السكن في مكة والمدينة.","إتاحة بيانات المخيمات عبر منصة نسك مسار."],detailsEn:["Collect accommodation preferences in Makkah and Madinah.","Publish camp data through Nusuk Masar."],actualAr:"مكتمل",actualEn:"Completed",ownerAr:"الديوان الوطني",ownerEn:"National Office"},
@@ -251,12 +249,13 @@ function ParticleField(){
 
 export default function Home(){
   const reduceMotion=useReducedMotion();
+  const directMeetingPlan=useRef(new URLSearchParams(location.search).get("meeting")==="algeria-plan").current;
   const initialView=useRef(readPresentationView()).current;
-  const [lang,setLang]=useState<Lang>(initialView?.lang??"ar"),[loading,setLoading]=useState(!initialView),[transitioning,setTransitioning]=useState(false),[section,setSection]=useState<Section>(initialView?.section??"home"),[selected,setSelected]=useState<Level|null>(initialView?.selected??null),[focus,setFocus]=useState<Level>(initialView?.focus??1),[modal,setModal]=useState<Modal>(initialView?.modal??null),[slide,setSlide]=useState(initialView?.slide??0),[activeShowcase,setActiveShowcase]=useState(initialView?.activeShowcase??0),[activeHospitality,setActiveHospitality]=useState(initialView?.activeHospitality??0),[activeHospitalityPhase,setActiveHospitalityPhase]=useState(initialView?.activeHospitalityPhase??0),[activeReception,setActiveReception]=useState(initialView?.activeReception??0),[activeControlObservation,setActiveControlObservation]=useState(initialView?.activeControlObservation??0),[activeTestimonial,setActiveTestimonial]=useState(initialView?.activeTestimonial??0),[activeTrust,setActiveTrust]=useState(initialView?.activeTrust??0),[trustTurn,setTrustTurn]=useState<"next"|"prev">("next"),[compactBook,setCompactBook]=useState(false),[activeComprehensive,setActiveComprehensive]=useState<number|null>(null),[comprehensivePhase,setComprehensivePhase]=useState<ComprehensivePhase>("idle"),[isFullscreen,setIsFullscreen]=useState(false),[activeHub,setActiveHub]=useState<number|null>(null),[qrUrl,setQrUrl]=useState("");
+  const [lang,setLang]=useState<Lang>(initialView?.lang??"ar"),[loading,setLoading]=useState(!initialView&&!directMeetingPlan),[transitioning,setTransitioning]=useState(false),[section,setSection]=useState<Section>(directMeetingPlan?"hajj1448Algeria":initialView?.section??"home"),[selected,setSelected]=useState<Level|null>(directMeetingPlan?null:initialView?.selected??null),[focus,setFocus]=useState<Level>(initialView?.focus??1),[modal,setModal]=useState<Modal>(directMeetingPlan?"meeting":initialView?.modal??null),[slide,setSlide]=useState(initialView?.slide??0),[activeShowcase,setActiveShowcase]=useState(initialView?.activeShowcase??0),[activeHospitality,setActiveHospitality]=useState(initialView?.activeHospitality??0),[activeHospitalityPhase,setActiveHospitalityPhase]=useState(initialView?.activeHospitalityPhase??0),[activeReception,setActiveReception]=useState(initialView?.activeReception??0),[activeControlObservation,setActiveControlObservation]=useState(initialView?.activeControlObservation??0),[activeTestimonial,setActiveTestimonial]=useState(initialView?.activeTestimonial??0),[activeTrust,setActiveTrust]=useState(initialView?.activeTrust??0),[trustTurn,setTrustTurn]=useState<"next"|"prev">("next"),[compactBook,setCompactBook]=useState(false),[activeComprehensive,setActiveComprehensive]=useState<number|null>(null),[comprehensivePhase,setComprehensivePhase]=useState<ComprehensivePhase>("idle"),[isFullscreen,setIsFullscreen]=useState(false),[activeHub,setActiveHub]=useState<number|null>(null),[qrUrl,setQrUrl]=useState("");
   const [cms,setCms]=useState<CmsPayload|null>(null);
   const [testimonialFocus,setTestimonialFocus]=useState(0);
   const [testimonialFilter,setTestimonialFilter]=useState<"all"|"video"|"comments">("all");
-  const [meetingSlide,setMeetingSlide]=useState(0);
+  const [meetingSlide,setMeetingSlide]=useState(directMeetingPlan?meetingPlanSlideIndex:initialView?.meetingSlide??0);
   const managedPacks=([1,2,3] as Level[]).reduce((all,level)=>{const item=cms?.packages?.find(entry=>entry.level===level);all[level]={...packs[level],ar:item?.titleAr||packs[level].ar,en:item?.titleEn||packs[level].en};return all},{} as Record<Level,{ar:string;en:string;no:string;tone:string}>);
   const managedLeadership=leadership.map((leader,index)=>{const item=cms?.leaders?.find(entry=>entry.order===index+1);return {...leader,ar:{name:item?.nameAr||leader.ar.name,role:item?.roleAr||leader.ar.role},en:{name:item?.nameEn||leader.en.name,role:item?.roleEn||leader.en.role}}});
   const managedStages=(cms?.stages?.length?cms.stages:hospitalityStages).map((stage,index)=>{const fallback=hospitalityStages[Math.min(index,hospitalityStages.length-1)];return {ar:("titleAr" in stage&&stage.titleAr)||fallback.ar,en:("titleEn" in stage&&stage.titleEn)||fallback.en,kind:("mediaType" in stage&&stage.mediaType==="images"?"gallery":"video") as "gallery"|"video"}});
@@ -289,7 +288,7 @@ export default function Home(){
   const restoringHistory=useRef(false);
   const [historyDepth,setHistoryDepth]=useState(0);
   useEffect(()=>{if(!loading)return;const id=setTimeout(()=>setLoading(false),700);return()=>clearTimeout(id)},[loading]);
-  useEffect(()=>{try{sessionStorage.setItem(VIEW_STORAGE_KEY,JSON.stringify({lang,section,selected,focus,modal,slide,activeShowcase,activeHospitality,activeHospitalityPhase,activeReception,activeControlObservation,activeTestimonial,activeTrust} satisfies PresentationView))}catch{/* State persistence is optional in restricted browser contexts. */}},[lang,section,selected,focus,modal,slide,activeShowcase,activeHospitality,activeHospitalityPhase,activeReception,activeControlObservation,activeTestimonial,activeTrust]);
+  useEffect(()=>{try{sessionStorage.setItem(VIEW_STORAGE_KEY,JSON.stringify({lang,section,selected,focus,modal,slide,meetingSlide,activeShowcase,activeHospitality,activeHospitalityPhase,activeReception,activeControlObservation,activeTestimonial,activeTrust} satisfies PresentationView))}catch{/* State persistence is optional in restricted browser contexts. */}},[lang,section,selected,focus,modal,slide,meetingSlide,activeShowcase,activeHospitality,activeHospitalityPhase,activeReception,activeControlObservation,activeTestimonial,activeTrust]);
   useEffect(()=>{
     const restore=(event:PopStateEvent)=>{
       const entry=event.state as {bushraView?:PresentationView;bushraDepth?:number}|null;
@@ -297,14 +296,14 @@ export default function Home(){
       restoringHistory.current=true;
       setHistoryDepth(entry.bushraDepth??0);
       const view=entry.bushraView;
-      setLang(view.lang);setSection(view.section);setSelected(view.selected);setFocus(view.focus);setModal(view.modal);setSlide(view.slide);setActiveShowcase(view.activeShowcase);setActiveHospitality(view.activeHospitality);setActiveHospitalityPhase(view.activeHospitalityPhase);setActiveReception(view.activeReception);setActiveControlObservation(view.activeControlObservation);setActiveTestimonial(view.activeTestimonial);setActiveTrust(view.activeTrust);
+      setLang(view.lang);setSection(view.section);setSelected(view.selected);setFocus(view.focus);setModal(view.modal);setSlide(view.slide);setMeetingSlide(view.meetingSlide??0);setActiveShowcase(view.activeShowcase);setActiveHospitality(view.activeHospitality);setActiveHospitalityPhase(view.activeHospitalityPhase);setActiveReception(view.activeReception);setActiveControlObservation(view.activeControlObservation);setActiveTestimonial(view.activeTestimonial);setActiveTrust(view.activeTrust);
     };
     addEventListener("popstate",restore);
     return()=>removeEventListener("popstate",restore);
   },[]);
   useEffect(()=>{
-    const view={lang,section,selected,focus,modal,slide,activeShowcase,activeHospitality,activeHospitalityPhase,activeReception,activeControlObservation,activeTestimonial,activeTrust} satisfies PresentationView;
-    const destination=modal??(selected?`level-${selected}`:section);
+    const view={lang,section,selected,focus,modal,slide,meetingSlide,activeShowcase,activeHospitality,activeHospitalityPhase,activeReception,activeControlObservation,activeTestimonial,activeTrust} satisfies PresentationView;
+    const destination=modal==="meeting"&&meetingSlide===meetingPlanSlideIndex?"algeria-meeting-plan":modal??(selected?`level-${selected}`:section);
     const hash=destination==="home"?"":`#${destination}`;
     const url=`${location.pathname}${location.search}${hash}`;
     if(!historyReady.current){
@@ -316,7 +315,7 @@ export default function Home(){
     const nextDepth=historyDepth+1;
     history.pushState({bushraView:view,bushraDepth:nextDepth},"",url);
     setHistoryDepth(nextDepth);
-  },[section,selected,modal]);
+  },[section,selected,modal,meetingSlide]);
   useEffect(()=>{const video=backgroundVideoRef.current;if(!video)return;video.playbackRate=.72;if(modal)video.pause();else video.play().catch(()=>{})},[modal]);
   useEffect(()=>{QRCode.toDataURL(location.href,{width:360,margin:2,color:{dark:"#133c67",light:"#ffffff"}}).then(setQrUrl).catch(()=>setQrUrl(""))},[]);
   useEffect(()=>{const controller=new AbortController();fetch(SANITY_URL,{signal:controller.signal}).then(response=>response.ok?response.json():Promise.reject()).then(data=>setCms(data.result as CmsPayload)).catch(()=>{/* Keep the complete built-in presentation when the CMS is unavailable. */});return()=>controller.abort()},[]);
@@ -326,6 +325,8 @@ export default function Home(){
   const turnTrust=(direction:"next"|"prev")=>{setTrustTurn(direction);setActiveTrust(current=>compactBook?(current+(direction==="next"?1:trustSlideCount-1))%trustSlideCount:direction==="next"?(current===0?1:current===1?3:current===3?5:0):(current===0?5:current===5?3:current===3?1:0))};
   const scrollHub=(direction:-1|1)=>{const track=hubOptionsRef.current;if(!track)return;const card=track.querySelector<HTMLElement>("button");const gap=Number.parseFloat(getComputedStyle(track).columnGap||getComputedStyle(track).gap)||0;track.scrollBy({left:direction*((card?.getBoundingClientRect().width||track.clientWidth*.32)+gap),behavior:"smooth"})};
   useEffect(()=>{if(modal!=="comprehensive")return;const navigate=(event:KeyboardEvent)=>{if(event.key==="ArrowLeft"||event.key==="PageDown")selectComprehensiveService(((activeComprehensive??-1)+1)%comprehensiveServices.length);if(event.key==="ArrowRight"||event.key==="PageUp")selectComprehensiveService(((activeComprehensive??0)+comprehensiveServices.length-1)%comprehensiveServices.length)};addEventListener("keydown",navigate);return()=>removeEventListener("keydown",navigate)},[modal,activeComprehensive]);
+  useEffect(()=>{if(modal!=="meeting")return;const navigate=(event:KeyboardEvent)=>{if(event.key==="PageDown"||event.key===" "||event.key==="ArrowLeft"){event.preventDefault();setMeetingSlide(index=>(index+1)%meetingSlides.length)}if(event.key==="PageUp"||event.key==="ArrowRight"){event.preventDefault();setMeetingSlide(index=>(index+meetingSlides.length-1)%meetingSlides.length)}};addEventListener("keydown",navigate);return()=>removeEventListener("keydown",navigate)},[modal]);
+  useEffect(()=>{if(modal!=="meeting")return;const next=meetingSlides[(meetingSlide+1)%meetingSlides.length];if(next.kind==="image"){const preload=new Image();preload.src=next.src}},[modal,meetingSlide]);
   useEffect(()=>{if(modal!=="comprehensive"||activeComprehensive===null)return;const dismiss=(event:PointerEvent)=>{const target=event.target;if(target instanceof Element&&target.closest(".comprehensive-orbit button"))return;closeComprehensiveService()};document.addEventListener("pointerdown",dismiss);return()=>document.removeEventListener("pointerdown",dismiss)},[modal,activeComprehensive]);
   useEffect(()=>{const sync=()=>setIsFullscreen(Boolean(document.fullscreenElement));document.addEventListener("fullscreenchange",sync);return()=>document.removeEventListener("fullscreenchange",sync)},[]);
   useEffect(()=>{const media=matchMedia("(max-width: 620px)");const sync=()=>setCompactBook(media.matches);sync();media.addEventListener("change",sync);return()=>media.removeEventListener("change",sync)},[]);
