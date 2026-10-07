@@ -164,14 +164,24 @@ function CareLevelIcon({level}:{level:Level}){
   if(level===2)return <svg className="care-level-icon" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 78S19 61 19 35c0-11 8-18 18-18 6 0 10 3 11 8 2-5 6-8 12-8 10 0 17 7 17 18 0 26-29 43-29 43Z"/><path d="M14 72c8-9 17-14 28-15M82 72c-8-9-17-14-28-15"/></svg>;
   return <svg className="care-level-icon" viewBox="0 0 96 96" aria-hidden="true"><path d="M14 60c10-2 19 1 28 10l6 7 6-7c9-9 18-12 28-10"/><path d="M20 51V31M10 41h20M66 39l7-7 7 7-7 7Z"/><circle cx="48" cy="35" r="12"/><path d="M48 23v24M36 35h24"/></svg>;
 }
+function RoadmapFilterIcon({kind}:{kind:"all"|"done"|"active"|"next"}){
+  if(kind==="all")return <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>;
+  if(kind==="done")return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.6 2.7L16.5 9"/></svg>;
+  if(kind==="active")return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18Z"/></svg>;
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 9-9 9-9-9Z"/><path d="M8 12h8"/></svg>;
+}
 
 function MeetingReadinessSlide({lang}:{lang:Lang}){
   const ar=lang==="ar";
+  const [filter,setFilter]=useState<"all"|"done"|"active"|"next">("all");
   const [selected,setSelected]=useState(0);
   const current=ministryTimeline[selected];
+  const filteredIndices=ministryTimeline.map((stage,index)=>({stage,index})).filter(({stage})=>filter==="all"||(filter==="done"?(stage.status==="done"||stage.status==="ahead"):stage.status===filter)).map(({index})=>index);
+  const selectedPosition=Math.max(filteredIndices.indexOf(selected),0);
   const visible=Array.from({length:5},(_,position)=>{
-    const index=selected+position-2;
-    return index>=0&&index<ministryTimeline.length?{...ministryTimeline[index],index,offset:index-selected}:null;
+    const filteredPosition=selectedPosition+position-2;
+    const index=filteredIndices[filteredPosition];
+    return index!==undefined?{...ministryTimeline[index],index,offset:position-2}:null;
   });
   const statusLabel=current.status==="done"?(ar?"مكتمل":"Completed"):current.status==="ahead"?(ar?"متقدم على الخطة":"Ahead of plan"):current.status==="active"?(ar?"قيد التنفيذ":"In progress"):(ar?"مرحلة قادمة":"Upcoming");
   const nextAction=current.status==="done"||current.status==="ahead"
@@ -179,7 +189,8 @@ function MeetingReadinessSlide({lang}:{lang:Lang}){
     :current.status==="active"
       ?(ar?"استكمال المتطلبات المفتوحة ورفع تحديث الجاهزية.":"Close outstanding requirements and issue a readiness update.")
       :(ar?"بدء التنفيذ في التاريخ المعتمد بعد اكتمال المتطلبات السابقة.":"Begin on the approved date once preceding requirements are complete.");
-  const move=(direction:-1|1)=>setSelected(index=>Math.min(Math.max(index+direction,0),ministryTimeline.length-1));
+  const move=(direction:-1|1)=>setSelected(filteredIndices[Math.min(Math.max(selectedPosition+direction,0),filteredIndices.length-1)]);
+  const applyFilter=(value:"all"|"done"|"active"|"next")=>{setFilter(value);const indices=ministryTimeline.map((stage,index)=>({stage,index})).filter(({stage})=>value==="all"||(value==="done"?(stage.status==="done"||stage.status==="ahead"):stage.status===value)).map(({index})=>index);if(!indices.includes(selected))setSelected(indices[0])};
   return <article className="readiness-slide ministry-roadmap" dir={ar?"rtl":"ltr"} aria-label={ar?"البرنامج الزمني لموسم حج 1448هـ":"Hajj 1448 AH Ministry timeline"}>
     <header className="readiness-header">
       <div><small>{ar?"وزارة الحج والعمرة · موسم حج 1448هـ":"MINISTRY OF HAJJ AND UMRAH · HAJJ 1448 AH"}</small><h2>{ar?"خارطة الجاهزية التشغيلية":"Operational readiness roadmap"}</h2><p>{ar?"20 محطة زمنية من إطلاق البرنامج حتى شهادة الإنجاز":"20 milestones from programme launch to completion certification"}</p></div>
@@ -187,16 +198,19 @@ function MeetingReadinessSlide({lang}:{lang:Lang}){
         <span><b>4</b><em>{ar?"مكتملة":"Completed"}</em></span><span><b>3</b><em>{ar?"قيد التنفيذ":"In progress"}</em></span><span><b>13</b><em>{ar?"قادمة":"Upcoming"}</em></span>
       </aside>
     </header>
+    <nav className="roadmap-filters roadmap-status-filters" aria-label={ar?"تصفية المحطات حسب الحالة":"Filter milestones by status"}>
+      {(["all","done","active","next"] as const).map(value=><button key={value} type="button" className={filter===value?"is-active":""} onClick={()=>applyFilter(value)} aria-pressed={filter===value}><RoadmapFilterIcon kind={value}/><span>{value==="all"?(ar?"الكل":"All"):value==="done"?(ar?"المكتملة":"Completed"):value==="active"?(ar?"قيد التنفيذ":"In progress"):(ar?"القادمة":"Upcoming")}</span></button>)}
+    </nav>
     <nav className="roadmap-overview" aria-label={ar?"جميع المحطات الزمنية":"All timeline milestones"}>
-      {ministryTimeline.map((stage,index)=><button type="button" key={index} className={`is-${stage.status} ${selected===index?"is-selected":""}`} onClick={()=>setSelected(index)} aria-label={`${index+1}. ${ar?stage.ar:stage.en}`} aria-current={selected===index?"step":undefined}><i/><span>{String(index+1).padStart(2,"0")}</span></button>)}
+      {ministryTimeline.map((stage,index)=><button type="button" key={index} className={`is-${stage.status} ${selected===index?"is-selected":""} ${filteredIndices.includes(index)?"is-in-filter":"is-filtered-out"}`} onClick={()=>{setFilter("all");setSelected(index)}} aria-label={`${index+1}. ${ar?stage.ar:stage.en}`} aria-current={selected===index?"step":undefined}><i/><span>{String(index+1).padStart(2,"0")}</span></button>)}
     </nav>
     <div className="roadmap-strip-wrap">
-      <button type="button" className="roadmap-scroll roadmap-scroll--start" onClick={()=>move(-1)} disabled={selected===0} aria-label={ar?"المحطة السابقة":"Previous milestone"}><Chevron/></button>
+      <button type="button" className="roadmap-scroll roadmap-scroll--start" onClick={()=>move(-1)} disabled={selectedPosition===0} aria-label={ar?"المحطة السابقة":"Previous milestone"}><Chevron/></button>
       <div className="roadmap-strip" role="list">
         <i className="roadmap-line" aria-hidden="true"/>
         {visible.map((stage,position)=>stage?<button type="button" key={stage.index} role="listitem" className={`roadmap-point is-${stage.status} is-offset-${Math.abs(stage.offset)} ${selected===stage.index?"is-selected":""}`} onClick={()=>setSelected(stage.index)} aria-pressed={selected===stage.index}><time>{ar?stage.dateAr:stage.dateEn}</time><i><span>{stage.status==="done"||stage.status==="ahead"?"✓":stage.status==="active"?"◐":"◆"}</span></i><strong>{ar?stage.ar:stage.en}</strong></button>:<span key={`empty-${position}`} className="roadmap-point-placeholder" aria-hidden="true"/>)}
       </div>
-      <button type="button" className="roadmap-scroll roadmap-scroll--end" onClick={()=>move(1)} disabled={selected===ministryTimeline.length-1} aria-label={ar?"المحطة التالية":"Next milestone"}><Chevron/></button>
+      <button type="button" className="roadmap-scroll roadmap-scroll--end" onClick={()=>move(1)} disabled={selectedPosition===filteredIndices.length-1} aria-label={ar?"المحطة التالية":"Next milestone"}><Chevron/></button>
     </div>
     <section className={`roadmap-detail is-${current.status}`} key={selected} aria-live="polite">
       <header className="roadmap-detail-title"><div><span>{String(selected+1).padStart(2,"0")}</span><i/><b>{statusLabel}</b></div><small>{ar?current.dateAr:current.dateEn}</small><h3>{ar?current.ar:current.en}</h3><p>{ar?current.ownerAr:current.ownerEn}</p></header>
