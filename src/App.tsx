@@ -253,6 +253,7 @@ export default function Home(){
     if(selected){setSelected(null);return}
     if(section!=="home")goHome();
   };
+  const isAlgeriaContext=section==="hajj1448Algeria"||modal==="meeting";
   const openSection=(next:Section)=>{transitionTimers.current.forEach(clearTimeout);setTransitioning(false);setActiveHub(null);setModal(null);setSelected(null);setSection(next)};
   const refreshPresentation=()=>{try{sessionStorage.setItem(VIEW_STORAGE_KEY,JSON.stringify({lang,section,selected,focus,modal,slide,activeShowcase,activeHospitality,activeHospitalityPhase,activeReception,activeControlObservation,activeTestimonial,activeTrust} satisfies PresentationView))}finally{location.reload()}};
   const toggleFullscreen=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{/* Fullscreen can be blocked by the browser or an embedded frame. */}};
@@ -284,8 +285,13 @@ export default function Home(){
   return <main className={`experience theme-${focus}`} dir={rtl?"rtl":"ltr"} onPointerMove={e=>{const el=e.currentTarget;el.style.setProperty("--mx",`${e.clientX}px`);el.style.setProperty("--my",`${e.clientY}px`)}}>
     <div className="brand-film" aria-hidden="true"><video ref={backgroundVideoRef} src={`${MEDIA_BASE}/media/brand/background-video2.mp4`} poster={`${MEDIA_BASE}/media/brand/background-poster.jpg`} onLoadedMetadata={e=>{e.currentTarget.playbackRate=.72}} autoPlay muted loop playsInline preload="auto"/><div className="film-grade"/><div className="film-vignette"/><div className="film-grain"/></div>
     <div className="aurora"/><div className="cursor-light"/><div className="edge-noise"/>
-    <header className="nav">
+    <header className={`nav ${isAlgeriaContext?"nav--algeria":""}`}>
       <button className="brand-lockup" onClick={()=>transition(()=>{setSelected(null);setSection("home")})} aria-label="Bushra Hospitality home"><img className="anniversary-logo" src={`${MEDIA_BASE}/anniversary-logo.svg`} alt="11th anniversary"/><i/><img className="company-wordmark" src={activeHub!==null?"/media/brand/company-logo-dark.svg":`${MEDIA_BASE}/company-logo-horizontal.svg`} alt="Bushra Hospitality"/></button>
+      {isAlgeriaContext&&<div className="partner-lockup" aria-label={lang==="ar"?"مكتب شؤون حجاج الجزائر":"The Algerian Office of Pilgrims Affairs"}>
+        <i aria-hidden="true"/>
+        <img src="/media/hajj1448/algeria-pilgrims-office-logo-transparent.png" alt={lang==="ar"?"مكتب شؤون حجاج الجزائر":"The Algerian Office of Pilgrims Affairs"}/>
+        <span><small>{lang==="ar"?"شريك اللقاء":"MEETING PARTNER"}</small><b>{lang==="ar"?"مكتب شؤون حجاج الجزائر":"Algerian Pilgrims Office"}</b></span>
+      </div>}
       <div className="lang-switch" role="group" aria-label="Language selection">
         <button className={lang==="ar"?"is-active":""} onClick={()=>setLang("ar")} aria-label="العربية" aria-pressed={lang==="ar"}><span>عربي</span></button>
         <button className={lang==="en"?"is-active":""} onClick={()=>setLang("en")} aria-label="English" aria-pressed={lang==="en"}><span>English</span></button>

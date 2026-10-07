@@ -331,6 +331,22 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 @media(max-width:1000px){.trust-book-stage.is-cover .trust-book{width:min(78vw,760px)!important;height:min(55.2vw,538px)!important}.trust-book-stage.is-cover~.trust-book-nav button:first-child{left:8px!important}.trust-book-stage.is-cover~.trust-book-nav button:last-child{right:8px!important}}
 @media(max-width:620px){.trust-book-stage.is-cover .trust-book{width:min(86vw,540px)!important;height:min(60.85vw,382px)!important}.trust-book-stage.is-cover~.trust-book-nav button:first-child{left:1px!important}.trust-book-stage.is-cover~.trust-book-nav button:last-child{right:1px!important}}
 
+/* Contextual co-branding for the Algeria meeting — one shared header, no logo repetition in content slides. */
+.nav.nav--algeria{z-index:90;grid-template-columns:minmax(330px,1fr) auto minmax(280px,1fr);column-gap:clamp(20px,3vw,54px)}
+.partner-lockup{justify-self:center;height:52px;display:flex;align-items:center;gap:13px;direction:ltr;color:#133c67;animation:partnerLockupIn .55s cubic-bezier(.16,1,.3,1) both}
+.partner-lockup>i{width:1px;height:36px;background:linear-gradient(180deg,transparent,rgba(176,142,87,.8),transparent)}
+.partner-lockup>img{display:block;width:55px;height:48px;object-fit:contain}
+.partner-lockup>span{display:flex;flex-direction:column;gap:5px;min-width:0}
+.partner-lockup small{color:#b08e57;font:700 8px/1 sans-serif;letter-spacing:.15em;white-space:nowrap}
+.partner-lockup b{font-size:13px;line-height:1.05;font-weight:700;white-space:nowrap}
+.experience[dir="rtl"] .partner-lockup>span{direction:rtl;text-align:right}
+.experience[dir="ltr"] .partner-lockup>span{direction:ltr;text-align:left}
+.nav--algeria .lang-switch{justify-self:end}
+.meeting-presentation-modal{z-index:78;top:var(--presentation-header,78px);bottom:0;left:0;right:0}
+@keyframes partnerLockupIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@media(max-width:1050px){.nav.nav--algeria{grid-template-columns:minmax(250px,1fr) auto auto;column-gap:15px}.partner-lockup b{display:none}.partner-lockup>img{width:45px;height:42px}}
+@media(max-width:760px){.nav.nav--algeria{grid-template-columns:minmax(0,1fr) auto auto;padding-inline:12px;column-gap:8px}.nav--algeria .brand-lockup{gap:5px}.nav--algeria .anniversary-logo{height:27px}.nav--algeria .company-wordmark{height:26px}.partner-lockup{height:42px;gap:7px}.partner-lockup>i{height:28px}.partner-lockup>img{width:36px;height:36px}.partner-lockup>span{display:none}}
+
 /* Hajj 1448 country preparations — restrained executive country index. */
 .hajj1448-scene{position:absolute;z-index:4;inset:var(--presentation-header) 0 0;padding:clamp(44px,6vh,76px) clamp(42px,7vw,132px) 92px;display:grid;grid-template-rows:auto minmax(0,1fr);gap:clamp(34px,5vh,64px);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(18px);transition:opacity .55s ease,transform .75s cubic-bezier(.16,1,.3,1),visibility 0s .75s;background:radial-gradient(circle at 21% 48%,rgba(32,84,119,.34),transparent 36%),linear-gradient(118deg,rgba(2,16,27,.97),rgba(7,38,61,.94) 56%,rgba(2,16,27,.98))}
 .hajj1448-scene.is-here{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s}

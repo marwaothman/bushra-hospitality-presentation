@@ -75,19 +75,11 @@ pdraw.rectangle((0, 0, 18, H), fill=BLUE)
 pdraw.rectangle((18, 0, 24, H), fill=GOLD)
 pdraw.line((72, 190, W - 72, 190), fill=(216, 207, 191), width=2)
 
-# Smaller institutional marks create a quiet header instead of competing with content.
-bushra = Image.open(BUSHRA).convert("RGBA")
-pixels = bushra.load()
-for y in range(bushra.height):
-    for x in range(bushra.width):
-        red, green, blue, alpha = pixels[x, y]
-        if alpha and red > 235 and green > 235 and blue > 235:
-            pixels[x, y] = (*BLUE, alpha)
-bushra.thumbnail((350, 105), Image.Resampling.LANCZOS)
-profile.paste(bushra, (W - bushra.width - 84, 55), bushra)
-algeria_mark = Image.open(ALGERIA).convert("RGBA").crop((750, 38, 985, 285))
-algeria_mark.thumbnail((150, 112), Image.Resampling.LANCZOS)
-profile.paste(algeria_mark, (88, 45), algeria_mark)
+# The website header now carries the co-branding. Internal slides use a quiet
+# editorial folio instead of repeating both institutional marks.
+pdraw.text((W - 84, 78), "اللقاء التنسيقي الأول", font=f(FONT_BOLD, 27), fill=BLUE, anchor="ra", direction="rtl", language="ar")
+pdraw.text((W - 84, 124), "موسم حج 1448هـ / 2027م", font=f(FONT_REGULAR, 21), fill=GOLD, anchor="ra", direction="rtl", language="ar")
+pdraw.text((84, 102), "02", font=f(FONT_BOLD, 22), fill=GOLD, anchor="la")
 
 # The portrait becomes an editorial image with one thin architectural accent.
 photo_box = (88, 250, 760, H)
