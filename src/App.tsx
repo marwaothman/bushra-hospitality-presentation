@@ -98,13 +98,13 @@ const meetingSlides=[
   {kind:"readiness",altAr:"موقف الجاهزية التنفيذي لموسم حج 1448هـ",altEn:"Executive readiness status for Hajj 1448 AH"},
 ] as const;
 const readinessStages=[
-  {status:"done",dateAr:"5 أكتوبر",dateEn:"5 Oct",ar:"حجز مواقع المخيمات",en:"Reserve camp locations",ownerAr:"الديوان الوطني",ownerEn:"National Office"},
-  {status:"done",dateAr:"أُنجز مبكرًا",dateEn:"Completed early",ar:"إنشاء الباقة الشاملة",en:"Create the comprehensive package",ownerAr:"الديوان الوطني",ownerEn:"National Office"},
-  {status:"active",ar:"التعاقد مع مزوّدي الخدمات",en:"Contract service providers",ownerAr:"بشرى الضيافة",ownerEn:"Bushra Hospitality"},
-  {status:"active",ar:"تخصيص العقود على مراكز الضيافة",en:"Allocate contracts to hospitality centres",ownerAr:"بشرى الضيافة",ownerEn:"Bushra Hospitality"},
-  {status:"active",ar:"استكمال بيانات الحجاج والتأشيرات",en:"Complete pilgrim data and visas",ownerAr:"الديوان الوطني",ownerEn:"National Office"},
-  {status:"next",ar:"تكوين مجموعات بطاقات نسك",en:"Form Nusuk card groups",ownerAr:"بشرى الضيافة",ownerEn:"Bushra Hospitality"},
-  {status:"next",ar:"إصدار بطاقات نسك",en:"Issue Nusuk cards",ownerAr:"بشرى الضيافة",ownerEn:"Bushra Hospitality"},
+  {status:"ahead",ar:"حجز مواقع المخيمات",en:"Reserve camp locations",ministryAr:"بدء تخصيص المواقع · 12 أكتوبر 2026م",ministryEn:"Site allocation starts · 12 Oct 2026",actualAr:"تم الإنجاز · 5 أكتوبر 2026م",actualEn:"Completed · 5 Oct 2026",ownerAr:"الديوان الوطني",ownerEn:"National Office"},
+  {status:"ahead",ar:"إنشاء الباقة الشاملة",en:"Create the comprehensive package",ministryAr:"فترة التعاقد المعتمدة · حتى 23 يناير 2027م",ministryEn:"Approved contracting window · to 23 Jan 2027",actualAr:"تم الإنجاز · الموعد المعتمد 30 أكتوبر",actualEn:"Completed · target date 30 Oct",ownerAr:"الديوان الوطني",ownerEn:"National Office"},
+  {status:"active",ar:"التعاقد مع مزوّدي الخدمات",en:"Contract service providers",ministryAr:"وفق تسلسل البرنامج التشغيلي المعتمد",ministryEn:"Per the approved operational sequence",actualAr:"جاري العمل",actualEn:"In progress",ownerAr:"بشرى الضيافة",ownerEn:"Bushra Hospitality"},
+  {status:"active",ar:"تخصيص العقود على مراكز الضيافة",en:"Allocate contracts to hospitality centres",ministryAr:"بعد اعتماد عقود مزوّدي الخدمات",ministryEn:"Following service-provider contracting",actualAr:"جاري العمل",actualEn:"In progress",ownerAr:"بشرى الضيافة",ownerEn:"Bushra Hospitality"},
+  {status:"active",ar:"بيانات الحجاج وإصدار التأشيرات",en:"Pilgrim data and visa issuance",ministryAr:"مراجعة البيانات حتى 27 فبراير · التأشيرات حتى 9 مارس",ministryEn:"Data review to 27 Feb · visas to 9 Mar",actualAr:"جاري استكمال البيانات لإصدار التأشيرات",actualEn:"Data completion in progress for visa issuance",ownerAr:"الديوان الوطني",ownerEn:"National Office"},
+  {status:"next",ar:"تكوين مجموعات بطاقات نسك",en:"Form Nusuk card groups",ministryAr:"يبدأ 27 فبراير 2027م",ministryEn:"Starts 27 Feb 2027",actualAr:"المرحلة التالية بعد اعتماد البيانات",actualEn:"Next after data approval",ownerAr:"بشرى الضيافة",ownerEn:"Bushra Hospitality"},
+  {status:"next",ar:"إصدار بطاقات نسك",en:"Issue Nusuk cards",ministryAr:"بعد تكوين المجموعات واعتماد البيانات",ministryEn:"After group formation and data approval",actualAr:"مرحلة لاحقة وفق الجدول المعتمد",actualEn:"Upcoming per the approved schedule",ownerAr:"بشرى الضيافة",ownerEn:"Bushra Hospitality"},
 ] as const;
 
 type CmsPayload={
@@ -156,19 +156,22 @@ function MeetingReadinessSlide({lang}:{lang:Lang}){
   const ar=lang==="ar";
   return <article className="readiness-slide" dir={ar?"rtl":"ltr"} aria-label={ar?"موقف الجاهزية التنفيذي لموسم حج 1448هـ":"Executive readiness status for Hajj 1448 AH"}>
     <header className="readiness-header">
-      <div><small>{ar?"الجزائر · موسم حج 1448هـ":"ALGERIA · HAJJ 1448 AH"}</small><h2>{ar?"موقف الجاهزية التنفيذي":"Executive readiness status"}</h2><p>{ar?"تقدم الأعمال المشتركة بين الديوان الوطني للحج والعمرة وشركة بشرى الضيافة":"Joint progress between the National Office for Hajj and Umrah and Bushra Hospitality"}</p></div>
+      <div><small>{ar?"مقارنة بالبرنامج الزمني لوزارة الحج والعمرة":"BENCHMARKED AGAINST THE MINISTRY OF HAJJ TIMELINE"}</small><h2>{ar?"الخطة المعتمدة مقابل التقدم الفعلي":"Approved plan vs. actual progress"}</h2><p>{ar?"موسم حج 1448هـ · الديوان الوطني للحج والعمرة × شركة بشرى الضيافة":"Hajj 1448 AH · National Office for Hajj and Umrah × Bushra Hospitality"}</p></div>
       <aside className="readiness-summary" aria-label={ar?"ملخص التقدم":"Progress summary"}>
-        <span><b>2</b><em>{ar?"مكتمل":"Completed"}</em></span><span><b>3</b><em>{ar?"قيد التنفيذ":"In progress"}</em></span><span><b>2</b><em>{ar?"تالٍ":"Next"}</em></span>
+        <span><b>2</b><em>{ar?"متقدم على الخطة":"Ahead"}</em></span><span><b>3</b><em>{ar?"قيد التنفيذ":"In progress"}</em></span><span><b>2</b><em>{ar?"قادمة":"Upcoming"}</em></span>
       </aside>
     </header>
-    <div className="readiness-track" role="list">
-      <i className="readiness-rail" aria-hidden="true"/>
-      {readinessStages.map((stage,index)=><section key={stage.en} className={`readiness-stage is-${stage.status}`} role="listitem">
-        <div className="readiness-node"><span>{stage.status==="done"?"✓":String(index+1).padStart(2,"0")}</span></div>
-        <div className="readiness-card"><small>{stage.status==="done"?(ar?"مكتمل":"COMPLETED"):stage.status==="active"?(ar?"قيد التنفيذ":"IN PROGRESS"):(ar?"المرحلة التالية":"NEXT")}</small><h3>{ar?stage.ar:stage.en}</h3><p>{ar?stage.ownerAr:stage.ownerEn}</p>{"dateAr" in stage&&<time>{ar?stage.dateAr:stage.dateEn}</time>}</div>
+    <div className="readiness-comparison" role="table" aria-label={ar?"مقارنة الخطة بالتقدم":"Plan versus progress comparison"}>
+      <div className="readiness-table-head" role="row"><span role="columnheader">{ar?"المرحلة":"Milestone"}</span><span role="columnheader">{ar?"مرجع خطة الوزارة":"Ministry baseline"}</span><span role="columnheader">{ar?"التقدم الفعلي":"Actual progress"}</span><span role="columnheader">{ar?"المسؤولية":"Owner"}</span><span role="columnheader">{ar?"الموقف":"Position"}</span></div>
+      {readinessStages.map((stage,index)=><section key={stage.en} className={`readiness-row is-${stage.status}`} role="row">
+        <span className="readiness-milestone" role="cell"><i>{String(index+1).padStart(2,"0")}</i><b>{ar?stage.ar:stage.en}</b></span>
+        <span className="readiness-ministry" role="cell">{ar?stage.ministryAr:stage.ministryEn}</span>
+        <span className="readiness-actual" role="cell">{ar?stage.actualAr:stage.actualEn}</span>
+        <span className="readiness-owner" role="cell">{ar?stage.ownerAr:stage.ownerEn}</span>
+        <span className="readiness-status" role="cell"><i/>{stage.status==="ahead"?(ar?"متقدم على الخطة":"Ahead of plan"):stage.status==="active"?(ar?"قيد التنفيذ":"In progress"):(ar?"مرحلة قادمة":"Upcoming")}</span>
       </section>)}
     </div>
-    <footer className="readiness-footer"><span/><p>{ar?"تنتقل كل مرحلة فور اعتماد مدخلاتها التشغيلية":"Each stage advances as soon as its operational inputs are approved"}</p></footer>
+    <footer className="readiness-footer"><span/><p>{ar?"المرجع: البرنامج الزمني لأعمال شركات تقديم الخدمة لحجاج الخارج – وزارة الحج والعمرة":"Reference: Ministry of Hajj and Umrah timeline for overseas pilgrim service companies"}</p></footer>
   </article>
 }
 
