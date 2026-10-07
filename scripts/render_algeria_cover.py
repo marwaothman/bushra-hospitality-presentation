@@ -67,37 +67,42 @@ base.save(OUT, quality=96)
 print(OUT)
 
 
-# Slide 02 — restrained executive profile, intentionally free of card panels.
-profile = Image.new("RGB", (W, H), BLUE)
+# Slide 02 — light editorial content system for the meeting's main slides.
+PAPER = (248, 246, 241)
+profile = Image.new("RGB", (W, H), PAPER)
 pdraw = ImageDraw.Draw(profile)
-pdraw.rectangle((1, 1, W - 2, H - 2), outline=(208, 168, 108), width=2)
+pdraw.rectangle((0, 0, 18, H), fill=BLUE)
+pdraw.rectangle((18, 0, 24, H), fill=GOLD)
+pdraw.line((72, 190, W - 72, 190), fill=(216, 207, 191), width=2)
 
-# Brand marks retain the same visual anchors as the cover.
+# Smaller institutional marks create a quiet header instead of competing with content.
 bushra = Image.open(BUSHRA).convert("RGBA")
-bushra.thumbnail((455, 155), Image.Resampling.LANCZOS)
-profile.paste(bushra, (W - bushra.width - 72, 60), bushra)
-profile.paste(alg, (72, 65 + (150 - alg.height) // 2), alg)
+pixels = bushra.load()
+for y in range(bushra.height):
+    for x in range(bushra.width):
+        red, green, blue, alpha = pixels[x, y]
+        if alpha and red > 235 and green > 235 and blue > 235:
+            pixels[x, y] = (*BLUE, alpha)
+bushra.thumbnail((350, 105), Image.Resampling.LANCZOS)
+profile.paste(bushra, (W - bushra.width - 84, 55), bushra)
+algeria_mark = Image.open(ALGERIA).convert("RGBA").crop((750, 38, 985, 285))
+algeria_mark.thumbnail((150, 112), Image.Resampling.LANCZOS)
+profile.paste(algeria_mark, (88, 45), algeria_mark)
 
-# Portrait is held inside a single Bushra-inspired architectural frame.
-outer = [(45, H), (45, 435), (430, 215), (815, 435), (815, H)]
-inner = [(82, H), (82, 457), (430, 258), (778, 457), (778, H)]
-pdraw.polygon(outer, fill=GOLD)
-pdraw.polygon(inner, fill=IVORY)
-portrait = Image.open(PORTRAIT).convert("RGB")
-portrait = portrait.crop((0, 95, portrait.width, 1910))
-portrait.thumbnail((690, 850), Image.Resampling.LANCZOS)
-portrait_layer = Image.new("RGB", (W, H), IVORY)
-portrait_layer.paste(portrait, (430 - portrait.width // 2, H - portrait.height))
-mask = Image.new("L", (W, H), 0)
-ImageDraw.Draw(mask).polygon(inner, fill=255)
-profile.paste(portrait_layer, (0, 0), mask)
+# The portrait becomes an editorial image with one thin architectural accent.
+photo_box = (88, 250, 760, H)
+pdraw.rectangle(photo_box, fill=(241, 237, 229), outline=GOLD, width=3)
+pdraw.rectangle((88, 250, 102, H), fill=BLUE)
+portrait = Image.open(PORTRAIT).convert("RGB").crop((0, 70, 1365, 1900))
+portrait.thumbnail((610, 825), Image.Resampling.LANCZOS)
+profile.paste(portrait, (118 + (622 - portrait.width) // 2, H - portrait.height))
 
 # Executive hierarchy: name, role, and one temporary positioning statement.
-right = 1778
-pdraw.text((right, 336), "القيادة والاستشارة التنفيذية", font=f(FONT_REGULAR, 26), fill=GOLD, anchor="ra", direction="rtl", language="ar")
-pdraw.text((right, 400), "ياسر باويان", font=f(FONT_BOLD, 72), fill=WHITE, anchor="ra", direction="rtl", language="ar")
-pdraw.text((right, 505), "مستشار الرئيس التنفيذي", font=f(FONT_BOLD, 38), fill=GOLD, anchor="ra", direction="rtl", language="ar")
-pdraw.line((1125, 585, right, 585), fill=(208, 168, 108), width=2)
+right = 1770
+pdraw.text((right, 325), "القيادة والاستشارة التنفيذية", font=f(FONT_REGULAR, 25), fill=GOLD, anchor="ra", direction="rtl", language="ar")
+pdraw.text((right, 390), "ياسر باويان", font=f(FONT_BOLD, 74), fill=BLUE, anchor="ra", direction="rtl", language="ar")
+pdraw.text((right, 500), "مستشار الرئيس التنفيذي", font=f(FONT_BOLD, 38), fill=GOLD, anchor="ra", direction="rtl", language="ar")
+pdraw.line((1085, 582, right, 582), fill=GOLD, width=2)
 body_font = f(FONT_REGULAR, 31)
 body_lines = [
     "يسهم في دعم التوجهات الاستراتيجية للشركة،",
@@ -105,8 +110,7 @@ body_lines = [
     "بتطوير منظومة الخدمات والارتقاء بتجربة ضيوف الرحمن.",
 ]
 for index, line in enumerate(body_lines):
-    pdraw.text((right, 650 + index * 58), line, font=body_font, fill=WHITE, anchor="ra", direction="rtl", language="ar")
+    pdraw.text((right, 650 + index * 58), line, font=body_font, fill=BLUE, anchor="ra", direction="rtl", language="ar")
 
-pdraw.text((right, 1010), "02", font=f(FONT_REGULAR, 18), fill=GOLD, anchor="ra")
 profile.save(PROFILE_OUT, quality=96)
 print(PROFILE_OUT)
