@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import QRCode from "qrcode";
 import { motion, useReducedMotion } from "motion/react";
 
-type Lang="ar"|"en"; type Level=1|2|3; type Modal="video"|"gallery"|"details"|"showcase"|"hospitality"|"trust"|"trustVideo"|"testimonial"|"testimonialVideo"|"comprehensive"|"qr"|null; type Section="home"|"packages"|"testimonials"|"videos"|"team"|"hospitality"; type ComprehensivePhase="idle"|"activating"|"panel";
+type Lang="ar"|"en"; type Level=1|2|3; type Modal="video"|"gallery"|"details"|"showcase"|"hospitality"|"trust"|"trustVideo"|"testimonial"|"testimonialVideo"|"comprehensive"|"qr"|null; type Section="home"|"hajj1448"|"packages"|"testimonials"|"videos"|"team"|"hospitality"; type ComprehensivePhase="idle"|"activating"|"panel";
 type PresentationView={lang:Lang;section:Section;selected:Level|null;focus:Level;modal:Modal;slide:number;activeShowcase:number;activeHospitality:number;activeHospitalityPhase:number;activeReception:number;activeControlObservation:number;activeTestimonial:number;activeTrust:number};
 const VIEW_STORAGE_KEY="bushra-presentation-view-v1";
 function readPresentationView():PresentationView|null{try{const saved=sessionStorage.getItem(VIEW_STORAGE_KEY);return saved?JSON.parse(saved) as PresentationView:null}catch{return null}}
@@ -87,6 +87,11 @@ const hospitalityValue=[
   {ar:"قرارات أسرع برؤية تشغيلية موحدة",en:"Faster decisions through one operational view"},
   {ar:"صوت الضيف يتحول إلى تحسين مستمر",en:"The guest voice driving continuous improvement"},
 ] as const;
+const hajj1448Countries=[
+  {id:"libya",ar:"ليبيا",en:"Libya"},
+  {id:"algeria",ar:"الجزائر",en:"Algeria"},
+  {id:"tunisia",ar:"تونس",en:"Tunisia"},
+] as const;
 
 type CmsPayload={
   settings?:{homepageTitleAr?:string;homepageTitleEn?:string}|null;
@@ -114,6 +119,12 @@ function FilmsIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><rect x=
 function TeamIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="20" r="9"/><circle cx="14" cy="28" r="6"/><circle cx="50" cy="28" r="6"/><path d="M17 55c0-11 6-18 15-18s15 7 15 18M3 53c0-8 4-13 11-13 4 0 7 2 9 5M61 53c0-8-4-13-11-13-4 0-7 2-9 5"/></svg>}
 function HospitalityIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 45c8-1 13 1 19 7h6c6-6 11-8 19-7M14 39V22l18-12 18 12v17"/><path d="M23 39V27h18v12M32 10v29"/><circle cx="32" cy="48" r="4"/></svg>}
 function TrustIcon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6 51 14v16c0 13-8 23-19 28C21 53 13 43 13 30V14Z"/><path d="m22 31 7 7 14-16"/><circle cx="32" cy="19" r="3"/></svg>}
+function Hajj1448Icon(){return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M13 50h38M18 50V26h28v24M23 26l9-12 9 12M25 35h14M25 41h14"/><path d="M9 19c7-7 15-10 23-10M55 19C48 12 40 9 32 9"/><circle cx="9" cy="19" r="2"/><circle cx="55" cy="19" r="2"/></svg>}
+function CountryFlag({country}:{country:(typeof hajj1448Countries)[number]["id"]}){
+  if(country==="libya")return <svg viewBox="0 0 90 60" role="img" aria-label="علم ليبيا"><path fill="#e70013" d="M0 0h90v15H0z"/><path fill="#000" d="M0 15h90v30H0z"/><path fill="#239e46" d="M0 45h90v15H0z"/><path fill="#fff" d="M50 23a9 9 0 1 0 0 14 8 8 0 1 1 0-14Z"/><path fill="#fff" d="m54 26 1.2 3.5h3.7l-3 2.2 1.1 3.5-3-2.1-3 2.1 1.1-3.5-3-2.2h3.7Z"/></svg>;
+  if(country==="algeria")return <svg viewBox="0 0 90 60" role="img" aria-label="علم الجزائر"><path fill="#fff" d="M0 0h90v60H0z"/><path fill="#006233" d="M0 0h45v60H0z"/><path fill="#d21034" d="M54 20a13 13 0 1 0 0 20 11 11 0 1 1 0-20Z"/><path fill="#d21034" d="m57 24 2 6h6.3l-5.1 3.7 1.9 6-5.1-3.6-5.1 3.6 1.9-6-5.1-3.7H55Z"/></svg>;
+  return <svg viewBox="0 0 90 60" role="img" aria-label="علم تونس"><path fill="#e70013" d="M0 0h90v60H0z"/><circle fill="#fff" cx="45" cy="30" r="16"/><path fill="#e70013" d="M49 21a11 11 0 1 0 0 18 9 9 0 1 1 0-18Z"/><path fill="#e70013" d="m51 24 1.8 5.3h5.6l-4.5 3.3 1.7 5.3-4.6-3.3-4.5 3.3 1.7-5.3-4.6-3.3h5.7Z"/></svg>;
+}
 function HomeIcon(){return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9h-6v-6H9v6H3Z"/></svg>}
 function BackIcon(){return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7"/><path d="M8 12h10"/></svg>}
 function FullscreenIcon({active=false}:{active?:boolean}){return active?<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6"/></svg>:<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg>}
@@ -166,6 +177,7 @@ export default function Home(){
     {title:t.packages,brief:lang==="ar"?"مستويات عناية صُممت لتلائم احتياجات ضيوف الرحمن في كل محطة.":"Care levels designed around pilgrims' needs at every stage of their journey."},
     {title:t.testimonials,brief:lang==="ar"?"أصوات ضيوفنا وشركائنا تحكي تجربة بشرى كما عاشوها.":"Guests and partners share the Bushra experience in their own words."},
     {title:t.videos,brief:lang==="ar"?"مشاهد مختارة توثق حضور بشرى وخدماتها في الميدان.":"Selected moments documenting Bushra's services and presence in the field."},
+    {title:lang==="ar"?"تجهيزات حج 1448هـ":"Hajj 1448 Preparations",brief:lang==="ar"?"استعدادات مخصصة لبعثات الدول التي تخدمها بشرى في موسم حج 1448هـ.":"Dedicated preparations for the country missions served by Bushra during Hajj 1448 AH."},
   ];
   const hasLevelOneArabic=selected===1&&lang==="ar";
   const galleryTotal=hasLevelOneArabic?50:60;
@@ -247,12 +259,14 @@ export default function Home(){
     else if(section==="testimonials")setSection("packages");
     else if(section==="packages")setSection("hospitality");
     else if(section==="hospitality")setSection("team");
+    else if(section==="hajj1448")setSection("home");
     else if(section==="team")setSection("home");
   });
   const nextPage=()=>transition(()=>{
     setModal(null);
     if(selected){if(selected<3)pick((selected+1) as Level);else{setSelected(null);setSection("testimonials")}return}
     if(section==="home")setSection("team");
+    else if(section==="hajj1448")setSection("team");
     else if(section==="team")setSection("hospitality");
     else if(section==="hospitality")setSection("packages");
     else if(section==="packages")pick(focus);
@@ -283,9 +297,26 @@ export default function Home(){
           <button className={activeHub===4?"is-active":""} onPointerEnter={()=>setActiveHub(4)} onFocus={()=>setActiveHub(4)} onClick={()=>openSection("packages")}><img src={`${MEDIA_BASE}/media/level-1/services-poster.jpg`} alt=""/><span><PackagesIcon/></span><strong>{t.packages}</strong></button>
           <button className={activeHub===5?"is-active":""} onPointerEnter={()=>setActiveHub(5)} onFocus={()=>setActiveHub(5)} onClick={()=>openSection("testimonials")}><img src={`${MEDIA_BASE}/media/testimonials/ibrahim-al-saghir-poster.jpg`} alt=""/><span><QuoteIcon/></span><strong>{t.testimonials}</strong></button>
           <button className={activeHub===6?"is-active":""} onPointerEnter={()=>setActiveHub(6)} onFocus={()=>setActiveHub(6)} onClick={()=>openSection("videos")}><img src={`${MEDIA_BASE}/media/showcase/01.jpg`} alt=""/><span><FilmsIcon/></span><strong>{t.videos}</strong></button>
+          <button className={`hub-hajj1448-card ${activeHub===7?"is-active":""}`} onPointerEnter={()=>setActiveHub(7)} onFocus={()=>setActiveHub(7)} onClick={()=>openSection("hajj1448")}><span><Hajj1448Icon/></span><strong>{lang==="ar"?"تجهيزات حج 1448هـ":"Hajj 1448 Preparations"}</strong></button>
         </div>
         <button className="hub-side-arrow hub-side-arrow--left" type="button" onClick={()=>scrollHub(-1)} aria-label={lang==="ar"?"البطاقات السابقة":"Previous cards"}><Chevron/></button>
         <button className="hub-side-arrow hub-side-arrow--right" type="button" onClick={()=>scrollHub(1)} aria-label={lang==="ar"?"البطاقات التالية":"Next cards"}><Chevron/></button>
+      </div>
+    </section>
+
+    <section className={`hajj1448-scene ${section==="hajj1448"?"is-here":""}`} aria-labelledby="hajj1448-title">
+      <header className="hajj1448-heading">
+        <small>{lang==="ar"?"الاستعداد للموسم":"SEASON READINESS"}</small>
+        <h2 id="hajj1448-title">{lang==="ar"?"تجهيزات حج 1448هـ":"Hajj 1448 Preparations"}</h2>
+        <p>{lang==="ar"?"استعدادات متكاملة، مصممة وفق احتياجات بعثات الدول التي تخدمها بشرى.":"Integrated preparations tailored to the needs of every country mission served by Bushra."}</p>
+      </header>
+      <div className="hajj1448-country-stage" role="list" aria-label={lang==="ar"?"الدول المخدومة في موسم حج 1448هـ":"Countries served during Hajj 1448 AH"}>
+        <span className="hajj1448-route" aria-hidden="true"/>
+        {hajj1448Countries.map((country,index)=><motion.button type="button" role="listitem" className="hajj1448-country" key={country.id} initial={reduceMotion?false:{opacity:0,y:24}} animate={section==="hajj1448"?{opacity:1,y:0}:{opacity:0,y:24}} transition={{duration:reduceMotion?.01:.62,delay:reduceMotion?0:index*.09,ease:[.16,1,.3,1]}}>
+          <span className="country-flag"><CountryFlag country={country.id}/></span>
+          <span className="country-copy"><small>{lang==="ar"?"بعثة حجاج":"PILGRIM MISSION"}</small><strong>{country[lang]}</strong></span>
+          <span className="country-arrow"><Arrow/></span>
+        </motion.button>)}
       </div>
     </section>
 
