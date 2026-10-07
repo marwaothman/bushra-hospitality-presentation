@@ -167,12 +167,20 @@ function CareLevelIcon({level}:{level:Level}){
 
 function MeetingReadinessSlide({lang}:{lang:Lang}){
   const ar=lang==="ar";
-  const [filter,setFilter]=useState<"all"|"done"|"active"|"next">("all");
   const [selected,setSelected]=useState(0);
-  const timelineRef=useRef<HTMLDivElement>(null);
-  const visible=ministryTimeline.map((stage,index)=>({...stage,index})).filter(stage=>filter==="all"||(filter==="done"?(stage.status==="done"||stage.status==="ahead"):stage.status===filter));
   const current=ministryTimeline[selected];
-  const scrollTimeline=(direction:-1|1)=>timelineRef.current?.scrollBy({left:direction*380,behavior:"smooth"});
+  const windowStart=Math.min(Math.max(selected-2,0),ministryTimeline.length-5);
+  const visible=Array.from({length:5},(_,position)=>{
+    const index=windowStart+position;
+    return {...ministryTimeline[index],index,offset:index-selected};
+  });
+  const statusLabel=current.status==="done"?(ar?"مكتمل":"Completed"):current.status==="ahead"?(ar?"متقدم على الخطة":"Ahead of plan"):current.status==="active"?(ar?"قيد التنفيذ":"In progress"):(ar?"مرحلة قادمة":"Upcoming");
+  const nextAction=current.status==="done"||current.status==="ahead"
+    ?(ar?"الانتقال إلى المتطلب التالي مع توثيق الإقفال.":"Document closure and proceed to the next requirement.")
+    :current.status==="active"
+      ?(ar?"استكمال المتطلبات المفتوحة ورفع تحديث الجاهزية.":"Close outstanding requirements and issue a readiness update.")
+      :(ar?"بدء التنفيذ في التاريخ المعتمد بعد اكتمال المتطلبات السابقة.":"Begin on the approved date once preceding requirements are complete.");
+  const move=(direction:-1|1)=>setSelected(index=>Math.min(Math.max(index+direction,0),ministryTimeline.length-1));
   return <article className="readiness-slide ministry-roadmap" dir={ar?"rtl":"ltr"} aria-label={ar?"البرنامج الزمني لموسم حج 1448هـ":"Hajj 1448 AH Ministry timeline"}>
     <header className="readiness-header">
       <div><small>{ar?"وزارة الحج والعمرة · موسم حج 1448هـ":"MINISTRY OF HAJJ AND UMRAH · HAJJ 1448 AH"}</small><h2>{ar?"خارطة الجاهزية التشغيلية":"Operational readiness roadmap"}</h2><p>{ar?"20 محطة زمنية من إطلاق البرنامج حتى شهادة الإنجاز":"20 milestones from programme launch to completion certification"}</p></div>
@@ -180,22 +188,23 @@ function MeetingReadinessSlide({lang}:{lang:Lang}){
         <span><b>4</b><em>{ar?"مكتملة":"Completed"}</em></span><span><b>3</b><em>{ar?"قيد التنفيذ":"In progress"}</em></span><span><b>13</b><em>{ar?"قادمة":"Upcoming"}</em></span>
       </aside>
     </header>
-    <nav className="roadmap-filters" aria-label={ar?"تصفية المراحل":"Filter milestones"}>{(["all","done","active","next"] as const).map(value=><button key={value} type="button" className={filter===value?"is-active":""} onClick={()=>setFilter(value)}>{value==="all"?(ar?"الكل":"All"):value==="done"?(ar?"مكتمل":"Completed"):value==="active"?(ar?"قيد التنفيذ":"In progress"):(ar?"قادم":"Upcoming")}</button>)}</nav>
+    <nav className="roadmap-overview" aria-label={ar?"جميع المحطات الزمنية":"All timeline milestones"}>
+      {ministryTimeline.map((stage,index)=><button type="button" key={index} className={`is-${stage.status} ${selected===index?"is-selected":""}`} onClick={()=>setSelected(index)} aria-label={`${index+1}. ${ar?stage.ar:stage.en}`} aria-current={selected===index?"step":undefined}><i/><span>{String(index+1).padStart(2,"0")}</span></button>)}
+    </nav>
     <div className="roadmap-strip-wrap">
-      <button type="button" className="roadmap-scroll roadmap-scroll--start" onClick={()=>scrollTimeline(ar?1:-1)} aria-label={ar?"المراحل السابقة":"Previous milestones"}><Chevron/></button>
-      <div className="roadmap-strip" ref={timelineRef} role="list">
+      <button type="button" className="roadmap-scroll roadmap-scroll--start" onClick={()=>move(-1)} disabled={selected===0} aria-label={ar?"المحطة السابقة":"Previous milestone"}><Chevron/></button>
+      <div className="roadmap-strip" role="list">
         <i className="roadmap-line" aria-hidden="true"/>
-        {visible.map(stage=><button type="button" key={stage.index} role="listitem" className={`roadmap-point is-${stage.status} ${selected===stage.index?"is-selected":""}`} onClick={()=>setSelected(stage.index)} aria-pressed={selected===stage.index}><time>{ar?stage.dateAr:stage.dateEn}</time><i><span>{String(stage.index+1).padStart(2,"0")}</span></i><strong>{ar?stage.ar:stage.en}</strong></button>)}
+        {visible.map(stage=><button type="button" key={stage.index} role="listitem" className={`roadmap-point is-${stage.status} is-offset-${Math.abs(stage.offset)} ${selected===stage.index?"is-selected":""}`} onClick={()=>setSelected(stage.index)} aria-pressed={selected===stage.index}><time>{ar?stage.dateAr:stage.dateEn}</time><i><span>{stage.status==="done"||stage.status==="ahead"?"✓":stage.status==="active"?"◐":"◆"}</span></i><strong>{ar?stage.ar:stage.en}</strong></button>)}
       </div>
-      <button type="button" className="roadmap-scroll roadmap-scroll--end" onClick={()=>scrollTimeline(ar?-1:1)} aria-label={ar?"المراحل التالية":"Next milestones"}><Chevron/></button>
+      <button type="button" className="roadmap-scroll roadmap-scroll--end" onClick={()=>move(1)} disabled={selected===ministryTimeline.length-1} aria-label={ar?"المحطة التالية":"Next milestone"}><Chevron/></button>
     </div>
     <section className={`roadmap-detail is-${current.status}`} key={selected} aria-live="polite">
-      <div className="roadmap-detail-status"><i/><span>{current.status==="done"?(ar?"مكتمل":"Completed"):current.status==="ahead"?(ar?"متقدم على الخطة":"Ahead of plan"):current.status==="active"?(ar?"قيد التنفيذ":"In progress"):(ar?"مرحلة قادمة":"Upcoming")}</span><b>{String(selected+1).padStart(2,"0")} / 20</b></div>
-      <div className="roadmap-detail-title"><small>{ar?current.dateAr:current.dateEn}</small><h3>{ar?current.ar:current.en}</h3><p>{ar?current.ownerAr:current.ownerEn}</p></div>
-      <ul>{(ar?current.detailsAr:current.detailsEn).map(detail=><li key={detail}>{detail}</li>)}</ul>
-      <aside><small>{ar?"التقدم الفعلي":"ACTUAL PROGRESS"}</small><strong>{ar?current.actualAr:current.actualEn}</strong></aside>
+      <header className="roadmap-detail-title"><div><span>{String(selected+1).padStart(2,"0")}</span><i/><b>{statusLabel}</b></div><small>{ar?current.dateAr:current.dateEn}</small><h3>{ar?current.ar:current.en}</h3><p>{ar?current.ownerAr:current.ownerEn}</p></header>
+      <div className="roadmap-detail-column"><small>{ar?"متطلب الوزارة":"MINISTRY REQUIREMENT"}</small><ul>{(ar?current.detailsAr:current.detailsEn).map(detail=><li key={detail}>{detail}</li>)}</ul></div>
+      <div className="roadmap-detail-column roadmap-detail-progress"><small>{ar?"التقدم الفعلي":"ACTUAL PROGRESS"}</small><strong>{ar?current.actualAr:current.actualEn}</strong></div>
+      <div className="roadmap-detail-column roadmap-detail-next"><small>{ar?"الإجراء التالي":"NEXT ACTION"}</small><strong>{nextAction}</strong></div>
     </section>
-    <footer className="readiness-footer"><span/><p>{ar?"انقر على أي محطة لعرض متطلب الوزارة والتقدم الفعلي":"Select any milestone to view the Ministry requirement and actual progress"}</p></footer>
   </article>
 }
 
