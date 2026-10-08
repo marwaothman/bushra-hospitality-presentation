@@ -190,13 +190,12 @@ function MeetingReadinessSlide({lang}:{lang:Lang}){
   const move=(direction:-1|1)=>setSelected(filteredIndices[Math.min(Math.max(selectedPosition+direction,0),filteredIndices.length-1)]);
   const applyFilter=(value:"all"|"done"|"active"|"next")=>{setFilter(value);const indices=timeline.map((stage,index)=>({stage,index})).filter(({stage})=>value==="all"||(value==="done"?(stage.status==="done"||stage.status==="ahead"):stage.status===value)).map(({index})=>index);if(!indices.includes(selected))setSelected(indices[0])};
   return <article className="readiness-slide ministry-roadmap" dir={ar?"rtl":"ltr"} aria-label={ar?"البرنامج الزمني لموسم حج 1448هـ":"Hajj 1448 AH Ministry timeline"}>
-    <div className="roadmap-brand-header" aria-label={ar?"بشرى الضيافة ومكتب شؤون حجاج الجزائر":"Bushra Hospitality and the Algerian Office of Pilgrims Affairs"}>
-      <img className="roadmap-partner-logo" src="/media/hajj1448/algeria-pilgrims-office-logo-transparent.png" alt={ar?"مكتب شؤون حجاج الجزائر":"The Algerian Office of Pilgrims Affairs"}/>
-      <i/>
-      <span><img src={`${MEDIA_BASE}/anniversary-logo.svg`} alt=""/><img src={`${MEDIA_BASE}/company-logo-horizontal.svg`} alt="Bushra Hospitality"/></span>
+    <div className="roadmap-brand-header" aria-label={ar?"خارطة الجاهزية التشغيلية — بشرى الضيافة ومكتب شؤون حجاج الجزائر":"Operational readiness roadmap — Bushra Hospitality and the Algerian Office of Pilgrims Affairs"}>
+      <div className="roadmap-header-title"><small>{ar?"موسم حج 1448هـ":"HAJJ 1448 AH"}</small><h2>{ar?"خارطة الجاهزية التشغيلية":"Operational readiness roadmap"}</h2></div>
+      <i aria-hidden="true"/>
+      <div className="roadmap-brand-lockup"><img className="roadmap-partner-logo" src="/media/hajj1448/algeria-pilgrims-office-logo-transparent.png" alt={ar?"مكتب شؤون حجاج الجزائر":"The Algerian Office of Pilgrims Affairs"}/><span><img src={`${MEDIA_BASE}/anniversary-logo.svg`} alt=""/><img src={`${MEDIA_BASE}/company-logo-horizontal.svg`} alt="Bushra Hospitality"/></span></div>
     </div>
     <header className="readiness-header">
-      <div><small>{ar?"موسم حج 1448هـ":"HAJJ 1448 AH"}</small><h2>{ar?"خارطة الجاهزية التشغيلية":"Operational readiness roadmap"}</h2></div>
       <aside className="readiness-summary" aria-label={ar?"ملخص التقدم":"Progress summary"}>
         <span><b>5</b><em>{ar?"مكتملة":"Completed"}</em></span><span><b>2</b><em>{ar?"قيد التنفيذ":"In progress"}</em></span><span><b>13</b><em>{ar?"قادمة":"Upcoming"}</em></span>
       </aside>
