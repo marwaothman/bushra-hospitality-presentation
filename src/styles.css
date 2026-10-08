@@ -2050,6 +2050,16 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .ministry-roadmap .roadmap-detail-column small{margin-bottom:8px;font-size:10px}
 .ministry-roadmap .roadmap-detail-column ul{font-size:12px;line-height:1.55}
 .ministry-roadmap .roadmap-detail-column strong{font-size:14px;line-height:1.45}
+@media(max-width:1200px){
+  .ministry-roadmap{padding-inline:28px}
+  .roadmap-brand-header{gap:10px}
+  .roadmap-brand-header>i{min-width:24px}
+  .roadmap-brand-lockup{gap:10px}
+  .roadmap-brand-lockup>span{gap:8px}
+  .roadmap-brand-lockup>img{height:27px;max-width:128px}
+  .roadmap-brand-lockup>span img:first-child{height:24px}
+  .roadmap-brand-lockup>span img:last-child{height:24px}
+}
 @media(max-width:1000px){
   .ministry-roadmap{padding-inline:34px}
   .roadmap-brand-header{flex-basis:62px}.roadmap-header-title h2{font-size:28px}.roadmap-brand-lockup>img{height:29px}.roadmap-brand-lockup>span img:first-child{height:26px}.roadmap-brand-lockup>span img:last-child{height:25px}
