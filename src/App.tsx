@@ -191,13 +191,8 @@ function MeetingReadinessSlide({lang}:{lang:Lang}){
     <div className="roadmap-brand-header" aria-label={ar?"خارطة الجاهزية التشغيلية — بشرى الضيافة ومكتب شؤون حجاج الجزائر":"Operational readiness roadmap — Bushra Hospitality and the Algerian Office of Pilgrims Affairs"}>
       <div className="roadmap-header-title"><small>{ar?"موسم حج 1448هـ":"HAJJ 1448 AH"}</small><h2>{ar?"خارطة الجاهزية التشغيلية":"Operational readiness roadmap"}</h2></div>
       <i aria-hidden="true"/>
-      <div className="roadmap-brand-lockup"><img className="roadmap-partner-logo" src="/media/hajj1448/algeria-pilgrims-office-logo-transparent.png" alt={ar?"مكتب شؤون حجاج الجزائر":"The Algerian Office of Pilgrims Affairs"}/><span><img src={`${MEDIA_BASE}/anniversary-logo.svg`} alt=""/><img src={`${MEDIA_BASE}/company-logo-horizontal.svg`} alt="Bushra Hospitality"/></span></div>
+      <div className="roadmap-brand-lockup"><span><img src={`${MEDIA_BASE}/company-logo-horizontal.svg`} alt="Bushra Hospitality"/><img src={`${MEDIA_BASE}/anniversary-logo.svg`} alt=""/></span><img className="roadmap-partner-logo" src="/media/hajj1448/algeria-pilgrims-office-logo-transparent.png" alt={ar?"مكتب شؤون حجاج الجزائر":"The Algerian Office of Pilgrims Affairs"}/></div>
     </div>
-    <header className="readiness-header">
-      <aside className="readiness-summary" aria-label={ar?"ملخص التقدم":"Progress summary"}>
-        <span><b>5</b><em>{ar?"مكتملة":"Completed"}</em></span><span><b>2</b><em>{ar?"قيد التنفيذ":"In progress"}</em></span><span><b>13</b><em>{ar?"قادمة":"Upcoming"}</em></span>
-      </aside>
-    </header>
     <nav className="roadmap-filters roadmap-status-filters" aria-label={ar?"تصفية المحطات حسب الحالة":"Filter milestones by status"}>
       {(["all","done","active","next"] as const).map(value=><button key={value} type="button" className={filter===value?"is-active":""} onClick={()=>applyFilter(value)} aria-pressed={filter===value}><RoadmapFilterIcon kind={value}/><span>{value==="all"?(ar?"الكل":"All"):value==="done"?(ar?"المكتملة":"Completed"):value==="active"?(ar?"قيد التنفيذ":"In progress"):(ar?"القادمة":"Upcoming")}</span></button>)}
     </nav>
