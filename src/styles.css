@@ -1930,6 +1930,7 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   outline:0;
   transform:translateY(-50%);
 }
+.experience.is-meeting-mode .meeting-slide-count{direction:ltr;unicode-bidi:isolate}
 .experience.is-meeting-mode .meeting-slide-arrow--next{left:-66px}
 .experience.is-meeting-mode .meeting-slide-arrow--previous{right:-66px}
 .experience.is-meeting-mode .meeting-slide-arrow:hover,
