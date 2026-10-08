@@ -1994,9 +1994,10 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .roadmap-header-title{flex:0 0 auto;text-align:start;white-space:nowrap}
 .roadmap-header-title small{display:block;margin-bottom:2px;font-size:9px;font-weight:800;color:#b08e57}
 .roadmap-header-title h2{margin:0;font-size:clamp(27px,2vw,39px);line-height:1;color:#133c67}
-.roadmap-brand-lockup{flex:0 0 auto;display:flex;align-items:center;gap:18px}
+.roadmap-brand-lockup{flex:0 0 auto;display:flex;align-items:center;gap:18px;background:transparent}
+.roadmap-brand-lockup img{display:block;background:transparent;box-shadow:none}
 .roadmap-brand-lockup>img{width:auto;height:34px;max-width:155px;object-fit:contain}
-.roadmap-brand-lockup>span{display:flex;align-items:center;gap:12px;height:34px}
+.roadmap-brand-lockup>span{display:flex;align-items:center;gap:12px;height:34px;background:transparent}
 .roadmap-brand-lockup>span img:first-child{width:auto;height:30px}
 .roadmap-brand-lockup>span img:last-child{width:auto;height:29px}
 .ministry-roadmap .readiness-header{
