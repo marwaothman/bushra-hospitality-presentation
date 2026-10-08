@@ -1888,9 +1888,7 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .ministry-roadmap .roadmap-status-filters{position:static;inset:auto;display:flex;align-items:center;justify-content:center;gap:7px;width:max-content;max-width:100%;margin:10px auto 1px;padding:5px;border:1px solid rgba(19,60,103,.13);border-radius:999px;background:rgba(255,255,255,.74);box-shadow:0 8px 24px rgba(19,60,103,.05)}.ministry-roadmap .roadmap-status-filters button{display:flex;align-items:center;gap:8px;min-height:34px;padding:6px 14px;border:0;border-radius:999px;background:transparent;color:rgba(19,60,103,.65);font-size:clamp(11px,.72vw,14px);font-weight:750;cursor:pointer;transition:.25s cubic-bezier(.16,1,.3,1)}.ministry-roadmap .roadmap-status-filters button svg{width:18px;height:18px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.ministry-roadmap .roadmap-status-filters button.is-active{background:#133c67;color:#fff;box-shadow:0 7px 18px rgba(19,60,103,.18)}.ministry-roadmap .roadmap-status-filters button:hover:not(.is-active){background:rgba(176,142,87,.1);color:#133c67}.ministry-roadmap .roadmap-overview{height:31px;margin-top:0;margin-bottom:0}.ministry-roadmap .roadmap-overview button.is-filtered-out{opacity:.16}.ministry-roadmap .roadmap-overview button.is-in-filter{opacity:1}.ministry-roadmap .roadmap-strip{height:clamp(164px,21vh,205px)}.ministry-roadmap .roadmap-point time{min-height:38px;margin-bottom:12px;font-size:clamp(11px,.78vw,15px);font-weight:750;line-height:1.35;color:rgba(19,60,103,.7)}.ministry-roadmap .roadmap-point>i{margin-bottom:18px}.ministry-roadmap .roadmap-point strong{min-height:42px;font-size:clamp(13px,.92vw,18px);line-height:1.34;font-weight:800}.ministry-roadmap .roadmap-point.is-selected strong{font-size:clamp(17px,1.16vw,23px);line-height:1.25}.ministry-roadmap .roadmap-detail-title small{font-size:clamp(11px,.78vw,15px)}.ministry-roadmap .roadmap-detail-title p{font-size:clamp(12px,.82vw,15px)}.ministry-roadmap .roadmap-detail-column small{font-size:clamp(11px,.76vw,14px)}.ministry-roadmap .roadmap-detail-column ul{font-size:clamp(13px,.9vw,17px);line-height:1.7}.ministry-roadmap .roadmap-detail-column strong{font-size:clamp(15px,1.05vw,20px)}
 @media(max-width:760px){.ministry-roadmap .roadmap-status-filters{width:100%;justify-content:flex-start;overflow-x:auto;border-radius:14px}.ministry-roadmap .roadmap-status-filters button{white-space:nowrap}.ministry-roadmap .roadmap-overview{height:38px}.ministry-roadmap .roadmap-strip{height:180px}}
 .ministry-roadmap .roadmap-status-filters button svg,.ministry-roadmap .roadmap-status-filters button svg *{fill:none!important;stroke:currentColor!important}
-.ministry-roadmap .roadmap-view-switch{position:absolute;z-index:4;top:clamp(28px,3.8vh,42px);left:50%;display:flex;gap:4px;padding:4px;border:1px solid rgba(19,60,103,.13);border-radius:999px;background:rgba(255,255,255,.72);transform:translateX(-50%);box-shadow:0 7px 20px rgba(19,60,103,.05)}.ministry-roadmap .roadmap-view-switch button{padding:8px 15px;border:0;border-radius:999px;background:transparent;color:rgba(19,60,103,.6);font-size:clamp(10px,.68vw,13px);font-weight:800;white-space:nowrap;cursor:pointer;transition:.25s}.ministry-roadmap .roadmap-view-switch button.is-active{background:#b08e57;color:#fff;box-shadow:0 6px 15px rgba(176,142,87,.2)}
-@media(max-width:1200px){.ministry-roadmap .roadmap-view-switch{position:static;width:max-content;max-width:100%;margin:8px auto 0;transform:none}.ministry-roadmap .roadmap-status-filters{margin-top:5px}}
-@media(max-width:760px){.ministry-roadmap .roadmap-view-switch{width:100%;overflow-x:auto;border-radius:14px}.ministry-roadmap .roadmap-view-switch button{flex:1}}
+@media(max-width:1200px){.ministry-roadmap .roadmap-status-filters{margin-top:5px}}
 
 /* Meeting deck: distraction-free viewport with a protected control zone. */
 .experience.is-meeting-mode .nav{
@@ -2011,15 +2009,6 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .ministry-roadmap .readiness-summary span{min-width:88px;padding:8px 12px}
 .ministry-roadmap .readiness-summary b{font-size:22px}
 .ministry-roadmap .readiness-summary em{margin-top:3px;font-size:10px}
-.ministry-roadmap .roadmap-view-switch{
-  position:static;
-  flex:0 0 auto;
-  width:max-content;
-  max-width:100%;
-  margin:8px auto 5px;
-  transform:none;
-}
-.ministry-roadmap .roadmap-view-switch button{padding:7px 14px;font-size:11px}
 .ministry-roadmap .roadmap-status-filters{
   flex:0 0 auto;
   min-height:34px;
