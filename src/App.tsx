@@ -117,16 +117,6 @@ const ministryTimeline=[
   {status:"next",dateAr:"24–29 ذو القعدة · 1 و6 مايو 2027م",dateEn:"1 & 6 May 2027",ar:"اختبارات الطاقة والقارئات",en:"Power and reader testing",detailsAr:["فرضيات الطاقة الكهربائية للمخيمات.","فرضية اختبار قارئات نسك في المشاعر."],detailsEn:["Run camp electrical-power drills.","Test Nusuk readers across the holy sites."],actualAr:"مرحلة قادمة",actualEn:"Upcoming",ownerAr:"بشرى الضيافة",ownerEn:"Bushra Hospitality"},
   {status:"next",dateAr:"1–20 محرم 1449هـ · 6–25 يونيو 2027م",dateEn:"6–25 Jun 2027",ar:"شهادة الإنجاز",en:"Completion certificate",detailsAr:["تسليم شهادة الإنجاز بين مكاتب شؤون الحج وشركات تقديم الخدمة."],detailsEn:["Issue the completion certificate between Hajj affairs offices and service companies."],actualAr:"مرحلة ختامية",actualEn:"Final stage",ownerAr:"الطرفان",ownerEn:"Joint"},
 ] as const;
-const executionPriorities=[
-  {status:"done",dateAr:"أولوية تنفيذية",dateEn:"Execution priority",ar:"حجز المواقع بالمخيمات",en:"Reserve camp locations",detailsAr:["حجز واعتماد مواقع المخيمات المخصصة للبعثة."],detailsEn:["Reserve and approve the camp locations allocated to the delegation."],actualAr:"تم الانتهاء",actualEn:"Completed",ownerAr:"البعثة",ownerEn:"Delegation"},
-  {status:"done",dateAr:"أولوية تنفيذية",dateEn:"Execution priority",ar:"إنشاء الباقة الشاملة",en:"Create the comprehensive package",detailsAr:["إنشاء واعتماد الباقة الشاملة وفق احتياجات البعثة."],detailsEn:["Create and approve the comprehensive package around delegation requirements."],actualAr:"تم الانتهاء",actualEn:"Completed",ownerAr:"البعثة",ownerEn:"Delegation"},
-  {status:"active",dateAr:"قيد التنفيذ",dateEn:"In progress",ar:"التعاقد مع مزوّدي الخدمة",en:"Contract service providers",detailsAr:["استكمال التعاقدات مع مزوّدي الخدمات التشغيلية المعتمدين."],detailsEn:["Complete contracting with approved operational service providers."],actualAr:"جاري العمل",actualEn:"In progress",ownerAr:"شركة تقديم الخدمة",ownerEn:"Service company"},
-  {status:"active",dateAr:"قيد التنفيذ",dateEn:"In progress",ar:"تخصيص العقود على مراكز الضيافة",en:"Allocate contracts to hospitality centres",detailsAr:["ربط العقود المعتمدة بمراكز الضيافة وتحديد نطاق التنفيذ لكل مركز."],detailsEn:["Assign approved contracts to hospitality centres and define each centre’s scope."],actualAr:"جاري العمل",actualEn:"In progress",ownerAr:"شركة تقديم الخدمة",ownerEn:"Service company"},
-  {status:"active",dateAr:"قيد التنفيذ",dateEn:"In progress",ar:"إدخال بيانات الحجاج",en:"Enter pilgrim data",detailsAr:["استكمال إدخال بيانات الحجاج تمهيدًا لإصدار التأشيرات."],detailsEn:["Complete pilgrim data entry in preparation for visa issuance."],actualAr:"جاري العمل لإصدار التأشيرات",actualEn:"In progress for visa issuance",ownerAr:"البعثة",ownerEn:"Delegation"},
-  {status:"next",dateAr:"المرحلة التالية",dateEn:"Next stage",ar:"تكوين المجموعات لبطاقات نسك",en:"Form Nusuk card groups",detailsAr:["تكوين مجموعات الحجاج المعتمدة تمهيدًا لإصدار بطاقات نسك."],detailsEn:["Create approved pilgrim groups in preparation for issuing Nusuk cards."],actualAr:"يبدأ بعد اعتماد البيانات",actualEn:"Starts after data approval",ownerAr:"شركة تقديم الخدمة",ownerEn:"Service company"},
-  {status:"next",dateAr:"المرحلة التالية",dateEn:"Next stage",ar:"إصدار بطاقات نسك",en:"Issue Nusuk cards",detailsAr:["إصدار بطاقات نسك بعد اكتمال تكوين المجموعات واعتماد البيانات."],detailsEn:["Issue Nusuk cards after group formation and data approval are complete."],actualAr:"مرحلة قادمة",actualEn:"Upcoming",ownerAr:"شركة تقديم الخدمة",ownerEn:"Service company"},
-] as const;
-
 type CmsPayload={
   settings?:{homepageTitleAr?:string;homepageTitleEn?:string}|null;
   packages?:Array<{level:number;titleAr?:string;titleEn?:string;active?:boolean}>;
@@ -180,10 +170,9 @@ function RoadmapFilterIcon({kind}:{kind:"all"|"done"|"active"|"next"}){
 
 function MeetingReadinessSlide({lang}:{lang:Lang}){
   const ar=lang==="ar";
-  const [view,setView]=useState<"ministry"|"execution">("ministry");
   const [filter,setFilter]=useState<"all"|"done"|"active"|"next">("all");
   const [selected,setSelected]=useState(0);
-  const timeline=view==="ministry"?ministryTimeline:executionPriorities;
+  const timeline=ministryTimeline;
   const current=timeline[selected];
   const filteredIndices=timeline.map((stage,index)=>({stage,index})).filter(({stage})=>filter==="all"||(filter==="done"?(stage.status==="done"||stage.status==="ahead"):stage.status===filter)).map(({index})=>index);
   const selectedPosition=Math.max(filteredIndices.indexOf(selected),0);
@@ -200,7 +189,6 @@ function MeetingReadinessSlide({lang}:{lang:Lang}){
       :(ar?"بدء التنفيذ في التاريخ المعتمد بعد اكتمال المتطلبات السابقة.":"Begin on the approved date once preceding requirements are complete.");
   const move=(direction:-1|1)=>setSelected(filteredIndices[Math.min(Math.max(selectedPosition+direction,0),filteredIndices.length-1)]);
   const applyFilter=(value:"all"|"done"|"active"|"next")=>{setFilter(value);const indices=timeline.map((stage,index)=>({stage,index})).filter(({stage})=>value==="all"||(value==="done"?(stage.status==="done"||stage.status==="ahead"):stage.status===value)).map(({index})=>index);if(!indices.includes(selected))setSelected(indices[0])};
-  const changeView=(value:"ministry"|"execution")=>{setView(value);setFilter("all");setSelected(0)};
   return <article className="readiness-slide ministry-roadmap" dir={ar?"rtl":"ltr"} aria-label={ar?"البرنامج الزمني لموسم حج 1448هـ":"Hajj 1448 AH Ministry timeline"}>
     <div className="roadmap-brand-header" aria-label={ar?"بشرى الضيافة ومكتب شؤون حجاج الجزائر":"Bushra Hospitality and the Algerian Office of Pilgrims Affairs"}>
       <img className="roadmap-partner-logo" src="/media/hajj1448/algeria-pilgrims-office-logo-transparent.png" alt={ar?"مكتب شؤون حجاج الجزائر":"The Algerian Office of Pilgrims Affairs"}/>
@@ -210,10 +198,9 @@ function MeetingReadinessSlide({lang}:{lang:Lang}){
     <header className="readiness-header">
       <div><small>{ar?"موسم حج 1448هـ":"HAJJ 1448 AH"}</small><h2>{ar?"خارطة الجاهزية التشغيلية":"Operational readiness roadmap"}</h2></div>
       <aside className="readiness-summary" aria-label={ar?"ملخص التقدم":"Progress summary"}>
-        <span><b>{view==="ministry"?4:2}</b><em>{ar?"مكتملة":"Completed"}</em></span><span><b>3</b><em>{ar?"قيد التنفيذ":"In progress"}</em></span><span><b>{view==="ministry"?13:2}</b><em>{ar?"قادمة":"Upcoming"}</em></span>
+        <span><b>4</b><em>{ar?"مكتملة":"Completed"}</em></span><span><b>3</b><em>{ar?"قيد التنفيذ":"In progress"}</em></span><span><b>13</b><em>{ar?"قادمة":"Upcoming"}</em></span>
       </aside>
     </header>
-    <nav className="roadmap-view-switch" aria-label={ar?"اختيار مسار العرض":"Choose roadmap view"}><button type="button" className={view==="ministry"?"is-active":""} onClick={()=>changeView("ministry")}>{ar?"خطة الوزارة · 20 محطة":"Ministry plan · 20 milestones"}</button><button type="button" className={view==="execution"?"is-active":""} onClick={()=>changeView("execution")}>{ar?"التقدم التنفيذي · 7 أولويات":"Execution progress · 7 priorities"}</button></nav>
     <nav className="roadmap-filters roadmap-status-filters" aria-label={ar?"تصفية المحطات حسب الحالة":"Filter milestones by status"}>
       {(["all","done","active","next"] as const).map(value=><button key={value} type="button" className={filter===value?"is-active":""} onClick={()=>applyFilter(value)} aria-pressed={filter===value}><RoadmapFilterIcon kind={value}/><span>{value==="all"?(ar?"الكل":"All"):value==="done"?(ar?"المكتملة":"Completed"):value==="active"?(ar?"قيد التنفيذ":"In progress"):(ar?"القادمة":"Upcoming")}</span></button>)}
     </nav>
@@ -230,7 +217,7 @@ function MeetingReadinessSlide({lang}:{lang:Lang}){
     </div>
     <section className={`roadmap-detail is-${current.status}`} key={selected} aria-live="polite">
       <header className="roadmap-detail-title"><div><span>{String(selected+1).padStart(2,"0")} / {String(timeline.length).padStart(2,"0")}</span><i/><b>{statusLabel}</b></div><small>{ar?current.dateAr:current.dateEn}</small><h3>{ar?current.ar:current.en}</h3><p>{ar?current.ownerAr:current.ownerEn}</p></header>
-      <div className="roadmap-detail-column"><small>{view==="ministry"?(ar?"متطلب الوزارة":"MINISTRY REQUIREMENT"):(ar?"نطاق العمل":"SCOPE OF WORK")}</small><ul>{(ar?current.detailsAr:current.detailsEn).map(detail=><li key={detail}>{detail}</li>)}</ul></div>
+      <div className="roadmap-detail-column"><small>{ar?"متطلب الوزارة":"MINISTRY REQUIREMENT"}</small><ul>{(ar?current.detailsAr:current.detailsEn).map(detail=><li key={detail}>{detail}</li>)}</ul></div>
       <div className="roadmap-detail-column roadmap-detail-progress"><small>{ar?"التقدم الفعلي":"ACTUAL PROGRESS"}</small><strong>{ar?current.actualAr:current.actualEn}</strong></div>
       <div className="roadmap-detail-column roadmap-detail-next"><small>{ar?"الإجراء التالي":"NEXT ACTION"}</small><strong>{nextAction}</strong></div>
     </section>
