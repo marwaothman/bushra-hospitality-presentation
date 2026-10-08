@@ -1976,3 +1976,90 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .experience.is-meeting-mode .meeting-slide-count{right:7px;bottom:6px;font-size:8px}
   .experience.is-meeting-mode .global-step-nav{bottom:4px}
 }
+
+/* Interactive plan slide: match the meeting deck's editorial hierarchy. */
+.ministry-roadmap{
+  padding:18px 58px 28px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+.roadmap-brand-header{
+  flex:0 0 46px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:17px;
+  border-bottom:1px solid rgba(176,142,87,.42);
+}
+.roadmap-brand-header>i{width:58px;height:1px;background:#b08e57}
+.roadmap-brand-header>img{width:auto;height:34px;max-width:155px;object-fit:contain}
+.roadmap-brand-header>span{display:flex;align-items:center;gap:12px;height:34px}
+.roadmap-brand-header>span img:first-child{width:auto;height:30px}
+.roadmap-brand-header>span img:last-child{width:auto;height:29px}
+.ministry-roadmap .readiness-header{
+  flex:0 0 74px;
+  align-items:center;
+  gap:30px;
+  padding:8px 0 9px;
+}
+.ministry-roadmap .readiness-header>div{max-width:none}
+.ministry-roadmap .readiness-header small{margin:0 0 3px;font-size:10px}
+.ministry-roadmap .readiness-header h2{margin:0;font-size:clamp(30px,2.2vw,43px);line-height:1}
+.ministry-roadmap .readiness-header p{display:none}
+.ministry-roadmap .readiness-summary{min-width:276px;height:54px}
+.ministry-roadmap .readiness-summary span{min-width:88px;padding:8px 12px}
+.ministry-roadmap .readiness-summary b{font-size:22px}
+.ministry-roadmap .readiness-summary em{margin-top:3px;font-size:10px}
+.ministry-roadmap .roadmap-view-switch{
+  position:static;
+  flex:0 0 auto;
+  width:max-content;
+  max-width:100%;
+  margin:8px auto 5px;
+  transform:none;
+}
+.ministry-roadmap .roadmap-view-switch button{padding:7px 14px;font-size:11px}
+.ministry-roadmap .roadmap-status-filters{
+  flex:0 0 auto;
+  min-height:34px;
+  margin:0 auto 3px;
+  padding:3px;
+}
+.ministry-roadmap .roadmap-status-filters button{min-height:28px;padding:4px 12px;font-size:11px}
+.ministry-roadmap .roadmap-status-filters button svg{width:15px;height:15px}
+.ministry-roadmap .roadmap-overview{flex:0 0 24px;height:24px;margin:0 auto}
+.ministry-roadmap .roadmap-overview button{height:23px}
+.ministry-roadmap .roadmap-strip-wrap{flex:0 0 164px;margin:0;padding-inline:52px}
+.ministry-roadmap .roadmap-strip{height:164px;padding-bottom:5px}
+.ministry-roadmap .roadmap-line{bottom:57px}
+.ministry-roadmap .roadmap-point time{min-height:31px;margin-bottom:6px;font-size:10px}
+.ministry-roadmap .roadmap-point>i{width:44px;height:44px;margin-bottom:10px}
+.ministry-roadmap .roadmap-point>i span{font-size:13px}
+.ministry-roadmap .roadmap-point strong{min-height:34px;font-size:12px;line-height:1.25}
+.ministry-roadmap .roadmap-point.is-selected>i{width:56px;height:56px}
+.ministry-roadmap .roadmap-point.is-selected>i span{font-size:17px}
+.ministry-roadmap .roadmap-point.is-selected strong{font-size:15px}
+.ministry-roadmap .roadmap-scroll{height:58px}
+.ministry-roadmap .roadmap-detail{
+  flex:1 1 auto;
+  min-height:0;
+  margin:2px 58px 0;
+  grid-template-columns:1.05fr 1.42fr .82fr .96fr;
+}
+.ministry-roadmap .roadmap-detail-title,
+.ministry-roadmap .roadmap-detail-column{padding:14px 18px}
+.ministry-roadmap .roadmap-detail-title>div{margin-bottom:7px}
+.ministry-roadmap .roadmap-detail-title>div span{font-size:17px}
+.ministry-roadmap .roadmap-detail-title small{font-size:10px}
+.ministry-roadmap .roadmap-detail-title h3{margin:6px 0;font-size:20px}
+.ministry-roadmap .roadmap-detail-title p{font-size:10px}
+.ministry-roadmap .roadmap-detail-column small{margin-bottom:8px;font-size:10px}
+.ministry-roadmap .roadmap-detail-column ul{font-size:12px;line-height:1.55}
+.ministry-roadmap .roadmap-detail-column strong{font-size:14px;line-height:1.45}
+@media(max-width:1000px){
+  .ministry-roadmap{padding-inline:34px}
+  .roadmap-brand-header{flex-basis:40px}.roadmap-brand-header>img{height:29px}.roadmap-brand-header>span img:first-child{height:26px}.roadmap-brand-header>span img:last-child{height:25px}
+  .ministry-roadmap .readiness-header{flex-basis:64px}.ministry-roadmap .readiness-header h2{font-size:30px}
+  .ministry-roadmap .roadmap-detail{margin-inline:38px}.ministry-roadmap .roadmap-detail-title,.ministry-roadmap .roadmap-detail-column{padding:12px}
+}
