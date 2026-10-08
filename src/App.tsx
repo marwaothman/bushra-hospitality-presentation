@@ -176,11 +176,9 @@ function MeetingReadinessSlide({lang}:{lang:Lang}){
   const current=timeline[selected];
   const filteredIndices=timeline.map((stage,index)=>({stage,index})).filter(({stage})=>filter==="all"||(filter==="done"?(stage.status==="done"||stage.status==="ahead"):stage.status===filter)).map(({index})=>index);
   const selectedPosition=Math.max(filteredIndices.indexOf(selected),0);
-  const visible=Array.from({length:5},(_,position)=>{
-    const filteredPosition=selectedPosition+position-2;
-    const index=filteredIndices[filteredPosition];
-    return index!==undefined?{...timeline[index],index,offset:position-2}:null;
-  });
+  const visibleCount=Math.min(5,filteredIndices.length);
+  const visibleStart=Math.min(Math.max(selectedPosition-2,0),Math.max(filteredIndices.length-visibleCount,0));
+  const visible=filteredIndices.slice(visibleStart,visibleStart+visibleCount).map((index)=>({...timeline[index],index,offset:filteredIndices.indexOf(index)-selectedPosition}));
   const statusLabel=current.status==="done"?(ar?"مكتمل":"Completed"):current.status==="ahead"?(ar?"متقدم على الخطة":"Ahead of plan"):current.status==="active"?(ar?"قيد التنفيذ":"In progress"):(ar?"مرحلة قادمة":"Upcoming");
   const nextAction=current.status==="done"||current.status==="ahead"
     ?(ar?"الانتقال إلى المتطلب التالي مع توثيق الإقفال.":"Document closure and proceed to the next requirement.")
