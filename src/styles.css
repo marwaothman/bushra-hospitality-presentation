@@ -375,10 +375,10 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 /* Homepage identity hierarchy: company name first, then the brand promise. */
 .hub-heading:not(.is-detail) .hub-company-name{
   margin:0;
-  max-width:15ch;
+  max-width:none;
   color:#fff;
   font-family:var(--presentation-title-font);
-  font-size:clamp(42px,4.25vw,82px);
+  font-size:clamp(36px,2.8vw,56px);
   font-weight:700;
   line-height:1.08;
   letter-spacing:-.035em;
@@ -394,8 +394,8 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   letter-spacing:-.02em!important;
 }
 .experience[dir="ltr"] .hub-heading:not(.is-detail) .hub-company-name{
-  max-width:18ch;
-  font-size:clamp(36px,3.65vw,70px);
+  max-width:none;
+  font-size:clamp(32px,2.55vw,50px);
   line-height:1.04;
 }
 @media(max-width:1000px){
