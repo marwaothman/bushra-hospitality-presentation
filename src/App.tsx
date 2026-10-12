@@ -19,6 +19,7 @@ const leadership=[
   {image:`${MEDIA_BASE}/media/team/mohammed-maimani.webp`,ar:{name:"محمد بن محمود ميمني",role:"نائب الرئيس التنفيذي"},en:{name:"Mohammed bin Mahmoud Maimani",role:"Deputy Chief Executive Officer"}},
   {image:`${MEDIA_BASE}/media/team/yasser-bukhari.webp`,ar:{name:"ياسر بن فؤاد بخاري",role:"المدير التنفيذي للخدمات اللوجستية"},en:{name:"Yasser bin Fouad Bukhari",role:"Executive Director of Logistics Services"}},
   {image:`${MEDIA_BASE}/media/team/essam-qattan.webp`,ar:{name:"عصام بن سليمان قطان",role:"المدير التنفيذي للخدمات المساندة"},en:{name:"Essam bin Suleiman Qattan",role:"Executive Director of Support Services"}},
+  {image:`${MEDIA_BASE}/media/team/hassan-sarouji.webp`,ar:{name:"حسن بن عبد الله سروجي",role:"المدير التنفيذي للحج المباشر"},en:{name:"Hassan bin Abdullah Sarouji",role:"Executive Director of Direct Hajj"}},
 ] as const;
 const showcaseVideos=[
   {ar:"استقبال حجاج ليبيا",en:"Welcoming Libyan Pilgrims",src:`${MEDIA_BASE}/media/showcase/01.mp4`,poster:`${MEDIA_BASE}/media/showcase/01.jpg`},

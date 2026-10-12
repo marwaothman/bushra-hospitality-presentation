@@ -372,6 +372,14 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .nav,.nav.nav--algeria{height:68px!important;min-height:68px!important}
 }
 
+/* Five-member executive leadership composition. */
+@media(min-width:901px){
+  .team-scene .leadership-grid{grid-template-columns:minmax(225px,1.18fr) repeat(4,minmax(180px,1fr))!important;gap:clamp(12px,.95vw,18px)!important}
+  .team-scene .leader-copy{padding:clamp(16px,1.25vw,22px)!important}
+  .team-scene .leader-copy h3{font-size:clamp(15px,1.05vw,20px)!important}
+  .team-scene .leader-copy p{font-size:clamp(9px,.68vw,12px)!important}
+}
+
 /* Homepage identity hierarchy: corporate descriptor first, memorable promise dominant. */
 .hub-heading:not(.is-detail) .hub-company-name{
   margin:0;
