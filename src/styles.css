@@ -2117,3 +2117,16 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .ministry-roadmap .readiness-header{flex-basis:54px}
   .ministry-roadmap .roadmap-detail{margin-inline:38px}.ministry-roadmap .roadmap-detail-title,.ministry-roadmap .roadmap-detail-column{padding:12px}
 }
+
+/* Keep all five executives within the presentation frame. */
+@media(min-width:901px){
+  .team-scene.is-here .leadership-grid{
+    right:clamp(42px,4vw,76px)!important;
+    left:clamp(42px,4vw,76px)!important;
+    grid-template-columns:minmax(0,1.12fr) repeat(4,minmax(0,1fr))!important;
+    gap:clamp(10px,.85vw,16px)!important;
+  }
+  .team-scene.is-here .leader-copy{padding:clamp(13px,1vw,18px)!important}
+  .team-scene.is-here .leader-copy h3{font-size:clamp(14px,1vw,18px)!important}
+  .team-scene.is-here .leader-copy p{font-size:clamp(9px,.66vw,11px)!important}
+}
