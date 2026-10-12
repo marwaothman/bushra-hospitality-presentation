@@ -372,41 +372,47 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .nav,.nav.nav--algeria{height:68px!important;min-height:68px!important}
 }
 
-/* Homepage identity hierarchy: company name first, then the brand promise. */
+/* Homepage identity hierarchy: corporate descriptor first, memorable promise dominant. */
 .hub-heading:not(.is-detail) .hub-company-name{
   margin:0;
   max-width:none;
-  color:#fff;
+  color:rgba(255,255,255,.88);
   font-family:var(--presentation-title-font);
-  font-size:clamp(36px,2.8vw,56px);
-  font-weight:700;
-  line-height:1.08;
-  letter-spacing:-.035em;
+  font-size:clamp(18px,1.45vw,28px);
+  font-weight:600;
+  line-height:1.25;
+  letter-spacing:0;
   text-wrap:balance;
-  text-shadow:0 16px 48px rgba(3,18,30,.42);
+  text-shadow:0 8px 28px rgba(3,18,30,.55);
 }
 .hub-heading:not(.is-detail){display:block!important;width:min(64vw,1040px)!important}
 .hub-heading:not(.is-detail) .hub-slogan{
-  margin-top:clamp(12px,1.6vh,22px)!important;
+  margin-top:clamp(10px,1.35vh,18px)!important;
   color:#d0a86c!important;
-  font-size:clamp(24px,2.15vw,42px)!important;
-  font-weight:600!important;
-  line-height:1.15!important;
-  letter-spacing:-.02em!important;
+  font-size:clamp(50px,5.25vw,92px)!important;
+  font-weight:700!important;
+  line-height:1.02!important;
+  letter-spacing:-.045em!important;
+  text-shadow:0 16px 52px rgba(3,18,30,.5)!important;
 }
 .experience[dir="ltr"] .hub-heading:not(.is-detail) .hub-company-name{
   max-width:none;
-  font-size:clamp(32px,2.55vw,50px);
-  line-height:1.04;
+  font-size:clamp(16px,1.2vw,23px);
+  line-height:1.25;
+}
+.experience[dir="ltr"] .hub-heading:not(.is-detail) .hub-slogan{font-size:clamp(42px,4.35vw,76px)!important;letter-spacing:-.035em!important}
+@media(min-width:1001px){
+  .hub-scene:not(.has-card-focus) .hub-carousel{transform:translateY(-8px)}
+  .hub-scene:not(.has-card-focus) .hub-options>button{aspect-ratio:1.56/1}
 }
 @media(max-width:1000px){
   .hub-heading:not(.is-detail){width:calc(100% - 40px)!important}
-  .hub-heading:not(.is-detail) .hub-company-name{max-width:none;font-size:clamp(30px,6vw,50px)}
-  .hub-heading:not(.is-detail) .hub-slogan{font-size:clamp(20px,3.8vw,30px)!important}
+  .hub-heading:not(.is-detail) .hub-company-name{max-width:none;font-size:clamp(15px,2.7vw,21px)}
+  .hub-heading:not(.is-detail) .hub-slogan{font-size:clamp(38px,7.5vw,58px)!important}
 }
 @media(max-width:560px){
-  .hub-heading:not(.is-detail) .hub-company-name{font-size:clamp(24px,7.2vw,36px)}
-  .hub-heading:not(.is-detail) .hub-slogan{margin-top:8px!important;font-size:clamp(17px,5vw,24px)!important}
+  .hub-heading:not(.is-detail) .hub-company-name{font-size:clamp(13px,3.8vw,17px)}
+  .hub-heading:not(.is-detail) .hub-slogan{margin-top:7px!important;font-size:clamp(32px,9.5vw,46px)!important}
 }
 
 /* Hajj 1448 country preparations — restrained executive country index. */
