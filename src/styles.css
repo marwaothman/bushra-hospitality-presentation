@@ -385,7 +385,7 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   text-wrap:balance;
   text-shadow:0 16px 48px rgba(3,18,30,.42);
 }
-.hub-heading:not(.is-detail){width:min(64vw,1040px)!important}
+.hub-heading:not(.is-detail){display:block!important;width:min(64vw,1040px)!important}
 .hub-heading:not(.is-detail) .hub-slogan{
   margin-top:clamp(12px,1.6vh,22px)!important;
   color:#d0a86c!important;
