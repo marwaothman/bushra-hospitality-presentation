@@ -402,7 +402,6 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 }
 .experience[dir="ltr"] .hub-heading:not(.is-detail) .hub-slogan{font-size:clamp(42px,4.35vw,76px)!important;letter-spacing:-.035em!important}
 @media(min-width:1001px){
-  .hub-scene:not(.has-card-focus) .hub-carousel{transform:translateY(-8px)}
   .hub-scene:not(.has-card-focus) .hub-options>button{aspect-ratio:1.56/1}
 }
 @media(max-width:1000px){
