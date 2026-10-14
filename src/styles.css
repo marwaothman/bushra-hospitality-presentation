@@ -2230,3 +2230,78 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .level-one-detail{grid-template-columns:1fr;min-height:auto;padding:28px 24px}.level-one-metric{grid-column:auto}
   .level-one-footer{display:none}
 }
+
+/* Level One layout correction — one stable executive frame in both reading directions. */
+@media(min-width:761px){
+  .level-one-catalogue,
+  .level-one-catalogue[dir="rtl"]{
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:auto auto minmax(0,1fr)!important;
+    grid-template-areas:"heading" "nav" "detail"!important;
+    gap:clamp(16px,2vh,25px)!important;
+    padding:clamp(24px,3.2vh,42px) clamp(52px,5vw,92px) clamp(112px,13vh,132px)!important;
+  }
+  .level-one-heading{
+    width:100%;
+    min-width:0;
+    align-items:center;
+    padding-bottom:clamp(14px,1.8vh,23px);
+  }
+  .level-one-heading>div{min-width:max-content;flex:0 0 auto}
+  .level-one-heading h2{font-size:clamp(40px,3.7vw,66px);white-space:nowrap}
+  .level-one-heading p{flex:1;max-width:650px;font-size:clamp(16px,1.15vw,22px)!important}
+  .level-one-catalogue[dir="rtl"] .level-one-heading p{text-align:left}
+  .level-one-catalogue[dir="ltr"] .level-one-heading p{text-align:right}
+  .level-one-pillar-nav{
+    display:grid!important;
+    grid-template-columns:repeat(9,minmax(0,1fr));
+    min-height:58px;
+    border:0!important;
+    border-bottom:1px solid rgba(210,174,111,.25)!important;
+    overflow:visible;
+  }
+  .level-one-pillar-nav button{
+    justify-content:center;
+    min-width:0;
+    min-height:58px;
+    padding:8px 7px;
+    gap:8px;
+    font-size:clamp(10px,.77vw,14px);
+    line-height:1.35;
+    text-align:center;
+    white-space:normal;
+    transform:none!important;
+  }
+  .level-one-pillar-nav button i{display:none}
+  .level-one-pillar-nav button:after{
+    inset:auto 18% -1px!important;
+    width:auto!important;
+    height:2px!important;
+    transform:scaleX(0)!important;
+    transform-origin:center;
+  }
+  .level-one-pillar-nav button.is-active:after{transform:scaleX(1)!important}
+  .level-one-detail{
+    width:100%;
+    min-width:0;
+    min-height:0;
+    align-self:stretch;
+    grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(170px,.42fr)!important;
+    gap:clamp(28px,3vw,60px)!important;
+    padding:clamp(30px,3.5vw,60px)!important;
+  }
+  .level-one-detail-copy,.level-one-detail ul,.level-one-metric{min-width:0}
+  .level-one-detail-copy h3{font-size:clamp(34px,2.75vw,50px)}
+  .level-one-detail-copy p{font-size:clamp(14px,1vw,19px)}
+  .level-one-detail li{font-size:clamp(13px,.9vw,17px)}
+  .level-one-metric{
+    grid-column:auto!important;
+    align-self:stretch!important;
+    flex-direction:column!important;
+    justify-content:center!important;
+    border-top:0!important;
+    border-inline-start:1px solid rgba(210,174,111,.26)!important;
+    padding:0 22px!important;
+  }
+  .level-one-footer{display:none!important}
+}
