@@ -16,4 +16,4 @@ Deployment is configured through GitHub Actions.
 
 Large videos and gallery images are served from the existing Bushra presentation media host to keep this repository lightweight and fast.
 
-Deployment sync: 2026-08-27 18:15 UTC
+Deployment sync: 2026-10-15 09:05 UTC
