@@ -2322,6 +2322,10 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .level-one-visual>span{position:absolute;z-index:1;inset-inline:20px;bottom:17px;display:flex;align-items:end;justify-content:space-between;gap:18px}
 .level-one-visual small{font-size:clamp(8px,.55vw,11px);font-weight:700;letter-spacing:.14em;color:#ddb574}
 .level-one-visual b{font-size:clamp(25px,2vw,38px);line-height:1;color:#fff}
+.level-one-photo-nav{position:absolute;z-index:2;top:14px;left:50%;display:flex;gap:7px;transform:translateX(-50%)}
+.level-one-photo-nav button{width:23px;height:3px;padding:0;border:0;border-radius:4px;background:rgba(255,255,255,.46);cursor:pointer;transition:width .3s ease,background .3s ease,box-shadow .3s ease}
+.level-one-photo-nav button:hover,.level-one-photo-nav button:focus-visible{background:#fff}
+.level-one-photo-nav button.is-active{width:38px;background:#d8ad69;box-shadow:0 0 14px rgba(216,173,105,.45)}
 @media(max-width:1100px) and (min-width:761px){
   .level-one-detail{grid-template-columns:minmax(0,1fr) minmax(0,.9fr) minmax(220px,.68fr)!important;gap:24px!important}
 }
