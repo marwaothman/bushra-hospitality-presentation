@@ -25,6 +25,11 @@ const levelOnePillars=[
   {icon:"sanitation",ar:{title:"النظافة ودورات المياه",brief:"معايير دقيقة للنظافة والتجهيز تقلل زمن الانتظار وتحافظ على راحة الضيوف.",value:"جاهزية صحية مستمرة",points:["توفير مستمر للصابون والمناديل","مناوبات تنظيف عميق وتنظيف سريع عند الحاجة","تحسين وتأهيل دورات المياه وفق النموذج المعتمد"],metric:"جاهزية مستمرة"},en:{title:"Sanitation & Washrooms",brief:"Defined cleaning and preparation standards supporting comfort and shorter waiting times.",value:"Continuous hygiene readiness",points:["Continuous supply of soap and tissues","Deep-cleaning rotations and rapid cleaning when required","Washroom improvement to the approved model"],metric:"Continuous"}},
   {icon:"supplies",ar:{title:"لوازم وتجربة الحاج",brief:"احتياجات شخصية مدروسة تدعم راحة الحاج وسهولة حركته في المشاعر.",value:"تفاصيل صغيرة تصنع تجربة أفضل",points:["حقيبة ظهر مخصصة لمستلزمات المشاعر","مظلة شمسية لكل حاج مع توفير بدائل احتياطية","مستلزمات عملية للراحة والعبادة والتنقل"],metric:"لكل حاج"},en:{title:"Pilgrim Essentials",brief:"Considered personal essentials supporting comfort and mobility across the holy sites.",value:"Small details that create a better journey",points:["Dedicated backpack for holy-sites essentials","Sun umbrella for every pilgrim with replacements available","Practical items supporting comfort, worship and movement"],metric:"Per pilgrim"}},
 ] as const;
+const levelOneLocations=[
+  {ar:"عرفة",en:"Arafat",pillars:[0,1,2,3,4,5,6,7]},
+  {ar:"مزدلفة",en:"Muzdalifah",pillars:[2,4,6,8]},
+  {ar:"منى",en:"Mina",pillars:[0,1,2,3,7,4,5,6,8]},
+] as const;
 const leadership=[
   {image:`${MEDIA_BASE}/media/team/ali-bandaqji.webp`,ar:{name:"علي بن حسين بندقجي",role:"الرئيس التنفيذي"},en:{name:"Ali bin Hussein Bandaqji",role:"Chief Executive Officer"}},
   {image:`${MEDIA_BASE}/media/team/mohammed-maimani.webp`,ar:{name:"محمد بن محمود ميمني",role:"نائب الرئيس التنفيذي"},en:{name:"Mohammed bin Mahmoud Maimani",role:"Deputy Chief Executive Officer"}},
@@ -254,6 +259,7 @@ export default function Home(){
   const [cms,setCms]=useState<CmsPayload|null>(null);
   const [testimonialFocus,setTestimonialFocus]=useState(0);
   const [activePackagePillar,setActivePackagePillar]=useState(0);
+  const [activePackageLocation,setActivePackageLocation]=useState(0);
   const [activePackagePhoto,setActivePackagePhoto]=useState(0);
   const [testimonialFilter,setTestimonialFilter]=useState<"all"|"video"|"comments">("all");
   const [meetingSlide,setMeetingSlide]=useState(directMeetingPlan?meetingPlanSlideIndex:directMeeting?0:initialView?.meetingSlide??0);
@@ -338,7 +344,7 @@ export default function Home(){
     transitionTimers.current.forEach(clearTimeout);setTransitioning(true);
     transitionTimers.current=[window.setTimeout(()=>{const doc=document as Document&{startViewTransition?:(cb:()=>void)=>void};doc.startViewTransition?doc.startViewTransition(action):action()},380),window.setTimeout(()=>setTransitioning(false),1150)];
   };
-  const pick=(n:Level)=>{setSlide(0);setFocus(n);setSelected(n);if(n===1){setActivePackagePillar(0);setModal("details")}else setModal(null)};
+  const pick=(n:Level)=>{setSlide(0);setFocus(n);setSelected(n);if(n===1){setActivePackageLocation(0);setActivePackagePillar(0);setModal("details")}else setModal(null)};
   const goHome=()=>transition(()=>{setModal(null);setSelected(null);setSection("home")});
   const canNavigateBack=historyDepth>0||modal!==null||selected!==null||section!=="home";
   const navigateBack=()=>{
@@ -558,10 +564,13 @@ export default function Home(){
       <div className="level-one-ambient" aria-hidden="true"><i/><i/><i/></div>
       <header className="level-one-heading">
         <div><small>{lang==="ar"?"باقة الضيافة التنفيذية":"EXECUTIVE HOSPITALITY PACKAGE"}</small><h2>{managedPacks[1][lang]}</h2></div>
-        <p>{lang==="ar"?"أعلى معايير الجاهزية التشغيلية والضيافة في المشاعر المقدسة":"The highest standards of operational readiness and hospitality across the holy sites"}</p>
+        <p>{lang==="ar"?`خدمات متكاملة في مشعر ${levelOneLocations[activePackageLocation].ar}`:`Integrated services in ${levelOneLocations[activePackageLocation].en}`}</p>
       </header>
-      <nav className="level-one-pillar-nav" aria-label={lang==="ar"?"محاور الباقة":"Package pillars"}>
-        {levelOnePillars.map((pillar,index)=><button type="button" key={pillar.en.title} className={activePackagePillar===index?"is-active":""} onClick={()=>{setActivePackagePillar(index);setActivePackagePhoto(0)}} aria-pressed={activePackagePillar===index}><i/><span>{pillar[lang].title}</span></button>)}
+      <nav className="level-one-location-nav" aria-label={lang==="ar"?"المشاعر المقدسة":"Holy sites"}>
+        {levelOneLocations.map((location,index)=><button type="button" key={location.en} className={activePackageLocation===index?"is-active":""} onClick={()=>{setActivePackageLocation(index);setActivePackagePillar(location.pillars[0]);setActivePackagePhoto(0)}} aria-pressed={activePackageLocation===index}><span>{location[lang]}</span></button>)}
+      </nav>
+      <nav className="level-one-pillar-nav" style={{gridTemplateColumns:`repeat(${levelOneLocations[activePackageLocation].pillars.length},minmax(0,1fr))`}} aria-label={lang==="ar"?`خدمات ${levelOneLocations[activePackageLocation].ar}`:`${levelOneLocations[activePackageLocation].en} services`}>
+        {levelOneLocations[activePackageLocation].pillars.map((pillarIndex)=><button type="button" key={levelOnePillars[pillarIndex].en.title} className={activePackagePillar===pillarIndex?"is-active":""} onClick={()=>{setActivePackagePillar(pillarIndex);setActivePackagePhoto(0)}} aria-pressed={activePackagePillar===pillarIndex}><i/><span>{levelOnePillars[pillarIndex][lang].title}</span></button>)}
       </nav>
       <motion.article className={`level-one-detail ${"images" in levelOnePillars[activePackagePillar]?"is-gallery":""}`} key={`${lang}-${activePackagePillar}`} initial={reduceMotion?false:{opacity:0,y:18}} animate={{opacity:1,y:0}} transition={{duration:reduceMotion?.01:.46,ease:[.16,1,.3,1]}} aria-live="polite">
         <div className="level-one-detail-copy"><small>{lang==="ar"?"منظومة الخدمة":"SERVICE SYSTEM"}</small><h3>{levelOnePillars[activePackagePillar][lang].title}</h3><p>{levelOnePillars[activePackagePillar][lang].brief}</p><strong>{levelOnePillars[activePackagePillar][lang].value}</strong></div>
