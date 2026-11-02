@@ -632,6 +632,64 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .nusuk-intro-copy button{width:100%;margin-top:22px}
 }
 
+.nusuk-intro-visual>img{animation:nusukPhotoReveal .55s cubic-bezier(.16,1,.3,1) both}
+@keyframes nusukPhotoReveal{from{opacity:.25;transform:scale(1.035)}to{opacity:1;transform:scale(1.01)}}
+.nusuk-photo-arrow{
+  position:absolute;
+  z-index:4;
+  top:50%;
+  width:52px;
+  height:74px;
+  display:grid;
+  place-items:center;
+  padding:0;
+  border:0;
+  background:rgba(3,24,39,.66);
+  color:#e0b56d;
+  cursor:pointer;
+  transform:translateY(-50%);
+  backdrop-filter:blur(8px);
+  transition:background .25s ease,color .25s ease,transform .3s cubic-bezier(.16,1,.3,1);
+}
+.nusuk-photo-arrow--prev{left:0;border-radius:0 14px 14px 0}
+.nusuk-photo-arrow--next{right:0;border-radius:14px 0 0 14px}
+.nusuk-photo-arrow--next svg{transform:rotate(180deg)}
+.nusuk-photo-arrow svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.4}
+.nusuk-photo-arrow:hover,.nusuk-photo-arrow:focus-visible{background:#d0a86c;color:#062036;outline:none;transform:translateY(-50%) scale(1.04)}
+.nusuk-photo-strip{
+  position:absolute;
+  z-index:5;
+  right:24px;
+  bottom:22px;
+  left:24px;
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  direction:ltr;
+}
+.nusuk-photo-strip button{
+  position:relative;
+  width:clamp(48px,4.2vw,72px);
+  aspect-ratio:1.5;
+  padding:0;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.38);
+  background:#061e31;
+  opacity:.58;
+  cursor:pointer;
+  transition:opacity .25s ease,border-color .25s ease,transform .3s cubic-bezier(.16,1,.3,1);
+}
+.nusuk-photo-strip button:after{content:"";position:absolute;right:18%;bottom:0;left:18%;height:2px;background:#d0a86c;transform:scaleX(0);transition:transform .3s ease}
+.nusuk-photo-strip button:hover,.nusuk-photo-strip button:focus-visible{opacity:.88;transform:translateY(-3px);outline:none}
+.nusuk-photo-strip button.is-active{opacity:1;border-color:#d0a86c;transform:translateY(-4px)}
+.nusuk-photo-strip button.is-active:after{transform:scaleX(1)}
+.nusuk-photo-strip img{display:block;width:100%;height:100%;object-fit:cover}
+@media(max-width:900px){
+  .nusuk-photo-arrow{width:42px;height:58px}
+  .nusuk-photo-strip{right:12px;bottom:12px;left:12px;gap:5px}
+  .nusuk-photo-strip button{width:46px}
+}
+
 /* Nusuk sector cover — visible on the sector card, not only inside the video. */
 .hospitality-scene .journey-stage.has-cover{
   isolation:isolate;
