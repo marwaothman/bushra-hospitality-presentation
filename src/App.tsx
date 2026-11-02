@@ -545,7 +545,8 @@ export default function Home(){
         {hospitalityPhases.map((phase,index)=><button type="button" role="tab" aria-selected={activeHospitalityPhase===index} className={activeHospitalityPhase===index?"is-active":""} key={phase.en} onClick={()=>setActiveHospitalityPhase(index)}><span>{phase[lang]}</span></button>)}
       </div>
       <div className="journey-map" role="list" aria-live="polite">
-        {hospitalityPhases[activeHospitalityPhase].indices.map((stageIndex,position)=>{const stage=managedStages[stageIndex];return <button type="button" role="listitem" className="journey-stage" key={stage.ar} style={{"--stage-index":position} as React.CSSProperties} onClick={()=>{setActiveHospitality(stageIndex);if(stageIndex===2)setActiveReception(0);if(stageIndex===4)setSlide(0);if(stageIndex===9)setActiveControlObservation(0);setModal("hospitality")}}>
+        {hospitalityPhases[activeHospitalityPhase].indices.map((stageIndex,position)=>{const stage=managedStages[stageIndex];return <button type="button" role="listitem" className={`journey-stage ${stageIndex===0?"has-cover":""}`} key={stage.ar} style={{"--stage-index":position} as React.CSSProperties} onClick={()=>{setActiveHospitality(stageIndex);if(stageIndex===2)setActiveReception(0);if(stageIndex===4)setSlide(0);if(stageIndex===9)setActiveControlObservation(0);setModal("hospitality")}}>
+          {stageIndex===0&&<span className="journey-stage-media" aria-hidden="true"><img src="/media/hospitality/nusuk-sector-cover.jpg" alt=""/></span>}
           <span className="journey-node"><Arrow/></span><strong>{stage[lang]}</strong><p>{hospitalityValue[stageIndex][lang]}</p>
         </button>})}
       </div>

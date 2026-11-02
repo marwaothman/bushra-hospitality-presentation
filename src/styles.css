@@ -576,6 +576,54 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
   .hospitality-modal-copy{width:88vw}.hospitality-modal-icon{width:82px;height:82px;margin:20px auto 15px}.hospitality-modal-icon svg{width:40px;height:40px}.hospitality-modal-copy h3{font-size:clamp(25px,8vw,38px);line-height:1.25}.hospitality-modal-copy p{font-size:13px}
 }
 
+/* Nusuk sector cover — visible on the sector card, not only inside the video. */
+.hospitality-scene .journey-stage.has-cover{
+  isolation:isolate;
+  background:#061d31!important;
+}
+.hospitality-scene .journey-stage .journey-stage-media{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  border-radius:inherit;
+  pointer-events:none;
+}
+.hospitality-scene .journey-stage .journey-stage-media img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 46%;
+  transform:scale(1.01);
+  filter:saturate(.94) contrast(1.03);
+  transition:transform .7s cubic-bezier(.16,1,.3,1),filter .45s ease;
+}
+.hospitality-scene .journey-stage .journey-stage-media:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(2,16,28,.12),rgba(2,18,31,.38) 45%,rgba(2,18,31,.96) 100%);
+}
+.hospitality-scene .journey-stage.has-cover .journey-node,
+.hospitality-scene .journey-stage.has-cover strong,
+.hospitality-scene .journey-stage.has-cover p{
+  position:relative;
+  z-index:2;
+}
+.hospitality-scene .journey-stage.has-cover strong{
+  text-shadow:0 2px 16px rgba(0,0,0,.72);
+}
+.hospitality-scene .journey-stage.has-cover:before{
+  z-index:3;
+  pointer-events:none;
+}
+.hospitality-scene .journey-stage.has-cover:hover .journey-stage-media img,
+.hospitality-scene .journey-stage.has-cover:focus-visible .journey-stage-media img{
+  transform:scale(1.065);
+  filter:saturate(1.05) contrast(1.05);
+}
+
 /* Motion orchestration shells keep animation separate from visual components. */
 .portal-motion-shell,.pick-motion-shell{position:relative;min-width:0;min-height:0}
 .portal-motion-shell{height:100%}.portal-motion-shell>.portal{height:100%}
