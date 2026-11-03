@@ -766,6 +766,14 @@ html,body{background:#133c67}.experience{background:#133c67;color:#fff}.brand-fi
 .nusuk-evidence-actions button:last-child{background:#d0a86c;color:#061e31}
 .nusuk-evidence-actions svg{width:25px;height:18px;fill:none;stroke:currentColor}
 .nusuk-evidence-copy .nusuk-report-context{margin-top:22px;color:rgba(255,255,255,.5);font-size:12px;font-weight:400;letter-spacing:0;line-height:1.6}
+.nusuk-intro-actions{display:flex;align-items:stretch;gap:14px;margin-top:34px}
+.nusuk-intro-copy .nusuk-intro-actions>button{flex:1;min-width:0;margin:0;min-height:62px;padding:13px 18px;justify-content:center;gap:16px}
+.nusuk-intro-copy .nusuk-intro-actions>.nusuk-achievement-launch{background:transparent;color:#d0a86c;border-color:rgba(208,168,108,.65)}
+.nusuk-intro-copy .nusuk-intro-actions>.nusuk-achievement-launch:hover{background:rgba(208,168,108,.1)}
+.nusuk-achievement-overlay{position:fixed;z-index:85;inset:0;display:grid;place-items:center;padding:calc(var(--presentation-header) + 24px) 4vw calc(var(--presentation-footer) + 24px);background:rgba(1,12,21,.83);backdrop-filter:blur(12px)}
+.nusuk-achievement-overlay .nusuk-evidence-shell{position:relative;max-height:100%;min-height:0;background:#072338;box-shadow:0 32px 100px rgba(0,0,0,.5);border:1px solid rgba(208,168,108,.28);overflow:auto}
+.nusuk-achievement-close{position:absolute;z-index:6;top:14px;inset-inline-end:18px;width:40px;height:40px;border:1px solid rgba(208,168,108,.5);border-radius:50%;background:#062036;color:#d0a86c;font:28px/1 Arial;cursor:pointer}
+@media(max-width:900px){.nusuk-intro-actions{flex-wrap:wrap;margin-top:22px}.nusuk-intro-copy .nusuk-intro-actions>button{flex-basis:180px}.nusuk-achievement-overlay{overflow:auto}.nusuk-achievement-overlay .nusuk-evidence-shell{max-height:100%;height:auto}}
 .nusuk-report-lightbox{
   position:fixed;
   z-index:120;
